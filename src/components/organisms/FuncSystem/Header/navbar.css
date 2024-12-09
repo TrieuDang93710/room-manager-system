@@ -1,0 +1,35 @@
+/* 
+.navbar_menu {
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.navbar_menu:hover{
+    background-color: #f3f3f3;
+}
+
+.navbar_menu:active{
+    border: 1px solid blue;
+    border-radius: 3px;
+    background: none;
+}
+.navbar_menu::before{
+    content: "";
+    min-width: 20px;
+    min-height: 2px;
+    background: blue;
+    border-radius: 4px;
+    bottom: -20px;
+    left: 0;
+}
+
+@media (min-width: 768px){
+    .navbar_menu {
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 15px;
+    }
+} */
