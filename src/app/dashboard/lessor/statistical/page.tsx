@@ -1,9 +1,7 @@
 'use client';
-
 import { Card } from '@/components/molecules/Card';
 import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import SeachComponent from '@/components/molecules/Search';
-import TableComponent from '@/components/molecules/Table';
 import MaintenanceCard from '@/components/organisms/FuncManager/maintenance-card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { chartConfig, chartConfigCircle } from '@/config/chart.config';
@@ -14,9 +12,11 @@ import { CartesianGrid, Line, LineChart, Pie, PieChart, XAxis } from 'recharts';
 const StatisticalManagerPage = () => {
   return (
     <div className='w-full flex flex-col items-end gap-6 snap-y pt-20 md:px-3'>
-      {listRoom.map((r) => {
-        return <MaintenanceCard key={r._id} title='Tong phong' icon={<BarChartOutlined />} />;
-      })}
+      <div className='md:w-[84%] w-full py-3 md:pr-10 md:flex justify-center items-center md:gap-3 gap-y-2'>
+        {listRoom.map((r) => {
+          return <MaintenanceCard key={r._id} title='Tong phong' icon={<BarChartOutlined />} />;
+        })}
+      </div>
       <div className='md:w-[84%] w-full py-3 md:pr-10 md:flex md:gap-3 gap-y-2'>
         <Card className='md:w-1/2 w-full dark:bg-[#1a1a1a] mb-5'>
           <p className='text-[#292929] dark:text-[#e6e6e6] font-bold text-[15px] pb-3'>Tổng doanh thu</p>
@@ -69,7 +69,7 @@ const StatisticalManagerPage = () => {
             <SeachComponent />
           </div>
           <br />
-          <TableComponent />
+          {/* <TableComponent /> */}
           <div className='w-full flex justify-end h-1/2 py-2'>
             <PaginationComponent />
           </div>

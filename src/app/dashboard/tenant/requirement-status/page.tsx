@@ -2,7 +2,6 @@
 import { Card } from '@/components/molecules/Card';
 import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import SeachComponent from '@/components/molecules/Search';
-import TableComponent from '@/components/molecules/Table';
 
 const RequirementStatusManagerPage = () => {
   return (
@@ -15,7 +14,7 @@ const RequirementStatusManagerPage = () => {
             <SeachComponent />
           </div>
           <br />
-          <TableComponent />
+          {/* <TableComponent /> */}
         </Card>
         <div className='w-full flex justify-end py-1'>
           <PaginationComponent />

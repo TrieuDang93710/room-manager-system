@@ -1,6 +1,5 @@
 import { Card } from '@/components/molecules/Card';
 import SeachComponent from '@/components/molecules/Search';
-import TableComponent from '@/components/molecules/Table';
 
 const RoomManagerPage = () => {
   return (
@@ -15,7 +14,7 @@ const RoomManagerPage = () => {
             </button>
             <SeachComponent />
           </div>
-          <TableComponent />
+          {/* <TableComponent /> */}
         </Card>
       </div>
     </div>
