@@ -1,0 +1,12 @@
+
+.selection_box  {
+    @apply px-3 py-1 border-[2px] rounded-sm border-green-600 w-[50%] dark:text-[#fff] dark:border dark:border-[#fff]
+}
+
+.selection_box select {
+    @apply w-full border-none
+}
+
+.selection_box select option {
+    @apply w-full border-none
+}

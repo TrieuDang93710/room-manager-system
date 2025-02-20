@@ -1,7 +1,9 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/helpers/utils';
+import { useAuth } from '@/hooks/useAuth';
 import { LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { ReactNode } from 'react';
 
 interface FunctionListManagerProps {
@@ -22,6 +24,17 @@ const FunctionListManager = ({
   setHidden,
   account
 }: FunctionListManagerProps) => {
+  const router = useRouter();
+  const auth = useAuth();
+  const { user, logout, setLoading } = auth;
+
+  const handleSignOut = () => {
+    setLoading(true);
+    logout();
+    setLoading(false);
+    router.push('/sign-in-manager');
+  };
+
   return (
     <div
       className={
@@ -39,7 +52,9 @@ const FunctionListManager = ({
       {hidden ? (
         <Image
           alt='avatar'
-          src='https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'
+          src={
+            user && user!.avatar ? user.avatar : 'https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'
+          }
           width='60'
           height='60'
           className='pb-5'
@@ -49,12 +64,16 @@ const FunctionListManager = ({
           <h2 className='text-white md:text-2xl text-[16px] font-bold pb-5 text-center'>{title}</h2>
           <Image
             alt='avatar'
-            src='https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'
+            src={
+              user && user!.avatar
+                ? user.avatar
+                : 'https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'
+            }
             width='60'
             height='60'
             className='pb-5'
           />
-          <p className='text-[#e4e4e4] md:text-[16px] text-[13px] font-bold pt-4 pb-4 text-center'>Quan ly chuc nang</p>
+          <p className='text-[#e4e4e4] md:text-[16px] text-[13px] font-bold pt-4 pb-4 text-center'>Quản Lý Chức Năng</p>
         </div>
       )}
       <div className='w-full'>
@@ -93,12 +112,12 @@ const FunctionListManager = ({
               hidden ? 'justify-center' : 'justify-start'
             }`}
           >
-            <Link href={'/sign-in'} className='text-start'>
+            <Link href={'/sign-in-manager'} onClick={handleSignOut} className='text-start md:line-clamp-2'>
               {hidden === true ? (
                 <LogoutOutlined className='px-2 text-center' />
               ) : (
                 <>
-                  Logout <LogoutOutlined className='px-2' />
+                  Đăng Xuất <LogoutOutlined className='px-2' />
                 </>
               )}
             </Link>

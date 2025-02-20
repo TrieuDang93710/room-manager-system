@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { pageSizeList } from '@/faker/data';
 import SelectionComponent from '@/components/atoms/Selection';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
-import ButtonCommon from '@/components/atoms/ButtonCommon';
 
 const PaginationComponent = () => {
   const [pageSize, setPageSize] = useState<number>(10);
@@ -35,19 +34,22 @@ const PaginationComponent = () => {
   };
 
   return (
-    <div className='w-1/3 flex items-center justify-between p-2 gap-4'>
-      <div className='w-2/3 flex items-center justify-between'>
-        <ButtonCommon onClick={handlePageDec} icon={<ArrowLeftOutlined />}/>
+    <div className='pagination_box'>
+      <div className='input_group'>
+        <button type='submit' onClick={handlePageDec} className={`button_manager_style `}>
+          <ArrowLeftOutlined />
+        </button>
         <ul className='gap-2'>
           <li className='text-[#1e1e1e] font-[14px] dark:text-[#e2e2e2]'>{currentPage}</li>
         </ul>
-        <ButtonCommon onClick={handlePageInc} icon={<ArrowRightOutlined />}/>
+        <button type='submit' onClick={handlePageInc} className={`button_manager_style `}>
+          <ArrowRightOutlined />
+        </button>
       </div>
       <SelectionComponent
         optionList={pageSizeList}
         selectValue={String(pageSize)}
         setSelectValue={handlePageSizeChange}
-        className='px-3 py-1 border-[2px] rounded-sm border-green-600 w-1/3 dark:text-[#fff] dark:border dark:border-[#fff]'
       />
     </div>
   );

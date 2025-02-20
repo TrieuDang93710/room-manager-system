@@ -1,0 +1,12 @@
+
+.pagination_box {
+    @apply sm:w-[50%] md:w-[40%] w-full flex items-center justify-between py-4 px-2 gap-8
+}
+
+.input_group {
+    @apply w-2/3 flex items-center justify-between gap-4
+}
+
+.button_manager_style {
+    @apply w-[90%] bg-green-500 dark:bg-green-500 font-bold text-[15px] py-2 rounded-md text-[#fff] hover:bg-green-600 dark:border-[1px] dark:border-[#fff] dark:hover:bg-green-600 dark:hover:text-slate-300 dark:text-white
+}

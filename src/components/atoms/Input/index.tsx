@@ -1,9 +1,9 @@
 'use client';
-
 import { useState } from 'react';
 import SelectionComponent from '../Selection';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
-import { cn } from '@/lib/utils';
+import { cn } from '@/helpers/utils';
+import './index.css';
 
 interface OptionInterface {
   value: string;
@@ -23,6 +23,7 @@ interface CommonInputProps {
   iconPassStyle?: string;
   optionList?: (OptionInterface | undefined)[];
   hidden?: boolean;
+  isAuth?: boolean;
   iconPass?: boolean;
   passHidden?: boolean;
   setPassHidden?: (value: boolean) => void;
@@ -42,6 +43,7 @@ const CommonInput = ({
   setField,
   field,
   hidden,
+  isAuth,
   passHidden,
   iconPass,
   setPassHidden,
@@ -55,21 +57,12 @@ const CommonInput = ({
   };
 
   return (
-    <div
-      className={`relative w-full px-3 py-2 flex flex-col justify-start items-start gap-1 ${
-        passHidden ? 'relative justify-end' : ''
-      }`}
-    >
+    <div className={`group_input ${passHidden && 'relative justify-end'}`}>
       <label
-        htmlFor=''
-        className={
-          hidden
-            ? cn('font-bold text-[14px] text-[#252525] dark:text-[#e6e6e6]', labelTileClassName)
-            : cn(
-                `after:content-['*'] after:ml-0.5 after:text-red-500 font-bold text-[14px] text-[#252525] dark:text-[#e6e6e6]`,
-                labelTileClassName
-              )
-        }
+        className={cn(
+          `${isAuth ? 'sign_in_label_input' : 'label_input'} ${hidden && 'label_require'} `,
+          labelTileClassName
+        )}
       >
         {label_title}
       </label>
@@ -83,10 +76,7 @@ const CommonInput = ({
       ) : (
         <input
           onBlur={onblur}
-          className={cn(
-            `w-full border text-[13px] truncate text-[#1c1c1c] dark:text-[#f9f9f9] rounded-sm py-2 px-3 placeholder:text-[#1c1c1c] dark:placeholder:text-[#464646] outline-[#3a3a3a] focus:outline-blue-600 focus:placeholder:text-transparent dark:focus:outline-blue-600`,
-            inputClassName
-          )}
+          className={cn(`${isAuth ? 'sign_in_input_style' : 'input_style'} `, inputClassName)}
           type={passHidden ? 'text' : typeInput}
           value={inputValue}
           onChange={(e) => setField(field, e.target.value)}
@@ -96,18 +86,19 @@ const CommonInput = ({
       )}
       {iconPass ? (
         passHidden ? (
-          <EyeInvisibleOutlined
-            onClick={() => setPassHidden!(!passHidden)}
-            className={`absolute right-6 bottom-4 cursor-pointer ${iconPassStyle}`}
-          />
+          <span className={`absolute right-5 ${!error ? 'bottom-4' : 'top-10'}`}>
+            <EyeInvisibleOutlined
+              onClick={() => setPassHidden!(!passHidden)}
+              className={`cursor-pointer ${iconPassStyle}`}
+            />
+          </span>
         ) : (
-          <EyeOutlined
-            onClick={() => setPassHidden!(!passHidden)}
-            className={`absolute right-6 bottom-4 cursor-pointer ${iconPassStyle}`}
-          />
+          <span className={`absolute right-5 ${!error ? 'bottom-4' : 'top-10'}`}>
+            <EyeOutlined onClick={() => setPassHidden!(!passHidden)} className={`cursor-pointer ${iconPassStyle}`} />
+          </span>
         )
       ) : null}
-      {error && <span className='mt-1 text-[10px] text-red-500'>{error}</span>}
+      {error && <span className='mt-1 text-[12px] text-red-500 line-clamp-5 pr-2'>{error}</span>}
     </div>
   );
 };

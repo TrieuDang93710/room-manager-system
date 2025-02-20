@@ -1,0 +1,125 @@
+'use client';
+import BreadCrumbCommon from '@/components/atoms/Breadcumb';
+import flex from '@/config/flex.config';
+import { listRoom } from '@/faker/data';
+import useCombinedState from '@/hooks/useCombinedState';
+import { FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import CheckboxCard from '@/components/molecules/CheckboxCard';
+import PostCardRow from '@/components/organisms/FuncSystem/Card/PostCardRow';
+import { PostCardSquareComponent } from '@/components/organisms/FuncSystem/Card/PostCardSquare';
+
+const RentOfRoomPage = () => {
+  const [state, setField] = useCombinedState({
+    email: '',
+    phone: '',
+    fullName: '',
+    address: '',
+    avatar: '',
+    social: '',
+    // checking error field
+    emailError: '',
+    phoneError: '',
+    fullNameError: '',
+    addressError: '',
+    avatarError: '',
+    socialError: ''
+  });
+
+  const [filteredItems] = useState(listRoom);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(2);
+  const [viewRender, setViewRender] = useState<boolean>(false);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  const breadcrumbs = [
+    {
+      url: '/',
+      label: 'Trang chủ',
+      prefixIcon: () => <HomeOutlined />
+    },
+    {
+      url: '/system/post-filter',
+      label: 'Tiềm kiếm',
+      prefixIcon: () => <FilterOutlined />
+    }
+  ];
+
+  const handleSetViewRender = () => {
+    setViewRender(!viewRender);
+  };
+
+  return (
+    <div
+      className={
+        'w-full min-h-screen md:px-10 px-3 pt-20  z-10' +
+        flex({ direction: 'col', justifyContent: 'start', alignItems: 'center' })
+      }
+    >
+      <div
+        className='w-full h-[20vh] px-2 bg-center bg-cover bg-no-repeat flex flex-row items-center justify-start'
+        style={{
+          backgroundImage:
+            "url('https://taggd.in/wp-content/uploads/2022/12/Job-Prospects-for-Freshers-in-Pharmaceutical-Industry-Banner.png')"
+        }}
+      >
+        <BreadCrumbCommon breadcrumbs={breadcrumbs} currentUrl='/' mode='dark' />
+      </div>
+      <div className='w-full flex flex-row items-start justify-around my-4 gap-3'>
+        <div className='w-[20%] border border-green-500 hidden md:flex flex-col items-center justify-start px-4'>
+          <h3 className='text-[18px] text-black font-medium py-2'>Bo loc bai dang</h3>
+          <CheckboxCard title='Linh vuc' />
+          <CheckboxCard title='Dia diem' />
+          <CheckboxCard title='Hinh thuc' />
+        </div>
+        <div className='w-full flex flex-col items-center justify-start'>
+          <div className='w-full flex flex-row justify-between items-center px-4 py-4 gap-2'>
+            <p className='md:hidden text-slate-800 text-[14px] flex items-center gap-2'>
+              <strong className='font-bold'>Loc : </strong>
+              <FileSearchOutlined className='text-green-500 font-bold text-2xl cursor-pointer active:shadow-slate-500 active:shadow-sm' />
+            </p>
+            <div className='md:w-full w-3/4 flex justify-end items-center gap-3'>
+              <div className='border border-green-500 rounded-sm'>
+                <select className='px-2 border-none' name='' id=''>
+                  <option className='border-none' value=''>
+                    All
+                  </option>
+                  <option className='border-none' value='10'>
+                    10
+                  </option>
+                </select>
+              </div>
+              <p className='text-slate-800 text-[14px] flex items-center gap-2'>
+                <strong className='font-bold'>View : </strong>
+                <TableOutlined
+                  onClick={() => handleSetViewRender()}
+                  className='text-green-500 font-bold text-2xl cursor-pointer active:shadow-slate-500 active:shadow-sm'
+                />
+              </p>
+            </div>
+          </div>
+          {viewRender ? (
+            <div className='w-full flex sm:grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around gap-3'>
+              {Array.from({ length: 1 }).map((_, index) => (
+                <PostCardSquareComponent key={index + 1} />
+              ))}
+            </div>
+          ) : (
+            <div className='w-full flex flex-col items-center justify-start p-2 gap-3'>
+              {Array.from({ length: 1 }).map((_, index) => (
+                <PostCardRow key={index} />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RentOfRoomPage;
