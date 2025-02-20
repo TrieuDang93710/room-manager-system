@@ -1,5 +1,4 @@
 'use client';
-
 import Modal from '@/components/molecules/Modal';
 import FunctionListManager from '@/components/organisms/FuncManager/func-menu';
 import ManagerHeader from '@/components/organisms/FuncManager/manage-header';

@@ -3,7 +3,6 @@
 import { Card } from '@/components/molecules/Card';
 import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import SeachComponent from '@/components/molecules/Search';
-import TableComponent from '@/components/molecules/Table';
 import MaintenanceCard from '@/components/organisms/FuncManager/maintenance-card';
 import { listRoom } from '@/faker/data';
 import { BarChartOutlined } from '@ant-design/icons';
@@ -22,7 +21,7 @@ const StatisticalManagerPage = () => {
             <SeachComponent />
           </div>
           <br />
-          <TableComponent />
+          {/* <TableComponent /> */}
         </Card>
         <div className='w-full flex justify-end py-2'>
           <PaginationComponent />

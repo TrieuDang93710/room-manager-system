@@ -3,13 +3,14 @@ import CommonInput from '@/components/atoms/Input';
 import { Card } from '@/components/molecules/Card';
 import Modal from '@/components/molecules/Modal';
 import SeachComponent from '@/components/molecules/Search';
-import TableComponent from '@/components/molecules/Table';
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, ContactsOutlined, DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import useCombinedState from '@/hooks/useCombinedState';
 import { handleBlurChecking } from '@/lib/utils';
 import { useState } from 'react';
 import { pageSizeList } from '@/faker/data';
 import PaginationComponent from '@/components/molecules/Pagination/pagination';
+import ButtonCommon from '@/components/atoms/ButtonCommon';
+import TableComponent from '@/components/molecules/Table';
 
 const ContractManagerPage = () => {
   const [state, setField] = useCombinedState({
@@ -32,28 +33,54 @@ const ContractManagerPage = () => {
     contractError: ''
   });
 
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClickNewButton = () => {
     setIsOpen(!isOpen);
   };
+  const contractHeaders = ['Contract Name', 'Tenant', 'Phone', 'Price', 'Contract', 'Date time', 'Status', 'Actions'];
+
+  const contracts = Array.from({ length: 20 }).map((_, index) => ({
+    name: `Hop dong so ${index + 1}`,
+    tenant: 'Dang Thanh Tam',
+    phone: '0336.148.613',
+    price: '3.000.000',
+    contract: '',
+    date: '25/12/2024',
+    status: 'Da thue'
+  }));
+
+  const renderContractRow = (contract: any) => (
+    <>
+      <td className='truncate px-2'>{contract.name}</td>
+      <td className='truncate px-2'>{contract.tenant}</td>
+      <td className='truncate px-2'>{contract.phone}</td>
+      <td className='truncate px-2'>{contract.price}</td>
+      <td className='truncate px-2'>
+        <ContactsOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />
+      </td>
+      <td className='truncate px-2'>{contract.date}</td>
+      <td className='truncate px-2'>{contract.status}</td>
+      <td className='flex items-center justify-center sm:gap-2 px-2'>
+        <EditOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />
+        <DeleteOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />
+      </td>
+    </>
+  );
   return (
     <div className='w-full flex flex-col items-end gap-6 snap-y pt-20 md:px-3'>
       <div className='md:w-[84%] w-full dark:bg-[#1a1a1a00] md:pr-10'>
         <Card className='w-full dark:bg-[#ffffff00] h-1/2'>
-          <p className='text-[#292929] font-bold text-[15px] pb-2 dark:text-[#e6e6e6]'>Danh sách phòng</p>
-          <p className='text-[#333333] font-bold text-[12px] pb-4 dark:text-[#e6e6e6]'>descriptions</p>
+          <p className='text-[#292929] font-bold text-[15px] pb-2 dark:text-[#e6e6e6]'>Quan ly hop dong thue nha tro</p>
+          <p className='text-[#333333] font-bold text-[12px] pb-4 dark:text-[#e6e6e6]'>Viet mo ta o day</p>
           <div className='flex items-end justify-between'>
-            <button
-              onClick={handleClickNewButton}
-              className='text-[#dbdbdb] bg-[#6f6f6f] dark:bg-[#fff0] font-bold text-[13px] dark:text-[#d1d1d1] dark:border-[#d1d1d1] dark:border-[2px] rounded-md px-4 py-1 hover:bg-[#e4e4e4] hover:text-[#232323] dark:hover:bg-[#e4e4e4] dark:hover:text-[#232323]'
-            >
-              Thêm
-            </button>
+            <div className='w-1/2 flex justify-start gap-2'>
+              <ButtonCommon onClick={handleClickNewButton} icon={<PlusOutlined />} title='Add new' />
+            </div>
             <SeachComponent />
           </div>
           <br />
-          <TableComponent />
+          <TableComponent headers={contractHeaders} data={contracts} renderRow={renderContractRow} />
         </Card>
         <div className='w-full flex justify-end py-1'>
           <PaginationComponent />
