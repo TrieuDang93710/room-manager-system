@@ -1,5 +1,5 @@
 import { Card } from '@/components/molecules/Card';
-import { cn } from '@/lib/utils';
+import { cn } from '@/helpers/utils';
 
 interface MaintenanceCardProps {
   title: string;

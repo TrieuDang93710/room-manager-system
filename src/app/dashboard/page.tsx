@@ -1,4 +1,4 @@
-import StatisticalManagerPage from '@/app/dashboard/lessor/statistical/page';
+import StatisticalManagerPage from "./manager/statistical/page";
 
 const DashboardPage = () => {
   return <StatisticalManagerPage />;

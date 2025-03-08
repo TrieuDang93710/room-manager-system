@@ -2,6 +2,15 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
+import { ContextProvider } from '../contexts/ContextProvider';
+import { QueryProvider } from '@/query/QueryProvider';
+//import css
+import '@/components/atoms/ButtonCommon/button.css';
+import '@/components/atoms/Input/index.css';
+import '@/app/(auth)/sign-in/sign-in.css';
+import '@/app/(auth)/sign-up/sign-up.css';
+import '@/components/molecules/Pagination/pagination.css';
+import '@/components/atoms/Selection/selection.css'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -27,9 +36,13 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+        <QueryProvider>
+          <ContextProvider>
+            <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
+              {children}
+            </ThemeProvider>
+          </ContextProvider>
+        </QueryProvider>
       </body>
     </html>
   );

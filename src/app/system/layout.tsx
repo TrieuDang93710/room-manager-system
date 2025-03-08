@@ -1,5 +1,4 @@
 'use client';
-
 import Modal from '@/components/molecules/Modal';
 import FooterCommon from '@/components/organisms/FuncSystem/Footer/footer';
 import NavbarCommon from '@/components/organisms/FuncSystem/Header/navbar';
@@ -23,13 +22,13 @@ const SystemLayout = ({ children }: SystemLayoutProps) => {
     setIsOpen(!isOpen);
   };
   return (
-    <div className='w-full'>
+    <div className='w-full z-10'>
       <NavbarCommon isOpen={isOpen} setIsOpen={setIsOpen} />
       {children}
       <FooterCommon />
       <Modal
         className='bg-[#10101030] dark:bg-[#73737300] border-none min-h-screen max-w-screen-2xl top-0 right-0 p-0'
-        hedden={false}
+        hidden={false}
         isOpen={isOpen}
         onClose={handleCloseModal}
       >
@@ -48,23 +47,28 @@ const SystemLayout = ({ children }: SystemLayoutProps) => {
             />
             <span className='text-[20px] font-bold text-gradient-to-bl text-green-500 pb-3'>green life</span>
           </div>
+
           <ul className='w-full list-none flex flex-col gap-2'>
             <li className='navbar_menu text-[14px] py-2 hover:cursor-pointer dark:hover:bg-slate-700'>
-              <Link href='/'>Home</Link>
+              <Link href='/'>Trang Chủ</Link>
             </li>
             <li className='navbar_menu text-[14px] py-2 hover:cursor-pointer dark:hover:bg-slate-700'>
-              <Link href='/system/rent-of-room'>Room of rent</Link>
+              <Link href='/system/post-filter'>Tìm kiếm</Link>
             </li>
             <li className='navbar_menu text-[14px] py-2 hover:cursor-pointer dark:hover:bg-slate-700'>
-              <Link href='#'>Lessor</Link>
+              <Link href='/system/post-map'>Tìm kiếm trên bản đồ</Link>
             </li>
             <li className='navbar_menu text-[14px] py-2 hover:cursor-pointer dark:hover:bg-slate-700'>
-              <Link href='/system/search-by-google-map'>Search</Link>
+              <Link href='/system/business'>Doanh nghiệp</Link>
             </li>
             <li className='navbar_menu text-[14px] py-2 hover:cursor-pointer dark:hover:bg-slate-700'>
-              <Link href='#'>Contact</Link>
+              <Link href='/system/applicant'>Ứng viên</Link>
+            </li>
+            <li className='navbar_menu text-[14px] py-2 hover:cursor-pointer dark:hover:bg-slate-700'>
+              <Link href='/system/news'>Tin tức</Link>
             </li>
           </ul>
+
           <ul className='list-none flex'>
             <li onClick={() => setTheme('system')}>
               <SunOutlined className='cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full p-3' />

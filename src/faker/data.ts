@@ -3,8 +3,12 @@ import BannerInterface from '@/interfaces/banner/banner';
 import shopping_cart from '@/public/svgs/shopping_cart.svg';
 import key from '@/public/svgs/key.svg';
 import quality from '@/public/svgs/quality.svg';
-// import images
-// import banner_url_1 from "@/public/images/banner.jpeg"
+
+import {} from './../public/images/banner_1.jpg'
+
+const banner_1 = './../public/images/banner_1.jpg';
+const banner_2 = '../images/banner_2.jpg';
+const banner_3 = '../images/banner_3.jpg';
 
 const listRoom = [
   {
@@ -90,22 +94,22 @@ const introductions = [
 
 const banners: BannerInterface[] = [
   {
-    title: 'Khu tro cao cap',
-    subTitle: 'Gia ca sinh vien',
-    descriptions: 'K29/8 Tran Duc Thao, Hoa Cuong Nam, Hai Chau, Da Nang',
-    image_url: 'https://www.home-designing.com/wp-content/uploads/2013/10/glass-wall.jpeg'
+    title: 'Khu Trọ Cao Cấp',
+    subTitle: 'Giá Cả Sinh Viên',
+    descriptions: 'K29/8 Trần Đức Tháo - Phường Hòa Cường Nam - Quận Hải Châu - Tp Đà Nẵng',
+    image_url: 'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
   },
   {
-    title: 'Khu tro cao cap',
-    subTitle: 'Gia ca sinh vien',
-    descriptions: 'K29/8 Tran Duc Thao, Hoa Cuong Nam, Hai Chau, Da Nang',
-    image_url: 'https://archiadvisor.com/wp-content/uploads/2019/02/interior-layout.jpg'
+    title: 'Khu Trọ Cao Cấp',
+    subTitle: 'Giá Cả Sinh Viên',
+    descriptions: 'K29/8 Trần Đức Tháo - Phường Hòa Cường Nam - Quận Hải Châu - Tp Đà Nẵng',
+    image_url: 'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
   },
   {
-    title: 'Khu tro cao cap',
-    subTitle: 'Gia ca sinh vien',
-    descriptions: 'K29/8 Tran Duc Thao, Hoa Cuong Nam, Hai Chau, Da Nang',
-    image_url: 'https://planner5d.com/blog/content/images/2024/06/rooms-in-the-house.jpg'
+    title: 'Khu Trọ Cao Cấp',
+    subTitle: 'Giá Cả Sinh Viên',
+    descriptions: 'K29/8 Trần Đức Tháo - Phường Hòa Cường Nam - Quận Hải Châu - Tp Đà Nẵng',
+    image_url: 'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
   }
 ];
 

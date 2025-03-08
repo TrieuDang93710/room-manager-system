@@ -1,0 +1,36 @@
+
+.room_container {
+    @apply w-full flex flex-col items-end gap-6 snap-y pt-20 md:px-3
+}
+
+.room_content {
+    @apply md:w-[84%] w-full  dark:bg-[#1a1a1a00]
+}
+
+.room_content div p {
+    @apply font-bold dark:text-[#e6e6e6]
+}
+
+.add_button {
+    @apply w-[90%] bg-green-500 dark:bg-green-500 font-bold text-[15px] py-1 rounded-md text-[#fff] hover:bg-green-600 dark:border-[1px] dark:border-[#fff] dark:hover:bg-green-600 dark:hover:text-slate-300 dark:text-white
+}
+
+.modal_container {
+    @apply absolute md:right-5 right-0 bg-[#ffffff] dark:bg-[#0a0a0a] md:w-[80%] w-full h-[80%] p-3 rounded-md shadow-md shadow-[#fff]
+}
+
+.modal_container form {
+    @apply relative w-full h-full
+}
+
+.modal_header{
+    @apply flex justify-between
+}
+
+.modal_header p{
+    @apply text-[#292929] font-bold text-[14px] p-2 dark:text-[#e6e6e6]
+}
+
+.modal_button {
+    @apply absolute left-0 bottom-8 bg-blue-600 dark:bg-[#0000] font-bold text-[13px] py-2 px-4 rounded-md text-[#fff] hover:bg-blue-500 dark:border-[1px] dark:border-[#fff] dark:hover:bg-blue-200 dark:hover:text-[#000] dark:text-white
+}

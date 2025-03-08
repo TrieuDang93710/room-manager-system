@@ -1,6 +1,6 @@
 'use client';
 import flex from '@/config/flex.config';
-import { addSingleMarkers } from '@/lib/utils';
+import { addSingleMarkers } from '@/helpers/utils';
 import { useEffect, useRef } from 'react';
 
 // Gurgaon coordinates
