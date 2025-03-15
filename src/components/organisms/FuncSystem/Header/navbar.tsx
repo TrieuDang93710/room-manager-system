@@ -62,7 +62,7 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
         </div>
         <h2 className='text-green-600 text-2xl font-bold sm:hidden py-4 px-2'>CHÀO MỪNG MỌI NGƯỜI</h2>
       </div>
-      <ul className='w-1/3 list-none md:flex gap-2 hidden'>
+      <ul className='w-[50%] list-none md:flex gap-2 hidden'>
         <li className='navbar_menu text-[14px] py-2 px-2 rounded-sm active:shadow active:shadow-slate-500 hover:cursor-pointer hover:border hover:border-green-500 dark:hover:bg-slate-700 truncate'>
           <Link href={'/'}>Trang Chủ</Link>
         </li>

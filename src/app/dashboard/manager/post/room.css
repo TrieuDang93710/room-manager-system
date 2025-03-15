@@ -4,7 +4,7 @@
 }
 
 .room_content {
-    @apply md:w-[84%] w-full  dark:bg-[#1a1a1a00]
+    @apply w-full  dark:bg-[#1a1a1a00]
 }
 
 .room_content div p {
@@ -16,7 +16,7 @@
 }
 
 .modal_container {
-    @apply absolute md:right-5 right-0 bg-[#ffffff] dark:bg-[#0a0a0a] md:w-[80%] w-full h-[80%] p-3 rounded-md shadow-md shadow-[#fff]
+    @apply absolute bg-[#ffffff] dark:bg-[#0a0a0a] w-[90%] h-[80%] p-3 rounded-md shadow-md shadow-[#fff]
 }
 
 .modal_container form {

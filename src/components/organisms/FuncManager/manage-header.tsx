@@ -34,9 +34,9 @@ const ManagerHeader = ({ setIsHiddenMenu, isHiddenMenu }: ManagerHeaderProps) =>
   };
 
   return (
-    <div className='w-full fixed z-10 right-0 shadow-md bg-slate-50 dark:bg-[#0D1116] p-3'>
+    <div className='w-full z-20 fixed right-0 shadow-md bg-blue-100 dark:bg-[#0D1116] p-3'>
       <div onClick={() => setIsHiddenMenu(!isHiddenMenu)} className='absolute top-5 left-1 md:hidden'>
-        <MenuUnfoldOutlined className='text-black dark:text-white text-[16px] font-bold text-xl hover:cursor-pointer hover:text-[#dcdcdc]' />
+        <MenuUnfoldOutlined className='text-black dark:text-white text-[16px] font-bold text-xl hover:cursor-pointer' />
       </div>
       <div className='flex items-center justify-end gap-4'>
         <div className='relative'>
@@ -77,34 +77,36 @@ const ManagerHeader = ({ setIsHiddenMenu, isHiddenMenu }: ManagerHeaderProps) =>
             <p className='font-medium text-[12px] dark:text-[#b4b4b4] dark:hover:text-[#ebebeb] cursor-pointer'>
               {user && user!.email}
             </p>
-            <Modal hidden={false} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-              <ul className='w-full'>
-                <li className='flex gap-2 text-[#141414] hover:text-[#747474] cursor-pointer font-bold'>
-                  <UserAddOutlined />
-                  <Link className='text-[15px]' href={'/dashboard/manager/profile'}>
-                    Quản lý hồ sơ
-                  </Link>
-                </li>
-                <li className='flex gap-2 text-[#141414] hover:text-[#747474] cursor-pointer font-bold'>
-                  <WindowsOutlined />
-                  <p onClick={() => setTheme('system')} className='text-[15px]'>
-                    system
-                  </p>
-                </li>
-                <li className='flex gap-2 text-[#141414] hover:text-[#747474] cursor-pointer font-bold'>
-                  <SunOutlined />
-                  <p onClick={() => setTheme('light')} className='text-[15px]'>
-                    light
-                  </p>
-                </li>
-                <li className='flex gap-2 text-[#141414] hover:text-[#747474] cursor-pointer  font-bold'>
-                  <MoonOutlined />
-                  <p onClick={() => setTheme('dark')} className='text-[15px]'>
-                    dark
-                  </p>
-                </li>
-              </ul>
-            </Modal>
+            {user && (
+              <Modal hidden={false} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                <ul className='w-full'>
+                  <li className='flex gap-2 text-[#141414] hover:text-[#747474] cursor-pointer font-bold'>
+                    <UserAddOutlined />
+                    <Link className='text-[15px]' href={'/dashboard/manager/profile'}>
+                      Quản lý hồ sơ
+                    </Link>
+                  </li>
+                  <li className='flex gap-2 text-[#141414] hover:text-[#747474] cursor-pointer font-bold'>
+                    <WindowsOutlined />
+                    <p onClick={() => setTheme('system')} className='text-[15px]'>
+                      system
+                    </p>
+                  </li>
+                  <li className='flex gap-2 text-[#141414] hover:text-[#747474] cursor-pointer font-bold'>
+                    <SunOutlined />
+                    <p onClick={() => setTheme('light')} className='text-[15px]'>
+                      light
+                    </p>
+                  </li>
+                  <li className='flex gap-2 text-[#141414] hover:text-[#747474] cursor-pointer  font-bold'>
+                    <MoonOutlined />
+                    <p onClick={() => setTheme('dark')} className='text-[15px]'>
+                      dark
+                    </p>
+                  </li>
+                </ul>
+              </Modal>
+            )}
           </div>
         </div>
       </div>

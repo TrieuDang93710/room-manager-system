@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .button_style {
-    @apply w-[90%] bg-green-500 dark:bg-green-500 font-bold text-[14px] truncate p-2 mt-2 rounded-md text-[#fff] hover:bg-green-600 dark:border-[1px] dark:border-[#fff] dark:hover:bg-green-600 dark:hover:text-slate-300 dark:text-white
+    @apply w-full bg-green-500 dark:bg-green-500 font-bold text-[12px] truncate px-2 py-2 mt-2 rounded-[4px] text-[#fff] hover:bg-green-600 dark:border-[1px] dark:border-[#fff] dark:hover:bg-green-600 dark:hover:text-slate-300 dark:text-white
 }

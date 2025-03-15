@@ -3,5 +3,6 @@ export enum Role {
   MANAGER = 'manager',
   ADMIN = 'admin',
   TENANT = 'tenant',
-  LESSOR = 'lessor'
+  LESSOR = 'lessor',
+  APPLICANT = 'applicant'
 }

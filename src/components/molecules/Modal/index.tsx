@@ -14,7 +14,7 @@ const Modal = ({ isOpen, hidden, onClose, children, className}: ModalProps) => {
     return (
         <div
         className={
-            cn("absolute top-14 right-10 w-full dark:bg-[#ececec] bg-[#fbfbfb] shadow-md py-3 px-3 border rounded-lg", className)
+            cn("absolute top-0 right-10 w-full dark:bg-[#ececec] bg-[#fbfbfb] shadow-md border rounded-lg", className)
         }>
             {hidden ?
                 <button onClick={onClose}>close</button>
