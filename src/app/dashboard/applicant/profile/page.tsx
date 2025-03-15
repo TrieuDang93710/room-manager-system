@@ -1,8 +1,5 @@
 'use client';
-import Image from 'next/image';
-import CommonInput from '@/components/atoms/Input';
 import useCombinedState from '@/hooks/useCombinedState';
-import { handleBlurChecking } from '@/helpers/utils';
 
 const ProfilePage = () => {
   const [state, setField] = useCombinedState({
@@ -12,7 +9,6 @@ const ProfilePage = () => {
     address: '',
     avatar: '',
     social: '',
-    // checking error field
     emailError: '',
     phoneError: '',
     fullNameError: '',
@@ -23,25 +19,20 @@ const ProfilePage = () => {
 
   return (
     <div className='relative w-full h-screen bg-[#f7f7f7] dark:bg-[#242424] flex flex-col items-end gap-6 snap-y pt-20 md:px-3'>
-      <div className='md:w-[84%] w-full h-fit py-3 px-3 flex-col justify-center md:gap-3 gap-y-2'>
-        <div className='relative flex items-center justify-center gap-1 pb-2'>
-          <Image
-            alt='avatar'
-            src='https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'
-            width='100'
-            height='100'
-            className='cursor-pointer'
-          />
-          <div className='flex flex-col items-start relative'>
-            <h3 className='font-bold text-[24px] dark:text-[#b4b4b4] dark:hover:text-[#ebebeb] cursor-pointer'>
-              Dang Binh Trieu
-            </h3>
-            <p className='font-medium text-[#b3b3b3] text-[14px] dark:text-[#b4b4b4] dark:hover:text-[#ebebeb] cursor-pointer'>
-              trieu.lessor123@gmail.com
-            </p>
-          </div>
+      <div className='w-full border border-green-500 h-fit py-3 px-3 flex-col justify-center md:gap-3 gap-y-2'>
+        <div className='flex sm:flex-row flex-col sm:items-center sm:justify-around items-start justify-start gap-1'>
+          <h3 className='text-[16px] text-black font-bold hover:text-blue-500 hover:underline-offset-1 cursor-default px-2 py-1'>
+            Thong tin chung
+          </h3>
+          <h3 className='text-[16px] text-black font-bold hover:text-blue-500 hover:underline-offset-1 cursor-default px-2 py-1'>
+            Thong tin lien he
+          </h3>
+          <h3 className='text-[16px] text-black font-bold hover:text-blue-500 hover:underline-offset-1 cursor-default px-2 py-1'>
+            Cai dat tai khoan
+          </h3>
         </div>
-        <div className='absolute md:right-5 right-0 bg-[#ffffff] dark:bg-[#0a0a0a] md:w-[80%] w-full h-[70%] p-3 rounded-md'>
+        <div className='w-full h-[80vh] border border-green-500 flex flex-col justify-start items-center'></div>
+        {/* <div className='absolute md:right-5 right-0 bg-[#ffffff] dark:bg-[#0a0a0a] md:w-[80%] w-full h-[70%] p-3 rounded-md'>
           <form action='' className='absolute w-full h-full md:right-0.5'>
             <div className='w-full py-1 grid grid-cols-2 gap-2 msm:flex-col'>
               <CommonInput
@@ -97,7 +88,7 @@ const ProfilePage = () => {
               SAVE
             </button>
           </form>
-        </div>
+        </div> */}
       </div>
     </div>
   );
