@@ -139,6 +139,6 @@ table thead tr th {
 }
 
 /*import css for component*/
-@import "@/components/organisms/FuncSystem/Header/navbar.css";
-@import "@/components/organisms/FuncSystem/banner/banner.css";
+/* @import "../components/organisms/System/Header/navbar.css";
+@import "../components/organisms/System/Banner/banner.css"; */
 @import "./../components/atoms/ButtonCommon/button.css";

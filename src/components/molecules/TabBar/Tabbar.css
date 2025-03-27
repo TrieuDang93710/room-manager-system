@@ -1,0 +1,8 @@
+
+.tab_container {
+    @apply flex sm:flex-row flex-col sm:items-center sm:justify-around items-start justify-start gap-1
+}
+
+.tab_container h3 {
+    @apply text-[16px] text-black font-bold hover:text-blue-500 hover:underline-offset-1 cursor-default px-2 py-1
+}

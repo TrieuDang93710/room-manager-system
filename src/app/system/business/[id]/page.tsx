@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
-import PostCardRow from '@/components/organisms/FuncSystem/Card/PostCardRow';
+import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
 import flex from '@/config/flex.config';
 import { listRoom } from '@/faker/data';
 import { FilterOutlined, HomeOutlined } from '@ant-design/icons';

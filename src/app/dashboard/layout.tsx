@@ -1,19 +1,12 @@
 'use client';
+import React, { Suspense, useEffect, useState } from 'react';
 import Modal from '@/components/molecules/Modal';
-import FunctionListManager from '@/components/organisms/FuncManager/func-menu';
-import ManagerHeader from '@/components/organisms/FuncManager/manage-header';
-import {
-  funcOfAdmin,
-  funcOfLessor,
-  funcOfTenant,
-  iconOfAdmin,
-  iconOfLessor,
-  iconOfTenant
-} from '@/config/funcMenuConfig';
-import { useAuth } from '@/hooks/useAuth';
-import React, { ReactNode, Suspense, useEffect, useState } from 'react';
+import { funcOfAdmin, funcOfApplicant, funcOfManager } from '@/config/funcMenuConfig';
 import { Role } from '@/enum/role.enum';
 import Loading from './loading';
+import listFuncInterface from '@/interfaces/listFunction';
+import FunctionListManager from '@/components/organisms/manager/SideBar';
+import ManagerHeader from '@/components/organisms/manager/ManagerHeader';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -22,12 +15,8 @@ interface DashboardLayoutProps {
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [hidden, setHidden] = useState<boolean>(false);
   const [isHiddenMenu, setIsHiddenMenu] = useState<boolean>(false);
-  const [functions, setFunctions] = useState<Map<string, string>[]>([]);
-  const [icons, setIcons] = useState<Map<string, ReactNode>[]>([]);
-  const auth = useAuth();
-
-  const { user } = auth;
-  console.log('user: ', user);
+  const [selectedMenu, setSelectedMenu] = useState<number>(0);
+  const [functions, setFunctions] = useState<listFuncInterface[]>([]);
   let account: string = Role.MANAGER;
 
   // account = user && user.role[0]!;
@@ -37,16 +26,13 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   useEffect(() => {
     switch (account) {
       case Role.MANAGER:
-        setFunctions(funcOfLessor);
-        setIcons(iconOfLessor);
+        setFunctions(funcOfManager);
         break;
       case Role.ADMIN:
         setFunctions(funcOfAdmin);
-        setIcons(iconOfAdmin);
         break;
       case Role.APPLICANT:
-        setFunctions(funcOfTenant);
-        setIcons(iconOfTenant);
+        setFunctions(funcOfApplicant);
         break;
       default:
         break;
@@ -56,12 +42,13 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <div className='relative w-full flex flex-row items-start justify-between gap-2 md:px-0 px-3'>
       <FunctionListManager
-        title={`${user && account.toLocaleUpperCase()}`}
+        title={`${true && account.toLocaleUpperCase()}`}
         hidden={hidden}
         setHidden={setHidden}
         listFunc={functions}
         account={account}
-        listIcon={icons}
+        selectedMenu={selectedMenu}
+        setSelectedMenu={setSelectedMenu}
         className='md:block hidden'
       />
       <div className='w-full max-h-screen flex flex-col items-center justify-start md:px-3'>
@@ -81,7 +68,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             setHidden={setHidden}
             listFunc={functions}
             account={account}
-            listIcon={icons}
+            selectedMenu={selectedMenu}//
+            setSelectedMenu={setSelectedMenu}
             className={`md:hidden block ${hidden ? 'w-1/6 z-10' : 'sm:w-1/2 w-3/4 z-10'}`}
           />
         </div>

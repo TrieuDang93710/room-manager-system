@@ -2,7 +2,7 @@
 import { Card } from '@/components/molecules/Card';
 import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import SearchComponent from '@/components/molecules/Search';
-import MaintenanceCard from '@/components/organisms/FuncManager/maintenance-card';
+import MaintenanceCard from '@/components/organisms/manager/MaintenanceCard';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { chartConfig, chartConfigCircle } from '@/config/chart.config';
 import { chartData, chartDataCircle, listRoom } from '@/faker/data';

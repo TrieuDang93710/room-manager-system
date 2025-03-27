@@ -1,15 +1,15 @@
 'use client';
-import BannerCarousel from '@/components/organisms/FuncSystem/Banner/banner_carousel';
-import { introductions, listRoom } from '@/faker/data';
-import Image from 'next/image';
-import 'react-multi-carousel/lib/styles.css';
 import { useState } from 'react';
-import { PostingAgentComponent } from '@/components/organisms/FuncSystem/Card/PostAgent';
-import CardSquare from '@/components/organisms/FuncSystem/Card/Square';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import BannerCarousel from '@/components/organisms/system/Banner';
+import { introductions, listRoom } from '@/faker/data';
+import 'react-multi-carousel/lib/styles.css';
+import CardSquare from '@/components/organisms/system/Card/Square';
 import { StarOutlined } from '@ant-design/icons';
 import CurrencyFormatted from '@/config/currency.config';
-import { PostCardSquareComponent } from '@/components/organisms/FuncSystem/Card/PostCardSquare';
-import { useRouter } from 'next/navigation';
+import { PostCardSquareComponent } from '@/components/organisms/system/Card/PostCardSquare';
+import { PostingAgentComponent } from '@/components/organisms/system/Card/PostAgent';
 
 const SystemPage = () => {
   const router = useRouter();

@@ -6,7 +6,7 @@ import useCombinedState from '@/hooks/useCombinedState';
 import { FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import CheckboxCard from '@/components/molecules/CheckboxCard';
-import PostCardRow from '@/components/organisms/FuncSystem/Card/PostCardRow';
+import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
 import { PostCardSquareComponent } from '@/components/organisms/FuncSystem/Card/PostCardSquare';
 
 const RentOfRoomPage = () => {

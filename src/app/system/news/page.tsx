@@ -4,7 +4,7 @@ import flex from '@/config/flex.config';
 import { listRoom } from '@/faker/data';
 import { FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import CardSquare from '@/components/organisms/FuncSystem/Card/Square';
+import CardSquare from '@/components/organisms/system/Card/Square';
 import { useRouter } from 'next/navigation';
 
 const NewsPage = () => {
