@@ -1,16 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
-import PostCardRow from '@/components/organisms/FuncSystem/Card/PostCardRow';
+import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
 import flex from '@/config/flex.config';
 import { listRoom } from '@/faker/data';
 import {
   ClockCircleOutlined,
-  FieldTimeOutlined,
   FilterOutlined,
   HeartOutlined,
   HomeOutlined,
-  MoneyCollectOutlined,
   SlackSquareOutlined,
   SortAscendingOutlined,
   UsergroupAddOutlined
@@ -174,7 +172,7 @@ const PostPage = ({ params }: PostPageProps) => {
             <p className='text-[20px] text-black font-bold py-8'>Viec lam lien quan :</p>
             <div className='w-full flex flex-col items-center justify-start p-2 gap-3'>
               {Array.from({ length: 3 }).map((_, index) => (
-                <PostCardRow key={index} />
+                <PostCardRow key={index} approved={true}/>
               ))}
             </div>
           </div>

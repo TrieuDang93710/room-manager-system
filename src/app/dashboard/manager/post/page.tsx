@@ -1,50 +1,41 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
+import { useState } from 'react';
+import AddPost from './components/AddPost';
 import SearchComponent from '@/components/molecules/Search';
 import TableComponent from '@/components/molecules/Table';
-import { useState } from 'react';
+import ButtonCommon from '@/components/atoms/ButtonCommon';
+import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
+import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import {
   AppstoreOutlined,
-  CloseOutlined,
   DeleteOutlined,
-  EditOutlined,
   EyeOutlined,
   PlusOutlined,
   ReadOutlined,
   TableOutlined,
   TeamOutlined
 } from '@ant-design/icons';
-import { handleBlurChecking } from '@/helpers/utils';
-import useCombinedState from '@/hooks/useCombinedState';
-import PaginationComponent from '@/components/molecules/Pagination/pagination';
-import ButtonCommon from '@/components/atoms/ButtonCommon';
 import './room.css';
-import PostCardRow from '@/components/organisms/FuncSystem/Card/PostCardRow';
-import CommonInput from '@/components/atoms/Input';
-import Modal from '@/components/molecules/Modal';
+import AddField from './components/AddField';
+import AddBusiness from './components/AddBusiness';
 
 const RoomManagerPage = () => {
-  const [state, setField] = useCombinedState({
-    name: '',
-    address: '',
-    price: '',
-    createBy: '',
-    nameError: '',
-    addressError: '',
-    priceError: '',
-    createByError: ''
-  });
-
-  const [isAddRoomOpen, setIsAddRoomOpen] = useState<boolean>(false);
-  const [isAddCategoryRoomOpen, setIsAddCategoryRoomOpen] = useState<boolean>(false);
+  const [openAddPost, setOpenAddPost] = useState<boolean>(false);
+  const [openAddField, setOpenAddField] = useState<boolean>(false);
+  const [openAddBusiness, setOpenAddBusiness] = useState<boolean>(false);
   const [viewRender, setViewRender] = useState<boolean>(false);
 
-  const closeAddRoomHandler = () => {
-    setIsAddRoomOpen(!isAddRoomOpen);
+  const closeAddPostHandler = () => {
+    setOpenAddPost(!openAddPost);
   };
 
-  const closeAddCategoryRoomHandler = () => {
-    setIsAddCategoryRoomOpen(!isAddCategoryRoomOpen);
+  const closeAddFieldHandler = () => {
+    setOpenAddField(!openAddField);
+  };
+
+  const closeAddBusinessHandler = () => {
+    setOpenAddBusiness(!openAddBusiness);
   };
 
   const headers = ['Tiêu đề', 'Lĩnh vực', 'Ngày hết hạn', 'Lượt xem', 'Trạng thái', 'Ứng viên', 'Xử lý'];
@@ -113,9 +104,9 @@ const RoomManagerPage = () => {
         </div>
         <div className='md:flex md:flex-row flex-col gap-5 items-end justify-between my-6 px-2'>
           <div className='lg:w-[50%] md:w-2/3 w-full truncate flex justify-start gap-2'>
-            <ButtonCommon onClick={closeAddRoomHandler} icon={<PlusOutlined />} title='Tạo mới bài đăng' />
-            <ButtonCommon onClick={closeAddCategoryRoomHandler} icon={<PlusOutlined />} title='Thêm lĩnh vực' />
-            <ButtonCommon onClick={closeAddCategoryRoomHandler} icon={<PlusOutlined />} title='Thêm doanh nghiệp' />
+            <ButtonCommon onClick={closeAddPostHandler} icon={<PlusOutlined />} title='Tạo mới bài đăng' />
+            <ButtonCommon onClick={closeAddFieldHandler} icon={<PlusOutlined />} title='Thêm lĩnh vực' />
+            <ButtonCommon onClick={closeAddBusinessHandler} icon={<PlusOutlined />} title='Thêm doanh nghiệp' />
           </div>
           {viewRender ? (
             <SearchComponent />
@@ -137,7 +128,7 @@ const RoomManagerPage = () => {
         ) : (
           <div className='w-full border h-[60vh] border-green-500 flex flex-col items-center justify-start overflow-y-auto gap-4 p-4 mt-4'>
             {Array.from({ length: 4 }).map((_, index) => (
-              <PostCardRow applied={true} key={index} />
+              <PostCardRow applied={false} key={index} />
             ))}
           </div>
         )}
@@ -147,203 +138,14 @@ const RoomManagerPage = () => {
           </div>
         )}
       </div>
-      <Modal
-        className='bg-[#29292962] dark:bg-[#f8f8f817] h-screen w-full flex justify-center items-center right-0 animate-in'
-        isOpen={isAddRoomOpen}
-        hidden={false}
-        onClose={() => setIsAddRoomOpen(false)}
-      >
-        <div className='modal_container'>
-          <form>
-            <div className='modal_header'>
-              <p>Thêm mới</p>
-              <CloseOutlined
-                onClick={closeAddRoomHandler}
-                className='cursor-pointer font-bold text-red-500 p-2 rounded-sm hover:bg-[#e3e3e3] dark:text-[#fff]'
-              />
-            </div>
-            <div className='w-full py-1 gap-2 flex-col md:flex'>
-              <CommonInput
-                onblur={() => handleBlurChecking('text', 'nameError', state.name, setField)}
-                inputValue={state.name}
-                typeInput='text'
-                setField={setField}
-                field='name'
-                error={state.nameError}
-                placeholder='Nhập tên phòng trọ ...'
-                label_title='Tên Phòng'
-              />
-              <CommonInput
-                onblur={() => handleBlurChecking('text', 'addressError', state.address, setField)}
-                inputValue={state.address}
-                typeInput='text'
-                setField={setField}
-                field='address'
-                error={state.addressError}
-                placeholder='Nhập địa chỉ ...'
-                label_title='Địa Chỉ'
-              />
-              <CommonInput
-                onblur={() => handleBlurChecking('text', 'priceError', state.price, setField)}
-                inputValue={state.price}
-                typeInput='text'
-                setField={setField}
-                field='price'
-                error={state.priceError}
-                placeholder='Nhập giá của phòng trọ ...'
-                label_title='Giá'
-              />
-              <CommonInput
-                onblur={() => handleBlurChecking('text', 'createByError', state.createBy, setField)}
-                inputValue={state.createBy}
-                typeInput='text'
-                setField={setField}
-                field='createBy'
-                error={state.createByError}
-                placeholder='Đăng bởi ...'
-                label_title='Đăng Bài Bởi'
-              />
-            </div>
-            <button className='modal_button' type='submit'>
-              SAVE
-            </button>
-          </form>
-        </div>
-      </Modal>
+      <AddPost openAddPost={openAddPost} setOpenAddPost={setOpenAddPost} onClick={closeAddPostHandler} />
+      <AddField openAddField={openAddField} setOpenAddField={setOpenAddField} onClick={closeAddFieldHandler} />
+      <AddBusiness
+        openAddBusiness={openAddBusiness}
+        setOpenAddBusiness={setOpenAddBusiness}
+        onClick={closeAddBusinessHandler}
+      />
     </div>
-
-    // <div className='room_container'>
-    //   <div className='room_content'>
-    //     <Card className='w-full dark:bg-[#ffffff00]'>
-    //       <p className='text-[#292929] text-[15px] pb-2'>Quản Lý Bài Đăng</p>
-    //       <p className='text-[#333333] text-[12px] pb-4'>
-    //         Dưới đây là toàn bộ các bài đăng - các phòng trọ mà tôi đã đăng để cho thuê phòng trọ.
-    //       </p>
-    //       <div className='md:flex md:flex-row flex-col gap-5 items-end justify-between'>
-    //         <div className='lg:w-[30%] md:w-2/3 w-full truncate flex justify-start gap-2'>
-    //           <ButtonCommon onClick={closeAddRoomHandler} icon={<PlusOutlined />} title='Thêm Phòng Trọ Mới' />
-    //           <ButtonCommon
-    //             onClick={closeAddCategoryRoomHandler}
-    //             icon={<PlusOutlined />}
-    //             title='Thêm Loại Phòng Cho Thuê'
-    //           />
-    //         </div>
-    //         <SearchComponent />
-    //       </div>
-    //       <br />
-    //       <TableComponent headers={roomHeaders} data={rooms} renderRow={renderRoomRow} />
-    //     </Card>
-    //     <div className='w-full flex justify-end py-1'>
-    //       <PaginationComponent />
-    //     </div>
-    //   </div>
-    //   <Modal
-    //     className='bg-[#29292962] dark:bg-[#f8f8f817] h-screen w-full flex justify-end items-center right-0 animate-in'
-    //     isOpen={isAddRoomOpen}
-    //     hidden={false}
-    //     onClose={() => setIsAddRoomOpen(false)}
-    //   >
-    //     <div className='modal_container'>
-    //       <form>
-    //         <div className='modal_header'>
-    //           <p>Thêm Phòng Trọ Mới</p>
-    //           <CloseOutlined
-    //             onClick={closeAddRoomHandler}
-    //             className='cursor-pointer font-bold text-red-500 p-2 rounded-sm hover:bg-[#e3e3e3] dark:text-[#fff]'
-    //           />
-    //         </div>
-    //         <div className='w-full py-1 gap-2 flex-col md:flex'>
-    //           <CommonInput
-    //             onblur={() => handleBlurChecking('text', 'nameError', state.name, setField)}
-    //             inputValue={state.name}
-    //             typeInput='text'
-    //             setField={setField}
-    //             field='name'
-    //             error={state.nameError}
-    //             placeholder='Nhập tên phòng trọ ...'
-    //             label_title='Tên Phòng'
-    //           />
-    //           <CommonInput
-    //             onblur={() => handleBlurChecking('text', 'addressError', state.address, setField)}
-    //             inputValue={state.address}
-    //             typeInput='text'
-    //             setField={setField}
-    //             field='address'
-    //             error={state.addressError}
-    //             placeholder='Nhập địa chỉ ...'
-    //             label_title='Địa Chỉ'
-    //           />
-    //           <CommonInput
-    //             onblur={() => handleBlurChecking('text', 'priceError', state.price, setField)}
-    //             inputValue={state.price}
-    //             typeInput='text'
-    //             setField={setField}
-    //             field='price'
-    //             error={state.priceError}
-    //             placeholder='Nhập giá của phòng trọ ...'
-    //             label_title='Giá'
-    //           />
-    //           <CommonInput
-    //             onblur={() => handleBlurChecking('text', 'createByError', state.createBy, setField)}
-    //             inputValue={state.createBy}
-    //             typeInput='text'
-    //             setField={setField}
-    //             field='createBy'
-    //             error={state.createByError}
-    //             placeholder='Đăng bởi ...'
-    //             label_title='Đăng Bài Bởi'
-    //           />
-    //         </div>
-    //         <button className='modal_button' type='submit'>
-    //           SAVE
-    //         </button>
-    //       </form>
-    //     </div>
-    //   </Modal>
-    //   <Modal
-    //     className='bg-[#29292962] dark:bg-[#f8f8f817] h-screen w-full flex justify-end items-center right-0 animate-in'
-    //     isOpen={isAddCategoryRoomOpen}
-    //     hidden={false}
-    //     onClose={() => setIsAddCategoryRoomOpen(false)}
-    //   >
-    //     <div className='modal_container'>
-    //       <form>
-    //         <div className='modal_header'>
-    //           <p>ADD NEW CATEGORY ROOM</p>
-    //           <CloseOutlined
-    //             onClick={closeAddCategoryRoomHandler}
-    //             className='cursor-pointer font-bold text-red-500 p-2 rounded-sm hover:bg-[#e3e3e3] dark:text-[#fff]'
-    //           />
-    //         </div>
-    //         <div className='w-full py-1 gap-2 flex'>
-    //           <div className='w-1/3 py-1 gap-2 flex md:flex'>
-    //             <CommonInput
-    //               onblur={() => handleBlurChecking('text', 'nameError', state.name, setField)}
-    //               inputValue={state.name}
-    //               typeInput='text'
-    //               setField={setField}
-    //               field='name'
-    //               error={state.nameError}
-    //               placeholder='Nhập tên loại phòng trọ ...'
-    //               label_title='Loai phong'
-    //             />
-    //           </div>
-    //           <div className='w-2/3 border py-1 gap-2 flex flex-col justify-start items-center'>
-    //             <p className='text-[14px] text-slate-800 font-bold m-0'>List of Room Category</p>
-    //             <ul className=''>
-    //               <li></li>
-    //               <li></li>
-    //               <g className='d'></g>
-    //             </ul>
-    //           </div>
-    //         </div>
-    //         <button className='modal_button' type='submit'>
-    //           SAVE
-    //         </button>
-    //       </form>
-    //     </div>
-    //   </Modal>
-    // </div>
   );
 };
 

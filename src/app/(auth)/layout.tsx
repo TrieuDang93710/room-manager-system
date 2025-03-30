@@ -1,5 +1,5 @@
 'use client';
-import NavbarCommon from '@/components/organisms/FuncSystem/Header/navbar';
+import NavbarCommon from '@/components/organisms/system/SystemHeader';
 import flex from '@/config/flex.config';
 import React, { useState } from 'react';
 

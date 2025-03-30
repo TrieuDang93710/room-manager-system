@@ -1,0 +1,16 @@
+
+.header_nav {
+    @apply w-full flex justify-between items-center bg-blue-50 dark:bg-blue-900 shadow-md dark:shadow-slate-300 border rounded-none px-2 overflow-y-auto fixed z-20
+}
+
+.header_logo {
+    @apply flex justify-start items-center gap-4 truncate
+}
+
+.header_menu {
+    @apply w-[50%] list-none md:flex gap-2 hidden
+}
+
+.menu_item {
+    @apply text-[14px] py-2 px-2 rounded-sm active:shadow active:shadow-slate-500 hover:cursor-pointer hover:border hover:border-blue-600 dark:hover:bg-slate-700 truncate
+}

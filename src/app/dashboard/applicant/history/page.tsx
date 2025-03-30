@@ -1,5 +1,5 @@
 'use client';
-import PostCardRow from '@/components/organisms/FuncSystem/Card/PostCardRow';
+import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -9,9 +9,9 @@ const HistoryManagerPage = () => {
   const [applied] = useState<boolean>(false);
 
   return (
-    <div className='relative w-full h-screen bg-[#f7f7f7] dark:bg-[#242424] flex flex-col items-end gap-6 snap-y pt-20 md:px-3'>
+    <div className='relative w-full h-screen dark:bg-[#242424] flex flex-col items-end gap-6 snap-y pt-20 md:px-3'>
       <div className='w-full h-fit py-3 px-3 flex-col justify-center md:gap-3 gap-y-2'>
-        <div className='w-full flex sm:flex-row flex-col sm:items-center sm:justify-between items-start justify-start border shadow-sm shadow-slate-500 rounded-sm px-2 py-1 gap-1'>
+        <div className='w-full bg-blue-50 flex sm:flex-row flex-col sm:items-center sm:justify-between items-start justify-start border shadow-sm shadow-slate-500 rounded-sm px-2 py-1 gap-1'>
           <h3 className='text-[16px] text-black font-bold hover:text-blue-500 hover:underline-offset-1 cursor-default p-2'>
             Trang thai bai dang ung tuyen
           </h3>
@@ -26,7 +26,7 @@ const HistoryManagerPage = () => {
             </select>
           </div>
         </div>
-        <div className='w-full border h-[70vh] border-green-500 flex flex-col items-center justify-start overflow-y-auto gap-4 p-4 mt-4'>
+        <div className='w-full h-[70vh] flex flex-col items-center justify-start overflow-y-auto gap-4 p-4 mt-4'>
           {Array.from({ length: 3 }).map((_, index) => (
             <PostCardRow key={index} applied={applied} />
           ))}

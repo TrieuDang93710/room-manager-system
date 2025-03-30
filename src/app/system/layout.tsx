@@ -1,14 +1,14 @@
 'use client';
-import Modal from '@/components/molecules/Modal';
-import FooterCommon from '@/components/organisms/FuncSystem/Footer/footer';
-import NavbarCommon from '@/components/organisms/FuncSystem/Header/navbar';
-import { Button } from '@/components/ui/button';
-import { MenuFoldOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons';
+import { useState } from 'react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import Modal from '@/components/molecules/Modal';
+import FooterCommon from '@/components/organisms/system/Footer';
+import NavbarCommon from '@/components/organisms/system/SystemHeader';
+import { Button } from '@/components/ui/button';
+import { MenuFoldOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons';
 
 interface SystemLayoutProps {
   children: React.ReactNode;

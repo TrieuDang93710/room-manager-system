@@ -10,7 +10,7 @@ import '@/components/atoms/Input/index.css';
 import '@/app/(auth)/sign-in/sign-in.css';
 import '@/app/(auth)/sign-up/sign-up.css';
 import '@/components/molecules/Pagination/pagination.css';
-import '@/components/atoms/Selection/selection.css'
+import '@/components/atoms/Selection/selection.css';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -35,6 +35,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
+      <head>
+        <meta />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <QueryProvider>
           <ContextProvider>
