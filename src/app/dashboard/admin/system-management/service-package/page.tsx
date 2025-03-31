@@ -70,7 +70,11 @@ const ServicePackageManagerPage = () => {
           <PaginationComponent />
         </div>
       </div>
-      <AddServicePackage openAddServicePackage={openAddServicePackage} setOpenAddServicePackage={setOpenAddServicePackage} onClick={closeAddServicePackageHandler} />
+      <AddServicePackage
+        openAddServicePackage={openAddServicePackage}
+        setOpenAddServicePackage={setOpenAddServicePackage}
+        onClick={closeAddServicePackageHandler}
+      />
     </div>
   );
 };

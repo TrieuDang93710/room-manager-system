@@ -1,5 +1,5 @@
 'use client';
-import { PostingAgentComponent } from '@/components/organisms/FuncSystem/Card/PostAgent';
+import { PostingAgentComponent } from '@/components/organisms/system/Card/PostAgent';
 import { useRouter } from 'next/navigation';
 
 const FollowerManagerPage = () => {

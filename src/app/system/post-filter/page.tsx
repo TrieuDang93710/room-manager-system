@@ -7,7 +7,7 @@ import { FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from 
 import { useState } from 'react';
 import CheckboxCard from '@/components/molecules/CheckboxCard';
 import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
-import { PostCardSquareComponent } from '@/components/organisms/FuncSystem/Card/PostCardSquare';
+import { PostCardSquareComponent } from '@/components/organisms/system/Card/PostCardSquare';
 
 const RentOfRoomPage = () => {
   const [state, setField] = useCombinedState({

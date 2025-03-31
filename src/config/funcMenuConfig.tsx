@@ -24,8 +24,7 @@ const funcOfAdmin = [
     children: [
       { label: 'Quản Lý Linh Vuc', icon: <HomeOutlined />, path: 'field' },
       { label: 'Quản Lý Doanh Nghiep', icon: <HomeOutlined />, path: 'business' },
-      { label: 'Quản Lý Bai Dang', icon: <HomeOutlined />, path: 'post' },
-      { label: 'Quản Lý Nguoi Dung', icon: <HomeOutlined />, path: 'applicant' }
+      { label: 'Quản Lý Bai Dang', icon: <HomeOutlined />, path: 'post' }
     ]
   },
   {
