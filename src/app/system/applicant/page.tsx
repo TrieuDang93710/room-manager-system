@@ -5,8 +5,8 @@ import { listRoom } from '@/faker/data';
 import { FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import CheckboxCard from '@/components/molecules/CheckboxCard';
-import { PostingApplicantComponent } from '@/components/organisms/FuncSystem/Card/PostApplicant';
 import { useRouter } from 'next/navigation';
+import { PostingApplicantComponent } from '@/components/organisms/system/Card/PostApplicant';
 
 const ApplicantPage = () => {
   const router = useRouter();

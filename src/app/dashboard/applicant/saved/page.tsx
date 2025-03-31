@@ -1,5 +1,5 @@
 'use client';
-import { PostCardSquareComponent } from '@/components/organisms/FuncSystem/Card/PostCardSquare';
+import { PostCardSquareComponent } from '@/components/organisms/system/Card/PostCardSquare';
 import { useRouter } from 'next/navigation';
 
 const SavedManagerPage = () => {

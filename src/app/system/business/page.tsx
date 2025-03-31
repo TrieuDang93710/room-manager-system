@@ -5,8 +5,8 @@ import { listRoom } from '@/faker/data';
 import { FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import CheckboxCard from '@/components/molecules/CheckboxCard';
-import { PostingAgentComponent } from '@/components/organisms/FuncSystem/Card/PostAgent';
 import { useRouter } from 'next/navigation';
+import { PostingAgentComponent } from '@/components/organisms/system/Card/PostAgent';
 
 const BusinessPage = () => {
   const router = useRouter();
