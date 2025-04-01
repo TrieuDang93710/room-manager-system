@@ -1,4 +1,5 @@
-'use client';
+'use client'
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CommonInput from '@/components/atoms/Input';
 import flex from '@/config/flex.config';
 import useCombinedState from '@/hooks/useCombinedState';
@@ -23,8 +24,8 @@ const AccountActive = () => {
   const handleAccountActive = async () => {
     const codeId = state.codeId;
     console.log('codeId: ', codeId);
-    const token: string | null = localStorage.getItem('access-token');
-    const { id } = jwt.decode(token!);
+    const token = localStorage.getItem('access-token');
+    const id = jwt.decode(token!);
 
     apiSecure
       .post(`/auth/activate-account/${id}`, { codeId: codeId })

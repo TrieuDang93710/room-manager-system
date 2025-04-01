@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { useAuth } from '@/hooks/useAuth';
 import useApiPublic from '@/hooks/useApiPublic';
 import { useRouter } from 'next/navigation';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { useApiSecure } from '@/hooks/useApiSecure';
 import NotificationCustom from '@/helpers/notify';
 
@@ -31,12 +31,12 @@ const SignIn = () => {
   const apiSecure = useApiSecure();
   const router = useRouter();
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     const email = state.email;
     const password = state.password;
 
     loginWithEmailAndPassword(email, password)
-      .then((result) => {
+      .then((result: { user: unknown }) => {
         console.log('user on firebase: ', result.user);
         const userInfo = {
           email: email,
@@ -49,7 +49,7 @@ const SignIn = () => {
 
             const token = response.data.data.token;
             localStorage.setItem('access-token', token);
-            const { id } = jwt.decode(token);
+            const { id } = jwt.decode(token) as JwtPayload;
             apiSecure
               .get(`/user/${id}`)
               .then((res) => {
@@ -78,7 +78,7 @@ const SignIn = () => {
             }
           });
       })
-      .catch((error) => {
+      .catch((error: string) => {
         console.log('error: ', error);
         NotificationCustom('error', error);
         reset();
@@ -88,9 +88,7 @@ const SignIn = () => {
 
   return (
     <div
-      className={
-        'w-full min-h-screen py-10 ' + flex({ direction: 'col', alignItems: 'center', justifyContent: 'start' })
-      }
+      className={'w-full h-full py-10 ' + flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })}
     >
       <div className='sign_in_container'>
         <h2 className='sign_in_title'>Sign In</h2>
@@ -132,7 +130,7 @@ const SignIn = () => {
         </form>
         <p>
           Haven&apos; t you an account yet?
-          <Link className='text-green-500' href={'/sign-up'}>
+          <Link className='text-blue-600' href={'/sign-up'}>
             Sign up
           </Link>
         </p>

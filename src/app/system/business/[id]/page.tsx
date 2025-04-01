@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-async-client-component */
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
@@ -11,8 +12,8 @@ interface BusinessInfoPageProps {
   params: Promise<{ id: number }>;
 }
 
-const BusinessInfoPage = ({ params }: BusinessInfoPageProps) => {
-  const id = params.id;
+const BusinessInfoPage = async ({ params }: BusinessInfoPageProps) => {
+  const id = (await params).id;
   console.log('id: ', id);
   const [filteredItems] = useState(listRoom);
   const [currentPage, setCurrentPage] = useState(1);

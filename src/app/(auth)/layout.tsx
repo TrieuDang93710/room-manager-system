@@ -14,11 +14,11 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
       <NavbarCommon isOpen={isOpen} setIsOpen={setIsOpen} />
       <main
         className={
-          'w-full min-h-screen md:px-10 px-3 pt-20 font-[family-name:var(--font-geist-sans)] z-10 ' +
-          flex({ direction: 'col', alignItems: 'center', justifyContent: 'start' })
+          'w-full min-h-screen md:px-10 px-3 font-[family-name:var(--font-geist-sans)] z-10 ' +
+          flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })
         }
         style={{
-          backgroundImage: `url('https://png.pngtree.com/background/20230403/original/pngtree-living-room-empty-room-interior-background-picture-image_2264677.jpg')`,
+          backgroundImage: `url('https://thatsgoodhr.com/wp-content/uploads/2024/03/MOre-than-luck.png')`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           backgroundPosition: 'center'

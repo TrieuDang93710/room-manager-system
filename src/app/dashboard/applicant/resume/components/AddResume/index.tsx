@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import Image from 'next/image';
 import CommonInput from '@/components/atoms/Input';
@@ -37,7 +38,7 @@ const AddResume = ({ addResume, setAddResume }: AddResumeProps) => {
   });
 
   const toggleSection = (section: string) => {
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
+    setOpenSections((prev: { [x: string]: any; }) => ({ ...prev, [section]: !prev[section] }));
   };
 
   const renderAddContent = (section: string) => {
@@ -206,7 +207,7 @@ const AddResume = ({ addResume, setAddResume }: AddResumeProps) => {
 
   const onSave = (e: { preventDefault: () => void }, section: string) => {
     e.preventDefault();
-    setOpenSections((prev) => ({ ...prev, [section]: false }));
+    setOpenSections((prev: any) => ({ ...prev, [section]: false }));
   };
 
   return (

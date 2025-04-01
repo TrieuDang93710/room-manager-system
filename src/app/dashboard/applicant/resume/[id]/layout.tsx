@@ -6,8 +6,8 @@ interface ResumeDetailLayoutProps {
   children: React.ReactNode;
 }
 
-const ResumeDetailLayout = ({ params, children }: ResumeDetailLayoutProps) => {
-  const id = params.id;
+const ResumeDetailLayout = async ({ params, children }: ResumeDetailLayoutProps) => {
+  const id = (await params).id;
 
   const navigates = [
     {

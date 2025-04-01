@@ -2,7 +2,6 @@
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
 import flex from '@/config/flex.config';
 import { listRoom } from '@/faker/data';
-import useCombinedState from '@/hooks/useCombinedState';
 import { FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import CheckboxCard from '@/components/molecules/CheckboxCard';
@@ -10,21 +9,21 @@ import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
 import { PostCardSquareComponent } from '@/components/organisms/system/Card/PostCardSquare';
 
 const RentOfRoomPage = () => {
-  const [state, setField] = useCombinedState({
-    email: '',
-    phone: '',
-    fullName: '',
-    address: '',
-    avatar: '',
-    social: '',
-    // checking error field
-    emailError: '',
-    phoneError: '',
-    fullNameError: '',
-    addressError: '',
-    avatarError: '',
-    socialError: ''
-  });
+  // const [state, setField] = useCombinedState({
+  //   email: '',
+  //   phone: '',
+  //   fullName: '',
+  //   address: '',
+  //   avatar: '',
+  //   social: '',
+  //   // checking error field
+  //   emailError: '',
+  //   phoneError: '',
+  //   fullNameError: '',
+  //   addressError: '',
+  //   avatarError: '',
+  //   socialError: ''
+  // });
 
   const [filteredItems] = useState(listRoom);
   const [currentPage, setCurrentPage] = useState(1);
@@ -36,6 +35,8 @@ const RentOfRoomPage = () => {
   const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  console.log('currentItems, paginate: ', currentItems, paginate)
 
   const breadcrumbs = [
     {

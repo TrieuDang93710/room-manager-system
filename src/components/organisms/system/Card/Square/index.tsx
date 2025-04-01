@@ -8,7 +8,7 @@ interface CardSquareProps {
   children?: React.ReactNode;
 }
 
-const CardSquare = ({ item, children }: CardSquareProps) => {
+const CardSquare = ({ children }: CardSquareProps) => {
   return (
     <div
       className='w-full border-[1px] rounded-sm hover:translate-x-1 cursor-pointer border-slate-300 hover:border-green-500 flex flex-col items-center justify-center'
