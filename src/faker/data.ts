@@ -6,9 +6,9 @@ import quality from '@/public/svgs/quality.svg';
 
 import {} from './../public/images/banner_1.jpg'
 
-const banner_1 = './../public/images/banner_1.jpg';
-const banner_2 = '../images/banner_2.jpg';
-const banner_3 = '../images/banner_3.jpg';
+// const banner_1 = './../public/images/banner_1.jpg';
+// const banner_2 = '../images/banner_2.jpg';
+// const banner_3 = '../images/banner_3.jpg';
 
 const listRoom = [
   {

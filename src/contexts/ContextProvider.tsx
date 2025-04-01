@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import React, { createContext, useEffect, useState } from 'react';
 import {
@@ -9,13 +9,24 @@ import {
   signInWithPopup,
   signOut
 } from 'firebase/auth';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import axios from 'axios';
 
 import app from '@/firebase/firebase.config';
 import API_PUBLIC_URI from '@/lib/constants';
 
-export const AuthContext = createContext(undefined);
+interface AuthContextType {
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  user: any;
+  setUser: React.Dispatch<React.SetStateAction<any>>;
+  loginWithEmailAndPassword: (email: string, password: string) => Promise<any>;
+  registerWithEmailAndPassword: (email: string, password: string) => Promise<any>;
+  loginWithGmail: () => Promise<any>;
+  logout: () => Promise<any>;
+}
+
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
@@ -78,8 +89,7 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
     const token: string | null = localStorage.getItem('access-token');
 
     if (token) {
-      const { id } = jwt.decode(token!);
-
+      const { id } = jwt.decode(token!) as JwtPayload
       axios
         .get(`${API_PUBLIC_URI}/user/${id}`, {
           headers: {
@@ -94,7 +104,7 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
         });
     }
   }, []);
-  const authInfo = {
+  const authInfo: AuthContextType = {
     loading,
     setLoading,
     user,

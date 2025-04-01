@@ -1,5 +1,6 @@
+/* eslint-disable @next/next/no-async-client-component */
 /* eslint-disable react-hooks/rules-of-hooks */
-'use client';
+'use client'
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
 import flex from '@/config/flex.config';
 import { listRoom } from '@/faker/data';
@@ -10,8 +11,8 @@ interface ApplicantInfoPageProps {
   params: Promise<{ id: number }>;
 }
 
-const ApplicantInfoPage = ({ params }: ApplicantInfoPageProps) => {
-  const id = params.id;
+const ApplicantInfoPage = async ({ params }: ApplicantInfoPageProps) => {
+  const id = (await params).id;
   console.log('id: ', id);
   const [filteredItems] = useState(listRoom);
   const [currentPage, setCurrentPage] = useState(1);

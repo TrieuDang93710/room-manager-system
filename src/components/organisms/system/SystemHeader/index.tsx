@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { useEffect } from 'react';
 import * as React from 'react';
@@ -5,7 +6,7 @@ import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Button } from '@/components/ui/button';
 import { MenuUnfoldOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons';
 import { useAuth } from '@/hooks/useAuth';
@@ -28,7 +29,7 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
     const token: string | null = localStorage.getItem('access-token');
 
     if (token) {
-      const { id } = jwt.decode(token!);
+      const { id } = jwt.decode(token!) as JwtPayload;
 
       apiSecure.get(`user/${id}`).then((result) => {
         console.log('user: ', result.data.data);

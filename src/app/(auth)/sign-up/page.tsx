@@ -11,7 +11,6 @@ import ButtonCommon from '@/components/atoms/ButtonCommon';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '@/hooks/useAuth';
 import useApiPublic from '@/hooks/useApiPublic';
-import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import NotificationCustom from '@/helpers/notify';
 
@@ -64,7 +63,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className={'w-full min-h-screen ' + flex({ direction: 'col', alignItems: 'center', justifyContent: 'start' })}>
+    <div className={'w-full h-full ' + flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })}>
       <div className='sign_up_container'>
         <h2 className='sign_up_title'>Sign up</h2>
         <form className='sign_up_form' onSubmit={handleSubmit(handleSignUp)}>
@@ -134,7 +133,7 @@ const SignUp = () => {
         </form>
         <p className=''>
           Have you already existed ?
-          <Link className='text-green-500' href={'/sign-in'}>
+          <Link className='text-blue-600' href={'/sign-in'}>
             Sign in
           </Link>
         </p>

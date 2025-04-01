@@ -108,7 +108,7 @@ const FunctionListManager = ({
               hidden ? 'justify-center' : 'justify-start'
             }`}
           >
-            <Link href={'/sign-in-manager'} onClick={handleSignOut} className='text-start truncate'>
+            <Link href={'/sign-in'} onClick={handleSignOut} className='text-start truncate'>
               {hidden === true ? <LogoutOutlined /> : 'Đăng Xuất'}
             </Link>
           </li>
@@ -135,7 +135,7 @@ export default FunctionListManager;
 
 interface SubMenuComponentProps {
   subMenus?: listFuncInterface[];
-  parentPath: string;
+  parentPath?: string;
   selectedSubMenu?: number;
   setSelectedSubMenu: (value: number) => void;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import ButtonCommon from '@/components/atoms/ButtonCommon';
 import PaginationComponent from '@/components/molecules/Pagination/pagination';
