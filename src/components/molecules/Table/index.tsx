@@ -7,7 +7,7 @@ interface TableComponentProps<T> {
 }
 const TableComponent = <T extends object>({ headers, data, renderRow }: TableComponentProps<T>) => {
   return (
-    <div className='min-w-full h-[50vh] overflow-y-auto'>
+    <div className='min-w-full h-[50vh] hide-scrollbar overflow-y-auto'>
       <table className='w-full table-fixed border-separate border-slate-300 rounded-md dark:text-[#d2d2d2]'>
         <thead className='w-full border text-slate-50'>
           <tr className='w-full border'>

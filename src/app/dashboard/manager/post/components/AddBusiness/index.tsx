@@ -138,7 +138,7 @@ const AddBusiness = ({ onClick, setOpenAddBusiness, openAddBusiness }: AddBusine
               className='cursor-pointer font-bold text-red-500 p-2 rounded-sm hover:bg-[#e3e3e3] dark:text-[#fff]'
             />
           </div>
-          <div className='w-full h-[80%] py-1 gap-2 flex flex-col md:flex overflow-y-auto'>
+          <div className='w-full h-[80%] py-1 gap-2 flex flex-col md:flex hide-scrollbar overflow-y-auto'>
             <CommonInput
               onblur={() => handleBlurChecking('text', 'nameError', state.name, setField)}
               inputValue={state.name}

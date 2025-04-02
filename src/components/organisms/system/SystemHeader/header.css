@@ -1,6 +1,6 @@
 
 .header_nav {
-    @apply w-full flex justify-between items-center bg-blue-50 dark:bg-blue-900 shadow-md dark:shadow-slate-300 border rounded-none px-2 overflow-y-auto fixed z-20
+    @apply w-full flex justify-between items-center bg-blue-50 dark:bg-blue-900 dark:shadow-slate-300 border rounded-none px-2 fixed z-20
 }
 
 .header_logo {
