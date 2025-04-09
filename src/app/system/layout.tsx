@@ -1,10 +1,11 @@
 'use client';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Image from 'next/image';
 import FooterCommon from '@/components/organisms/system/Footer';
 import NavbarCommon from '@/components/organisms/system/SystemHeader';
 import ChatBoxAI from './components/ChatBoxAI';
 import ModalResponsive from './components/Modal';
+import Loading from './loading';
 
 interface SystemLayoutProps {
   children: React.ReactNode;
@@ -19,7 +20,7 @@ const SystemLayout = ({ children }: SystemLayoutProps) => {
   };
 
   return (
-    <div className='w-full z-10'>
+    <div className='relative w-full z-10'>
       <NavbarCommon isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className='right-4 bottom-10 fixed z-20' onClick={openChatHandler}>
         <Image
@@ -31,9 +32,10 @@ const SystemLayout = ({ children }: SystemLayoutProps) => {
         />
       </div>
       {openChatAI && <ChatBoxAI />}
-      {children}
+      <Suspense fallback={<Loading />}>{children}</Suspense>
+      {/* <Loading /> */}
       <FooterCommon />
-      <ModalResponsive isOpen={isOpen} setIsOpen={setIsOpen}/>
+      <ModalResponsive isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };

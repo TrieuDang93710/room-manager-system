@@ -20,7 +20,7 @@ const BreadCrumbCommon = ({ breadcrumbs, currentUrl }: BreadCrumbCommonProps) =>
         <div key={link.url} className='flex items-center'>
           {link.url === currentUrl ? (
             <span
-              className={`text-base cursor-default font-medium mr-2 gap-3 flex dark:text-gray-600 dark:hover:text-slate-100 text-green-600 hover:text-green-800`}
+              className={`text-base cursor-default font-medium mr-2 gap-3 flex dark:text-blue-600 dark:hover:text-slate-100 text-green-600 hover:text-green-800`}
             >
               <Link href={`${link.url}`} className='cursor-default'>
                 {link.prefixIcon && <link.prefixIcon />}
@@ -30,7 +30,7 @@ const BreadCrumbCommon = ({ breadcrumbs, currentUrl }: BreadCrumbCommonProps) =>
               </Link>
             </span>
           ) : (
-            <Link href={link.url} className='text-primary text-base cursor-pointer dark:text-gray-600 dark:hover:text-slate-100'>
+            <Link href={link.url} className='text-primary text-base cursor-pointer dark:text-blue-600 dark:hover:text-slate-100'>
               {link.prefixIcon && <link.prefixIcon />}
               <span className='font-medium mx-2'>{link.label}</span>
             </Link>

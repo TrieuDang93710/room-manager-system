@@ -1,0 +1,19 @@
+.modal_container_approve {
+    @apply absolute bg-[#ffffff] dark:bg-[#0a0a0a] w-[30%] h-[30%] p-3 rounded-md shadow-md shadow-[#fff]
+}
+
+.modal_container_approve form {
+    @apply relative w-full h-full
+}
+
+.modal_header{
+    @apply flex w-full justify-between
+}
+
+.modal_header p{
+    @apply text-[#292929] font-bold text-[14px] p-2 dark:text-[#e6e6e6]
+}
+
+.approve_button {
+    @apply w-[80%] bg-blue-600 dark:bg-[#0000] font-bold text-[13px] py-2 px-4 rounded-md text-[#fff] hover:bg-blue-500 dark:border-[1px] dark:border-[#fff] dark:hover:bg-blue-200 dark:hover:text-[#000] dark:text-white
+}

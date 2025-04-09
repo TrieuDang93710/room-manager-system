@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const FooterCommon = () => {
   return (
-    <div className='flex flex-col md:flex-row justify-between items-center shadow-md bg-slate-50 dark:bg-slate-900 dark:shadow-none dark:shadow-slate-300 border p-2'>
+    <div className='flex flex-col md:flex-row justify-between items-center shadow-md bg-slate-50 dark:bg-blue-900 dark:shadow-none dark:shadow-slate-300 border p-2'>
       <div className='animation_fade md:w-1/3 w-full flex flex-col justify-center items-center py-1 px-2'>
         <Image alt='logo' src='https://www.svgrepo.com/show/513695/broccoli.svg' width={80} height={80} className='' />
         <span className='text-[20px] font-bold text-gradient-to-bl text-green-500 pb-3'>green life</span>

@@ -14,38 +14,38 @@ const PersonalInformation = () => {
           className='cursor-pointer'
         />
         <div className='flex flex-col items-center cursor-pointer'>
-          <UploadOutlined className='hover:bg-blue-50 active:shadow-sm active:shadow-slate-400 p-2 rounded-full' />
-          <p className='text-black text-[16px] font-medium'> Cap nhat</p>
+          <UploadOutlined className='hover:bg-blue-50 dark:text-blue-600 active:shadow-sm active:shadow-slate-400 p-2 rounded-full' />
+          <p className='text-black dark:text-blue-600 text-[16px] font-medium'> Cap nhat</p>
         </div>
       </div>
       <div className='flex flex-col items-start justify-start gap-2'>
-        <h3 className='text-black text-[16px] font-normal'>
-          <strong>Ho va Ten : </strong>Dang Binh trieu
+        <h3 className='text-black dark:text-white text-[16px] font-normal'>
+          <strong className='dark:text-blue-600'>Ho va Ten : </strong>Dang Binh trieu
         </h3>
-        <h3 className='text-black text-[16px] font-normal'>
-          <strong>Gioi tinh : </strong>Nam
+        <h3 className='text-black dark:text-white text-[16px] font-normal'>
+          <strong className='dark:text-blue-600'>Gioi tinh : </strong>Nam
         </h3>
-        <h3 className='text-black text-[16px] font-normal'>
-          <strong>Ngay sinh : </strong>17 - 03 - 2003
+        <h3 className='text-black dark:text-white text-[16px] font-normal'>
+          <strong className='dark:text-blue-600'>Ngay sinh : </strong>17 - 03 - 2003
         </h3>
       </div>
       <AddComponent title='Chuyen mon' action={true}>
         {Array.from({ length: 3 }).map((_, index) => (
-          <h3 key={index} className='text-black text-[16px] font-normal'>
+          <h3 key={index} className='text-black dark:text-white text-[16px] font-normal'>
             Giao tiep cuon hut
           </h3>
         ))}
       </AddComponent>
       <AddComponent title='So thich' action={true}>
         {Array.from({ length: 3 }).map((_, index) => (
-          <h3 key={index} className='text-black text-[16px] font-normal'>
+          <h3 key={index} className='text-black dark:text-white text-[16px] font-normal'>
             Nghe nhac
           </h3>
         ))}
       </AddComponent>
       <AddComponent title='Ngoai ngu'>
         {Array.from({ length: 3 }).map((_, index) => (
-          <h3 key={index} className='text-black text-[16px] font-normal'>
+          <h3 key={index} className='text-black dark:text-white text-[16px] font-normal'>
             Tieng anh
           </h3>
         ))}

@@ -8,8 +8,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import ButtonCommon from '@/components/atoms/ButtonCommon';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '@/hooks/useAuth';
-import useApiPublic from '@/hooks/useApiPublic';
+import { useAuth } from '@/hooks/auth/useAuth';
 import { useRouter } from 'next/navigation';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { useApiSecure } from '@/hooks/useApiSecure';
@@ -26,8 +25,7 @@ const SignIn = () => {
   });
 
   const { handleSubmit, reset } = useForm();
-  const { loginWithEmailAndPassword, setUser } = useAuth();
-  const apiPublic = useApiPublic();
+  const { signIn, setUser, user } = useAuth();
   const apiSecure = useApiSecure();
   const router = useRouter();
 
@@ -35,46 +33,30 @@ const SignIn = () => {
     const email = state.email;
     const password = state.password;
 
-    loginWithEmailAndPassword(email, password)
-      .then((result: { user: unknown }) => {
-        console.log('user on firebase: ', result.user);
-        const userInfo = {
-          email: email,
-          password: password
-        };
-        apiPublic
-          .post('/auth/sign-in', userInfo)
-          .then((response) => {
-            console.log('user on database : ', response.data);
-
-            const token = response.data.data.token;
-            localStorage.setItem('access-token', token);
-            const { id } = jwt.decode(token) as JwtPayload;
-            apiSecure
-              .get(`/user/${id}`)
-              .then((res) => {
-                if (res.data) {
-                  console.log('user: ', res.data.data);
-                  setUser(res.data.data[0]);
-                  NotificationCustom(`success`, res.data.statusMessage);
-                  router.push('/');
-                }
-              })
-              .catch((error) => {
-                console.log('error.response: ', error);
-                if (error.response.data) {
-                  NotificationCustom(`warning`, error.response.data.message);
-                  reset();
-                  router.push('/account-active');
-                }
-              });
+    signIn(email, password)
+      .then((response) => {
+        NotificationCustom('success', response.data.message);
+        const token = response.data.data.token;
+        const refreshToken = response.data.data.refreshToken;
+        localStorage.setItem('access-token', token);
+        localStorage.setItem('refresh-token', refreshToken);
+        const { id } = jwt.decode(token) as JwtPayload;
+        apiSecure
+          .get(`/user/${id}`)
+          .then((res) => {
+            if (res.data) {
+              setUser(res.data.data[0]);
+              console.log('user: ', user);
+              NotificationCustom(`success`, res.data.message);
+              router.push('/');
+            }
           })
           .catch((error) => {
             console.log('error.response: ', error);
             if (error.response.data) {
-              NotificationCustom(`error`, error);
+              NotificationCustom(`warning`, error.response.data.message);
               reset();
-              router.push('/sign-in');
+              router.push('/account-active');
             }
           });
       })
@@ -88,7 +70,7 @@ const SignIn = () => {
 
   return (
     <div
-      className={'w-full h-full py-10 ' + flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })}
+      className={'w-full py-10 ' + flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })}
     >
       <div className='sign_in_container'>
         <h2 className='sign_in_title'>Sign In</h2>

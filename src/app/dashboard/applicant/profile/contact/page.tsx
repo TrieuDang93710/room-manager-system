@@ -49,7 +49,7 @@ const Contact = () => {
           />
         </div>
         <button
-          className='bg-blue-100 hover:bg-blue-300 text-blue-600 hover:text-blue-500 active:shadow-sm active:shadow-slate-400 dark:bg-[#0000] font-bold text-[13px] py-2 px-4 rounded-md dark:border-[1px] dark:border-[#fff] dark:hover:bg-blue-200 dark:hover:text-[#000] dark:text-white ml-2'
+          className='bg-blue-100 hover:bg-blue-300 text-blue-600 hover:text-blue-500 active:shadow-sm active:shadow-slate-400 dark:bg-[#0000] font-bold text-[13px] py-2 px-4 rounded-md dark:border-[1px] dark:border-blue-600 dark:hover:bg-blue-500 dark:hover:text-white dark:text-blue-600 ml-2'
           type='submit'
         >
           Thay doi

@@ -14,6 +14,7 @@ import axios from 'axios';
 
 import app from '@/firebase/firebase.config';
 import API_PUBLIC_URI from '@/lib/constants';
+import useApiPublic from '@/hooks/useApiPublic';
 
 interface AuthContextType {
   loading: boolean;
@@ -22,6 +23,8 @@ interface AuthContextType {
   setUser: React.Dispatch<React.SetStateAction<any>>;
   loginWithEmailAndPassword: (email: string, password: string) => Promise<any>;
   registerWithEmailAndPassword: (email: string, password: string) => Promise<any>;
+  signIn: (email: string, password: string) => Promise<any>;
+  signUp: (username: string, email: string, password: string, role?: string[]) => Promise<any>;
   loginWithGmail: () => Promise<any>;
   logout: () => Promise<any>;
 }
@@ -33,7 +36,21 @@ const googleProvider = new GoogleAuthProvider();
 export const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const apiPublic = useApiPublic();
 
+  // register and login on local
+  const signIn = (email: string, password: string) => {
+    setLoading(true);
+    return apiPublic.post('/auth/sign-in', { email, password });
+  };
+
+  const signUp = (username: string, email: string, password: string, role?: string[]) => {
+    setLoading(true);
+    const body = { username: username, email: email, password: password, role: role };
+    return apiPublic.post('/auth/sign-up', body);
+  };
+
+  // register and login on firebase
   const registerWithEmailAndPassword = (email: string, password: string) => {
     setLoading(true);
     const response = createUserWithEmailAndPassword(auth, email, password);
@@ -57,36 +74,16 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
     return signOut(auth);
   };
 
-  // useEffect(() => {
-  //   const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-  //     if (currentUser) {
-  //       console.log('currentUser: ', currentUser);
-  //       setUser(currentUser);
-  //       if (currentUser) {
-  //         const userInfo = {
-  //           email: currentUser.email
-  //         };
-  //         axios.post(`${process.env.VITE_URL_API_ON_LOCAL}/auth/sign-in`, userInfo).then((res) => {
-  //           if (res.data.token) {
-  //             localStorage.setItem('access-token', res.data.token);
-  //           }
-  //         });
-  //       } else {
-  //         localStorage.removeItem('access-token');
-  //       }
-  //       setLoading(false);
-  //     }
-  //   });
-  //   return () => {
-  //     return unSubscribe();
-  //   };
-  // }, []);
-
   useEffect(() => {
     const token: string | null = localStorage.getItem('access-token');
 
     if (token) {
-      const { id } = jwt.decode(token!) as JwtPayload
+      const { id } = jwt.decode(token!) as JwtPayload;
+
+      if (!id) {
+        throw new Error('Not found token');
+      }
+
       axios
         .get(`${API_PUBLIC_URI}/user/${id}`, {
           headers: {
@@ -108,6 +105,8 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
     setUser,
     loginWithEmailAndPassword,
     registerWithEmailAndPassword,
+    signIn,
+    signUp,
     loginWithGmail,
     logout
   };

@@ -6,7 +6,7 @@ import { FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from 
 import { useState } from 'react';
 import CheckboxCard from '@/components/molecules/CheckboxCard';
 import { useRouter } from 'next/navigation';
-import { PostingApplicantComponent } from '@/components/organisms/system/Card/PostApplicant';
+import { ApplicantCardComponent } from '@/components/organisms/system/Card/ApplicantCard';
 
 const ApplicantPage = () => {
   const router = useRouter();
@@ -90,7 +90,7 @@ const ApplicantPage = () => {
           </div>
           <div className='w-[90%] flex sm:grid md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around gap-4 py-10'>
             {Array.from({ length: 2 }).map((_, index) => (
-              <PostingApplicantComponent
+              <ApplicantCardComponent
                 key={index + 1}
                 onClick={() => router.push(`/system/applicant/${index + 1}`)}
               />

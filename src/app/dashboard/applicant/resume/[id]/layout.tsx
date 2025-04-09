@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import TabBar from '@/components/molecules/TabBar';
 
 interface ResumeDetailLayoutProps {
-  params: Promise<{ id: number }>;
+  params: { id: number };
   children: React.ReactNode;
 }
 
-const ResumeDetailLayout = async ({ params, children }: ResumeDetailLayoutProps) => {
-  const id = (await params).id;
+const ResumeDetailLayout = ({ params, children }: ResumeDetailLayoutProps) => {
+  const id = params.id;
 
   const navigates = [
     {
@@ -26,9 +27,9 @@ const ResumeDetailLayout = async ({ params, children }: ResumeDetailLayoutProps)
 
   return (
     <div className='relative w-full h-screen dark:bg-[#242424] flex flex-col items-end gap-6 snap-y pt-20 md:px-3'>
-      <div className='w-full bg-blue-100 h-fit py-3 px-3 flex-col justify-center md:gap-3 gap-y-2'>
+      <div className='w-full bg-blue-100 dark:bg-blue-800 h-fit py-3 px-3 flex-col justify-center md:gap-3 gap-y-2'>
         <TabBar tabs={navigates} />
-        <div className='w-full h-[80vh] bg-white flex flex-col justify-start items-center rounded-sm overflow-y-auto'>
+        <div className='w-full h-[80vh] bg-white dark:bg-slate-900 flex flex-col justify-start items-center rounded-sm hide-scrollbar overflow-y-auto'>
           {children}
         </div>
       </div>
