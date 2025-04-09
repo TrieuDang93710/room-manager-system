@@ -41,7 +41,7 @@ const ManagerHeader = ({ setIsHiddenMenu, isHiddenMenu }: ManagerHeaderProps) =>
       </div>
       <div className='flex items-center justify-end gap-4'>
         <div className='relative'>
-          <Link href={'/dashboard/manager/message'}>
+          <Link href={'/dashboard/message'}>
             <MessageOutlined className=' text-[#2f2f2f] dark:text-[#d3d3d3] font-bold text-lg hover:cursor-pointer hover:text-[#a0a0a0] dark:hover:text-[#767676]' />
           </Link>
           <span className='absolute z-10 right-[-10px] top-[-5px] w-[20px] text-center bg-red-500 text-white border rounded-full font-bold text-[12px]'>

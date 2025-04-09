@@ -126,7 +126,7 @@ const RoomManagerPage = () => {
         {viewRender ? (
           <TableComponent headers={headers} data={posts} renderRow={renderRow} />
         ) : (
-          <div className='w-full border h-[60vh] border-green-500 flex flex-col items-center justify-start overflow-y-auto gap-4 p-4 mt-4'>
+          <div className='w-full border h-[60vh] border-green-500 flex flex-col items-center justify-start hide-scrollbar overflow-y-auto gap-4 p-4 mt-4'>
             {Array.from({ length: 4 }).map((_, index) => (
               <PostCardRow applied={false} key={index} />
             ))}

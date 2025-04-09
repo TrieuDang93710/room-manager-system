@@ -11,7 +11,7 @@ interface CardSquareProps {
 const CardSquare = ({ children }: CardSquareProps) => {
   return (
     <div
-      className='w-full border-[1px] rounded-sm hover:translate-x-1 cursor-pointer border-slate-300 hover:border-green-500 flex flex-col items-center justify-center'
+      className='w-full border-[1px] rounded-sm hover:translate-x-1 cursor-pointer bg-white border-slate-300 hover:border-green-500 flex flex-col items-center justify-center'
     >
       <div className='w-full h-full'>
         <div className='left-4 w-full flex flex-col justify-start items-center p-2 gap-2'>

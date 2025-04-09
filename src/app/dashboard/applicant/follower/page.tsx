@@ -12,7 +12,7 @@ const FollowerManagerPage = () => {
             Doanh nghiep dang theo doi
           </h3>
         </div>
-        <div className='w-full border h-[75vh] border-green-500 flex sm:grid md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around overflow-y-auto gap-4 p-4 mt-4'>
+        <div className='w-full border h-[75vh] border-green-500 flex sm:grid md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around hide-scrollbar overflow-y-auto gap-4 p-4 mt-4'>
           {Array.from({ length: 4 }).map((_, index) => (
             <PostingAgentComponent key={index + 1} onClick={() => router.push(`/system/business/${index + 1}`)} />
           ))}

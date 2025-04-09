@@ -4,9 +4,7 @@
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
 import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
 import flex from '@/config/flex.config';
-import { listRoom } from '@/faker/data';
 import { FilterOutlined, HomeOutlined } from '@ant-design/icons';
-import { useState } from 'react';
 
 interface BusinessInfoPageProps {
   params: Promise<{ id: number }>;
@@ -15,17 +13,15 @@ interface BusinessInfoPageProps {
 const BusinessInfoPage = async ({ params }: BusinessInfoPageProps) => {
   const id = (await params).id;
   console.log('id: ', id);
-  const [filteredItems] = useState(listRoom);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(2);
+  // const [filteredItems] = useState(listRoom);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [itemsPerPage] = useState(2);
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-  console.log('currentItems: ', currentItems, '\n', 'paginate: ', paginate);
+  // const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const breadcrumbs = [
     {

@@ -1,10 +1,8 @@
 /* eslint-disable @next/next/no-async-client-component */
-/* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
 import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
 import flex from '@/config/flex.config';
-import { listRoom } from '@/faker/data';
 import {
   ClockCircleOutlined,
   FilterOutlined,
@@ -14,26 +12,22 @@ import {
   SortAscendingOutlined,
   UsergroupAddOutlined
 } from '@ant-design/icons';
-import { useState } from 'react';
 
-interface PostPageProps {
+interface PostDetailPageProps {
   params: Promise<{ id: number }>;
 }
 
-const PostPage = async ({ params }: PostPageProps) => {
+async function PostDetailPage({ params }: PostDetailPageProps) {
   const id = (await params).id;
   console.log('id: ', id);
-  const [filteredItems] = useState(listRoom);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(2);
+  // const [filteredItems] = useState(listRoom);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [itemsPerPage] = useState(2);
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
-
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-  console.log('currentItems: ', currentItems, '\n', 'paginate: ', paginate);
+  // const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const breadcrumbs = [
     {
@@ -48,7 +42,7 @@ const PostPage = async ({ params }: PostPageProps) => {
     // },
     {
       url: `/system/post/${id}`,
-      label: 'Thong tin bai viet chi tiet',
+      label: `Thông tin chi tiết công việc ${id}`,
       prefixIcon: () => <FilterOutlined />
     }
   ];
@@ -173,7 +167,7 @@ const PostPage = async ({ params }: PostPageProps) => {
             <p className='text-[20px] text-black font-bold py-8'>Viec lam lien quan :</p>
             <div className='w-full flex flex-col items-center justify-start p-2 gap-3'>
               {Array.from({ length: 3 }).map((_, index) => (
-                <PostCardRow key={index} approved={true}/>
+                <PostCardRow key={index} approved={true} />
               ))}
             </div>
           </div>
@@ -247,6 +241,6 @@ const PostPage = async ({ params }: PostPageProps) => {
       </div>
     </div>
   );
-};
+}
 
-export default PostPage;
+export default PostDetailPage;

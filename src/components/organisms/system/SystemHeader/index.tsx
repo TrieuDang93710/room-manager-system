@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as React from 'react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
@@ -19,11 +19,41 @@ interface NavbarCommonProps {
 }
 
 const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
+  const [sticky, setSticky] = useState<boolean>(false);
   const router = useRouter();
   const { setTheme } = useTheme();
   const apiSecure = useApiSecure();
   const auth = useAuth();
   const { user, setUser, logout } = auth;
+  const menus = [
+    { path: '', label: 'Trang chủ' },
+    { path: 'system/post-filter', label: 'Tìm kiếm' },
+    { path: 'system/post-map', label: 'Tìm kiếm trên bản đồ' },
+    { path: 'system/business', label: 'Doanh nghiệp' },
+    { path: 'system/applicant', label: 'Ứng viên' },
+    { path: 'system/news', label: 'Tin tức' }
+  ];
+
+  const menuItem = menus.map((item, index) => (
+    <li key={index} className='menu_item'>
+      <Link href={`/${item.path}`}>{item.label}</Link>
+    </li>
+  ));
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      if (offset > 0) {
+        setSticky(true);
+      } else {
+        setSticky(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.addEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const token: string | null = localStorage.getItem('access-token');
@@ -40,8 +70,6 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
     }
   }, []);
 
-  console.log('user: ', user);
-
   const handleOpenModal = () => {
     setIsOpen(!isOpen);
   };
@@ -52,7 +80,7 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
   };
 
   return (
-    <nav className='header_nav'>
+    <nav className={`header_nav ${sticky && 'shadow-md transition-all duration-300 ease-in-out hide-scrollbar'}`}>
       <div className='header_logo'>
         <MenuUnfoldOutlined
           onClick={handleOpenModal}
@@ -64,26 +92,7 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
         </div>
         <h2 className='text-green-600 text-2xl font-bold sm:hidden py-4 px-2'>CHÀO MỪNG MỌI NGƯỜI</h2>
       </div>
-      <ul className='header_menu'>
-        <li className='menu_item'>
-          <Link href={'/'}>Trang Chủ</Link>
-        </li>
-        <li className='menu_item'>
-          <Link href={'/system/post-filter'}>Tìm kiếm</Link>
-        </li>
-        <li className='menu_item'>
-          <Link href={'/system/post-map'}>Tìm kiếm trên bản đồ</Link>
-        </li>
-        <li className='menu_item'>
-          <Link href={'/system/business'}>Doanh nghiệp</Link>
-        </li>
-        <li className='menu_item'>
-          <Link href={'/system/applicant'}>Ứng viên</Link>
-        </li>
-        <li className='menu_item'>
-          <Link href={'/system/news'}>Tin tức</Link>
-        </li>
-      </ul>
+      <ul className='header_menu'>{menuItem}</ul>
       {user ? (
         <div className='flex items-center justify-end'>
           <div className='relative flex items-start justify-center gap-1'>

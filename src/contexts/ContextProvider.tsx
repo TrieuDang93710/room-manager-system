@@ -54,9 +54,6 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
     localStorage.removeItem('access-token');
     localStorage.removeItem('ally-supports-cache');
     localStorage.removeItem('refresh-token');
-    // localStorage.removeItem('genius-token');
-    // localStorage.removeItem('token');
-    // localStorage.removeItem('chakra-ui-color-mode');
     return signOut(auth);
   };
 

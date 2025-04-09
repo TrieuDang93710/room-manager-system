@@ -18,7 +18,7 @@ const StatisticalAdminPage = () => {
             Thống kê chung
           </h3>
         </div>
-        <div className='w-full border h-[75vh] border-green-500 flex flex-col items-center justify-start overflow-y-auto gap-4 p-4 mt-4'>
+        <div className='w-full border h-[75vh] border-green-500 flex flex-col items-center justify-start hide-scrollbar overflow-y-auto gap-4 p-4 mt-4'>
           <div className='w-full py-3 md:flex justify-center items-center md:gap-3 gap-y-2'>
             {listRoom.map((r) => {
               return <MaintenanceCard key={r._id} title='Tổng bài đăng' icon={<BarChartOutlined />} />;

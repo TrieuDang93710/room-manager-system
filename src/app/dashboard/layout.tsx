@@ -20,7 +20,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   let account: string = Role.MANAGER;
 
   // account = user && user.role[0]!;
-  account = 'admin';
+  account = 'applicant';
   console.log('account: ', account);
 
   useEffect(() => {
