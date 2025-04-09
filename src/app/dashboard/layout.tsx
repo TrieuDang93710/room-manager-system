@@ -7,6 +7,7 @@ import Loading from './loading';
 import listFuncInterface from '@/interfaces/listFunction';
 import FunctionListManager from '@/components/organisms/manager/SideBar';
 import ManagerHeader from '@/components/organisms/manager/ManagerHeader';
+import { useAuth } from '@/hooks/auth/useAuth';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -17,10 +18,11 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [isHiddenMenu, setIsHiddenMenu] = useState<boolean>(false);
   const [selectedMenu, setSelectedMenu] = useState<number>(0);
   const [functions, setFunctions] = useState<listFuncInterface[]>([]);
+  const { user } = useAuth();
   let account: string = Role.MANAGER;
 
-  // account = user && user.role[0]!;
-  account = 'applicant';
+  account = user && user.role[0]!;
+  // account = 'manager';
   console.log('account: ', account);
 
   useEffect(() => {
@@ -42,7 +44,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <div className='relative w-full flex flex-row items-start justify-between gap-2 md:px-0 px-3'>
       <FunctionListManager
-        title={`${true && account.toLocaleUpperCase()}`}
+        title={`${user && account.toLocaleUpperCase()}`}
         hidden={hidden}
         setHidden={setHidden}
         listFunc={functions}
@@ -68,7 +70,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             setHidden={setHidden}
             listFunc={functions}
             account={account}
-            selectedMenu={selectedMenu}//
+            selectedMenu={selectedMenu} //
             setSelectedMenu={setSelectedMenu}
             className={`md:hidden block ${hidden ? 'w-1/6 z-10' : 'sm:w-1/2 w-3/4 z-10'}`}
           />

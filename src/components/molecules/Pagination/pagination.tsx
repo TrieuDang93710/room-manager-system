@@ -28,10 +28,10 @@ const PaginationComponent = () => {
     }
   };
 
-  const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectValue = Number(e.target.value);
-    setPageSize(selectValue);
-  };
+  // const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const selectValue = Number(e.target.value);
+  //   setPageSize(selectValue);
+  // };
 
   return (
     <div className='pagination_box'>
@@ -48,8 +48,8 @@ const PaginationComponent = () => {
       </div>
       <SelectionComponent
         optionList={pageSizeList}
-        selectValue={String(pageSize)}
-        setSelectValue={handlePageSizeChange}
+        value={String(pageSize)}
+        setValue={setPageSize}
       />
     </div>
   );

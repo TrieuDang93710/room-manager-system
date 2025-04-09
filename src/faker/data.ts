@@ -4,7 +4,7 @@ import shopping_cart from '@/public/svgs/shopping_cart.svg';
 import key from '@/public/svgs/key.svg';
 import quality from '@/public/svgs/quality.svg';
 
-import {} from './../public/images/banner_1.jpg'
+import {} from './../public/images/banner_1.jpg';
 
 // const banner_1 = './../public/images/banner_1.jpg';
 // const banner_2 = '../images/banner_2.jpg';
@@ -97,20 +97,30 @@ const banners: BannerInterface[] = [
     title: 'Khu Trọ Cao Cấp',
     subTitle: 'Giá Cả Sinh Viên',
     descriptions: 'K29/8 Trần Đức Tháo - Phường Hòa Cường Nam - Quận Hải Châu - Tp Đà Nẵng',
-    image_url: 'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
+    image_url:
+      'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
   },
   {
     title: 'Khu Trọ Cao Cấp',
     subTitle: 'Giá Cả Sinh Viên',
     descriptions: 'K29/8 Trần Đức Tháo - Phường Hòa Cường Nam - Quận Hải Châu - Tp Đà Nẵng',
-    image_url: 'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
+    image_url:
+      'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
   },
   {
     title: 'Khu Trọ Cao Cấp',
     subTitle: 'Giá Cả Sinh Viên',
     descriptions: 'K29/8 Trần Đức Tháo - Phường Hòa Cường Nam - Quận Hải Châu - Tp Đà Nẵng',
-    image_url: 'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
+    image_url:
+      'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
   }
 ];
 
-export { listRoom, chartData, chartDataCircle, pageSizeList, introductions, banners, listLessor };
+const approveStatus = [
+  { label: 'Đã duyệt', value: 'approved' },
+  { label: 'Không phù hợp', value: 'reject' },
+  { label: 'Xóa', value: 'cancelled' },
+  { label: 'Không phù hợp', value: 'reject' }
+];
+
+export { listRoom, chartData, chartDataCircle, pageSizeList, introductions, banners, listLessor, approveStatus };

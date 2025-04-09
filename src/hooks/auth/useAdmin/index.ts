@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { useApiSecure } from './useApiSecure';
-import { useAuth } from './useAuth';
-
+import { useAuth } from '../useAuth';
+import { useApiSecure } from '@/hooks/useApiSecure';
 export const useAdmin = () => {
   const auth = useAuth();
   const apiSecure = useApiSecure();

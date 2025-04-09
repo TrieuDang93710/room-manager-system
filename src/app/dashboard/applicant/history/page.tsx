@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
+import usePost from '@/hooks/usePost';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const HistoryManagerPage = () => {
   const router = useRouter();
   console.log('router: ', router);
+  const { posts } = usePost();
   const [applied] = useState<boolean>(false);
 
   return (
@@ -27,8 +30,8 @@ const HistoryManagerPage = () => {
           </div>
         </div>
         <div className='w-full h-[70vh] flex flex-col items-center justify-start overflow-y-auto gap-4 p-4 mt-4'>
-          {Array.from({ length: 3 }).map((_, index) => (
-            <PostCardRow key={index} applied={applied} />
+          {posts.map((item: any, index: any) => (
+            <PostCardRow key={index} postItem={item} applied={applied} />
           ))}
         </div>
       </div>

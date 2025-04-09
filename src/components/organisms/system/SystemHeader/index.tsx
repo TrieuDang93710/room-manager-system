@@ -5,11 +5,11 @@ import * as React from 'react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Button } from '@/components/ui/button';
 import { MenuUnfoldOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/auth/useAuth';
 import { useApiSecure } from '@/hooks/useApiSecure';
 import './header.css';
 
@@ -21,6 +21,7 @@ interface NavbarCommonProps {
 const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
   const [sticky, setSticky] = useState<boolean>(false);
   const router = useRouter();
+  const pathname = usePathname();
   const { setTheme } = useTheme();
   const apiSecure = useApiSecure();
   const auth = useAuth();
@@ -41,6 +42,19 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
   ));
 
   useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      if (offset > 0) {
+        setSticky(true);
+      } else {
+        setSticky(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.addEventListener('scroll', handleScroll);
+    };
+  }, []);useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
       if (offset > 0) {
@@ -88,11 +102,13 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
         />
         <div className='sm:flex hidden flex-col justify-center items-center py-1 px-2'>
           <Image alt='logo' src='https://www.svgrepo.com/show/513695/broccoli.svg' width={30} height={30} />
-          <span className='text-[13px] font-bold text-gradient-to-bl text-green-500'>green life</span>
+          <Link className='text-[13px] font-bold text-gradient-to-bl text-green-500' href={'/'}>
+            green life
+          </Link>
         </div>
         <h2 className='text-green-600 text-2xl font-bold sm:hidden py-4 px-2'>CHÀO MỪNG MỌI NGƯỜI</h2>
       </div>
-      <ul className='header_menu'>{menuItem}</ul>
+      {pathname !== '/sign-in' && pathname !== '/sign-up' && <ul className='header_menu'>{menuItem}</ul>}
       {user ? (
         <div className='flex items-center justify-end'>
           <div className='relative flex items-start justify-center gap-1'>
@@ -113,7 +129,7 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
             </div>
           </div>
           <ul className='list-none md:flex px-3 hidden'>
-            <li onClick={() => setTheme('system')}>
+            <li onClick={() => setTheme('light')}>
               <SunOutlined className='cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full p-3' />
             </li>
             <li onClick={() => setTheme('dark')}>

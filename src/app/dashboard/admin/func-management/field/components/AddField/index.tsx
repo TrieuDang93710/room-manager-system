@@ -5,6 +5,10 @@ import { handleBlurChecking } from '@/helpers/utils';
 import useCombinedState from '@/hooks/useCombinedState';
 import { CloseOutlined } from '@ant-design/icons';
 import './AddField.css';
+import { useForm } from 'react-hook-form';
+import useApiPublic from '@/hooks/useApiPublic';
+import useField from '@/hooks/useFeild';
+import NotificationCustom from '@/helpers/notify';
 
 interface AddFieldProps {
   openAddField: boolean;
@@ -14,15 +18,42 @@ interface AddFieldProps {
 
 const AddField = ({ onClick, setOpenAddField, openAddField }: AddFieldProps) => {
   const [state, setField] = useCombinedState({
-    name: '',
-    address: '',
-    price: '',
-    createBy: '',
-    nameError: '',
-    addressError: '',
-    priceError: '',
-    createByError: ''
+    title: '',
+    description: '',
+    slug: '',
+    titleError: '',
+    descriptionError: '',
+    slugError: ''
   });
+
+  const { handleSubmit, reset } = useForm();
+  const apiPublic = useApiPublic();
+  const { refetch } = useField();
+
+  const addFieldHandler = () => {
+    const title = state.title;
+    const description = state.description;
+    const slug = state.title.toLowerCase().replaceAll(' ', '-');
+
+    const fieldDto = {
+      title: title,
+      slug: slug,
+      description: description
+    };
+
+    apiPublic
+      .post('category', fieldDto)
+      .then((res) => {
+        console.log('res: ', res.data.data);
+        NotificationCustom('success', res.data.data.message);
+        refetch();
+        reset();
+      })
+      .catch((error) => {
+        console.log('error: ', error);
+        NotificationCustom('error', error);
+      });
+  };
 
   return (
     <Modal
@@ -32,7 +63,7 @@ const AddField = ({ onClick, setOpenAddField, openAddField }: AddFieldProps) => 
       onClose={() => setOpenAddField(false)}
     >
       <div className='modal_container_add_field'>
-        <form>
+        <form onSubmit={handleSubmit(addFieldHandler)}>
           <div className='modal_header'>
             <p>Thêm mới</p>
             <CloseOutlined
@@ -42,22 +73,22 @@ const AddField = ({ onClick, setOpenAddField, openAddField }: AddFieldProps) => 
           </div>
           <div className='w-full h-[80%] py-1 gap-2 flex flex-col md:flex overflow-y-auto'>
             <CommonInput
-              onblur={() => handleBlurChecking('text', 'nameError', state.name, setField)}
-              inputValue={state.name}
+              onblur={() => handleBlurChecking('text', 'titleError', state.title, setField)}
+              inputValue={state.title}
               typeInput='text'
               setField={setField}
-              field='name'
-              error={state.nameError}
+              field='title'
+              error={state.titleError}
               placeholder='Nhap ho va ten ...'
               label_title='Ten linh vuc'
             />
             <CommonInput
-              onblur={() => handleBlurChecking('text', 'addressError', state.address, setField)}
-              inputValue={state.address}
+              onblur={() => handleBlurChecking('text', 'descriptionError', state.description, setField)}
+              inputValue={state.description}
               typeInput='text'
               setField={setField}
-              field='address'
-              error={state.addressError}
+              field='description'
+              error={state.descriptionError}
               placeholder='Nhap mo ta ...'
               label_title='Mo ta chi tiet'
             />

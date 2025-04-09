@@ -3,6 +3,7 @@ import { AreaChartOutlined, BookOutlined, HomeOutlined, SettingOutlined } from '
 const funcOfManager = [
   { label: 'Thống Kê', icon: <AreaChartOutlined />, path: 'statistical' },
   { label: 'Quản Lý Bài Đăng', icon: <HomeOutlined />, path: 'post' },
+  { label: 'Quản Lý Công Ty', icon: <HomeOutlined />, path: 'business' },
   { label: 'Quản Lý Trạng Thái', icon: <HomeOutlined />, path: 'resume-status' },
   { label: 'Quản Lý Ứng Viên', icon: <HomeOutlined />, path: 'applicant' }
 ];

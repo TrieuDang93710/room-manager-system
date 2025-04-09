@@ -1,4 +1,4 @@
-'use client'
+'use client';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import CommonInput from '@/components/atoms/Input';
 import flex from '@/config/flex.config';
@@ -7,7 +7,7 @@ import { handleBlurChecking } from '@/helpers/utils';
 import ButtonCommon from '@/components/atoms/ButtonCommon';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { useApiSecure } from '@/hooks/useApiSecure';
 import NotificationCustom from '@/helpers/notify';
 
@@ -23,12 +23,11 @@ const AccountActive = () => {
 
   const handleAccountActive = async () => {
     const codeId = state.codeId;
-    console.log('codeId: ', codeId);
     const token = localStorage.getItem('access-token');
-    const id = jwt.decode(token!);
+    const { id } = jwt.decode(token!) as JwtPayload;
 
     apiSecure
-      .post(`/auth/activate-account/${id}`, { codeId: codeId })
+      .post(`/auth/activate-account/${id}`, { codeId })
       .then((response) => {
         console.log('user on database : ', response.data);
         NotificationCustom(`success`, response.data.statusMessage);

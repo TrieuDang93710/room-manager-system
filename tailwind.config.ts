@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
@@ -73,7 +74,7 @@ const config: Config = {
       animation: {
         fade: 'fadeOut 2s ease-in-out'
       },
-      keyframes: (theme) => ({
+      keyframes: (theme: any) => ({
         fadeOut: {
           '0%': { backgroundColor: theme('colors.transparent') },
           '100%': { backgroundColor: theme('colors.slate.50') }

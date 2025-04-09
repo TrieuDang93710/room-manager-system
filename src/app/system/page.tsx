@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import 'react-multi-carousel/lib/styles.css';
 import BannerCarousel from '@/components/organisms/system/Banner';

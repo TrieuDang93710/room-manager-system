@@ -10,21 +10,21 @@ import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import {
   AppstoreOutlined,
   DeleteOutlined,
-  EyeOutlined,
   PlusOutlined,
   ReadOutlined,
-  TableOutlined,
-  TeamOutlined
+  TableOutlined
 } from '@ant-design/icons';
 import './room.css';
 import AddField from './components/AddField';
-import AddBusiness from './components/AddBusiness';
+import AddBusiness from '../business/components/AddBusiness';
+import usePost from '@/hooks/usePost';
 
 const RoomManagerPage = () => {
   const [openAddPost, setOpenAddPost] = useState<boolean>(false);
   const [openAddField, setOpenAddField] = useState<boolean>(false);
   const [openAddBusiness, setOpenAddBusiness] = useState<boolean>(false);
   const [viewRender, setViewRender] = useState<boolean>(false);
+  const { posts } = usePost();
 
   const closeAddPostHandler = () => {
     setOpenAddPost(!openAddPost);
@@ -38,28 +38,16 @@ const RoomManagerPage = () => {
     setOpenAddBusiness(!openAddBusiness);
   };
 
-  const headers = ['Tiêu đề', 'Lĩnh vực', 'Ngày hết hạn', 'Lượt xem', 'Trạng thái', 'Ứng viên', 'Xử lý'];
+  const headers = ['#', 'Tiêu đề', 'Lĩnh vực', 'Ngày hết hạn', 'Trạng thái', 'Xử lý'];
 
-  const posts = Array.from({ length: 20 }).map((_, index) => ({
-    title: `Nhân viên kinh doanh ${index + 1}`,
-    field: 'Kinh doanh',
-    date: '11 - 03 - 2025',
-    view: '1',
-    status: 'Chưa duyệt'
-  }));
-
-  const renderRow = (post: any) => (
+  const renderRow = (post: any, index: any) => (
     <>
+      <td className='truncate px-2'>{index + 1}</td>
       <td className='truncate px-2'>{post.title}</td>
-      <td className='truncate px-2'>{post.field}</td>
-      <td className='truncate px-2'>{post.date}</td>
-      <td className='truncate px-2'>
-        <EyeOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />{' '}
-        {post.view}
-      </td>
-      <td className='truncate px-2'>{post.status}</td>
-      <td className='truncate px-2'>
-        <TeamOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />{' '}
+      <td className='truncate px-2'>{post.type_of_post.title}</td>
+      <td className='truncate px-2'>{post.duration}</td>
+      <td className={`truncate px-2 ${post && post.status[0] !== 'approved' ? 'text-orange-600' : 'text-green-600'}`}>
+        {post.status[0]}
       </td>
       <td className='flex items-center justify-center sm:gap-2 px-2'>
         <ReadOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />
@@ -126,9 +114,9 @@ const RoomManagerPage = () => {
         {viewRender ? (
           <TableComponent headers={headers} data={posts} renderRow={renderRow} />
         ) : (
-          <div className='w-full border h-[60vh] border-green-500 flex flex-col items-center justify-start hide-scrollbar overflow-y-auto gap-4 p-4 mt-4'>
-            {Array.from({ length: 4 }).map((_, index) => (
-              <PostCardRow applied={false} key={index} />
+          <div className='w-full h-[60vh] flex flex-col items-center justify-start hide-scrollbar overflow-y-auto gap-4 p-4 mt-4'>
+            {posts.map((item: any) => (
+              <PostCardRow applied={false} key={item.id} postItem={item} />
             ))}
           </div>
         )}

@@ -9,9 +9,9 @@ import {
   ToTopOutlined
 } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import CardSquare from '@/components/organisms/system/Card/Square';
 import AddResume from './components/AddResume';
-import { useState } from 'react';
 
 const ResumePage = () => {
   const router = useRouter();
@@ -60,14 +60,14 @@ const ResumePage = () => {
                   <p className='text-[13px] text-slate-800 font-normal py-1'>
                     <strong className='font-bold text-black'>Cap nhat : </strong> Sua <EditOutlined />
                   </p>
-                  <div className='w-full flex md:flex-row md:justify-between flex-col items-start justify-start gap-4 py-2'>
-                    <button className='px-4 py-1 cursor-pointer rounded-sm text-blue-800 hover:text-white text-[10px] font-medium hover:bg-blue-500 bg-blue-100 line-clamp-1'>
+                  <div className='w-full flex md:flex-row md:justify-between flex-col items-center justify-center gap-2 py-2'>
+                    <button className='p-2 cursor-pointer rounded-sm text-blue-800 hover:text-white text-[10px] font-medium hover:bg-blue-500 bg-blue-100'>
                       <ToTopOutlined />
                     </button>
-                    <button className='px-4 py-1 cursor-pointer rounded-sm text-blue-800 hover:text-white text-[10px] font-medium hover:bg-blue-500 bg-blue-100 line-clamp-1'>
+                    <button className='p-2 cursor-pointer rounded-sm text-blue-800 hover:text-white text-[10px] font-medium hover:bg-blue-500 bg-blue-100'>
                       <ShareAltOutlined />
                     </button>
-                    <button className='px-4 py-1 cursor-pointer rounded-sm text-blue-800 hover:text-white text-[10px] font-medium hover:bg-blue-500 bg-blue-100 line-clamp-1'>
+                    <button className='p-2 cursor-pointer rounded-sm text-blue-800 hover:text-white text-[10px] font-medium hover:bg-blue-500 bg-blue-100'>
                       <DownloadOutlined />
                     </button>
                     <DeleteOutlined />

@@ -9,8 +9,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import ButtonCommon from '@/components/atoms/ButtonCommon';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '@/hooks/useAuth';
-import useApiPublic from '@/hooks/useApiPublic';
+import { useAuth } from '@/hooks/auth/useAuth';
 import { useRouter } from 'next/navigation';
 import NotificationCustom from '@/helpers/notify';
 
@@ -29,44 +28,41 @@ const SignUp = () => {
   });
 
   const { handleSubmit, reset } = useForm();
-  const { registerWithEmailAndPassword } = useAuth();
-  const apiPublic = useApiPublic();
+  const { signUp } = useAuth();
   const router = useRouter();
 
   const handleSignUp = () => {
     const username = state.name;
     const email = state.email;
     const password = state.password;
+    const passConfirm = state.passConfirm;
+    const role = null;
 
-    registerWithEmailAndPassword(email, password)
-      .then((result: any) => {
-        const user = result.user;
-        console.log('user on firebase : ', user);
-        const userInfo = {
-          username: username,
-          email: email,
-          password: password
-        };
+    if (passConfirm !== password) {
+      NotificationCustom('error', 'passConfirm and password no match');
+    }
 
-        apiPublic.post('/auth/sign-up', userInfo).then((response) => {
-          console.log('user on database : ', response.data);
-          NotificationCustom('success', 'Signed up successfully');
-          reset();
-          router.push('/sign-in');
-        });
+    signUp(username, email, password, role!)
+      .then((response) => {
+        console.log('response: ', response);
+        NotificationCustom('success', response.data.message);
+        router.push('/sign-in');
       })
-      .catch((error: any) => {
+      .catch((error: string) => {
         console.log('error: ', error);
-        NotificationCustom('error', error.response.message);
+        NotificationCustom('error', error);
+        reset();
         router.push('/sign-up');
       });
   };
 
   return (
     <div className={'w-full h-full ' + flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })}>
-      <div className='sign_up_container'>
-        <h2 className='sign_up_title'>Sign up</h2>
-        <form className='sign_up_form' onSubmit={handleSubmit(handleSignUp)}>
+      <div className='sign_up_container flex flex-col items-center justify-start'>
+        <div className={`w-full flex flex-row items-center justify-center py-2`}>
+          <h2 className='sign_up_title'>Sign up</h2>
+        </div>
+        <form className='sign_up_form pt-4' onSubmit={handleSubmit(handleSignUp)}>
           <CommonInput
             onblur={() => handleBlurChecking('text', 'nameError', state.name, setField)}
             inputValue={state.name}
@@ -80,55 +76,69 @@ const SignUp = () => {
             placeholder='Please, enter name'
             labelTileClassName='text-white'
           />
-          <div className='w-full py-1 gap-3 flex-col'>
-            <CommonInput
-              onblur={() => handleBlurChecking('email', 'emailError', state.email, setField)}
-              passHidden={passHidden}
-              inputValue={state.email}
-              typeInput='email'
-              setField={setField}
-              field='email'
-              error={state.emailError}
-              hidden={false}
-              isAuth={true}
-              label_title='Email'
-              placeholder='Please, enter email'
-              labelTileClassName='text-white'
-            />
-            <CommonInput
-              onblur={() => handleBlurChecking('password', 'passwordError', state.password, setField)}
-              inputValue={state.password}
-              typeInput='password'
-              setField={setField}
-              field='password'
-              error={state.passwordError}
-              hidden={false}
-              iconPass={true}
-              isAuth={true}
-              passHidden={passHidden}
-              setPassHidden={setPassHidden}
-              label_title='Password'
-              placeholder='Please, enter password'
-              iconPassStyle='text-slate-100'
-              labelTileClassName='text-white'
-            />
-            <CommonInput
-              onblur={() =>
-                handleBlurChecking('passwordConfirm', 'passConfirmError', state.passConfirm, setField, state.password)
-              }
-              inputValue={state.passConfirm}
-              typeInput='password'
-              setField={setField}
-              field='passConfirm'
-              error={state.passConfirmError}
-              hidden={false}
-              isAuth={true}
-              label_title='Password Confirm'
-              placeholder='Please, enter password confirm'
-              iconPassStyle='text-slate-100'
-              labelTileClassName='text-white'
-            />
-          </div>
+          <CommonInput
+            onblur={() => handleBlurChecking('email', 'emailError', state.email, setField)}
+            passHidden={passHidden}
+            inputValue={state.email}
+            typeInput='email'
+            setField={setField}
+            field='email'
+            error={state.emailError}
+            hidden={false}
+            isAuth={true}
+            label_title='Email'
+            placeholder='Please, enter email'
+            labelTileClassName='text-white'
+          />
+          <CommonInput
+            onblur={() => handleBlurChecking('password', 'passwordError', state.password, setField)}
+            inputValue={state.password}
+            typeInput='password'
+            setField={setField}
+            field='password'
+            error={state.passwordError}
+            hidden={false}
+            iconPass={true}
+            isAuth={true}
+            passHidden={passHidden}
+            setPassHidden={setPassHidden}
+            label_title='Password'
+            placeholder='Please, enter password'
+            iconPassStyle='text-slate-100'
+            labelTileClassName='text-white'
+          />
+          <CommonInput
+            onblur={() =>
+              handleBlurChecking('passwordConfirm', 'passConfirmError', state.passConfirm, setField, state.password)
+            }
+            inputValue={state.passConfirm}
+            typeInput='password'
+            setField={setField}
+            field='passConfirm'
+            error={state.passConfirmError}
+            hidden={false}
+            isAuth={true}
+            label_title='Password Confirm'
+            placeholder='Please, enter password confirm'
+            iconPassStyle='text-slate-100'
+            labelTileClassName='text-white'
+          />
+          <CommonInput
+            onblur={() =>
+              handleBlurChecking('passwordConfirm', 'passConfirmError', state.passConfirm, setField, state.password)
+            }
+            inputValue={state.passConfirm}
+            typeInput='password'
+            setField={setField}
+            field='passConfirm'
+            error={state.passConfirmError}
+            hidden={false}
+            isAuth={true}
+            label_title='Role'
+            placeholder='Please, enter password confirm'
+            iconPassStyle='text-slate-100'
+            labelTileClassName='text-white'
+          />
           <ButtonCommon title='Sign up' onClick={() => console.log('Sign up')} />
         </form>
         <p className=''>

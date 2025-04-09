@@ -1,8 +1,10 @@
-/* eslint-disable @next/next/no-async-client-component */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
 import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
 import flex from '@/config/flex.config';
+import ExpiredPostChecking from '@/helpers/expired-check';
+import useApiPublic from '@/hooks/useApiPublic';
 import {
   ClockCircleOutlined,
   FilterOutlined,
@@ -12,22 +14,19 @@ import {
   SortAscendingOutlined,
   UsergroupAddOutlined
 } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import RenderContent from '../components/RenderContent';
 
 interface PostDetailPageProps {
-  params: Promise<{ id: number }>;
+  params: { id: number };
 }
 
-async function PostDetailPage({ params }: PostDetailPageProps) {
-  const id = (await params).id;
-  console.log('id: ', id);
-  // const [filteredItems] = useState(listRoom);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [itemsPerPage] = useState(2);
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
-
-  // const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+function PostDetailPage({ params }: PostDetailPageProps) {
+  const apiPublic = useApiPublic();
+  const [postItem, setPostItem] = useState<any>(null);
+  const [description, setDescription] = useState<string[]>([]);
+  const [experience, setExperience] = useState<string[]>([]);
+  console.log('res: ', params);
 
   const breadcrumbs = [
     {
@@ -35,17 +34,30 @@ async function PostDetailPage({ params }: PostDetailPageProps) {
       label: 'Trang chủ',
       prefixIcon: () => <HomeOutlined />
     },
-    // {
-    //   url: '/system/applicant',
-    //   label: 'Ứng viên',
-    //   prefixIcon: () => <FilterOutlined />
-    // },
     {
-      url: `/system/post/${id}`,
-      label: `Thông tin chi tiết công việc ${id}`,
+      url: `/system/post/${params.id}`,
+      label: `Thông tin chi tiết công việc`,
       prefixIcon: () => <FilterOutlined />
     }
   ];
+
+  useEffect(() => {
+    apiPublic
+      .get(`post/${params.id}`)
+      .then((res) => {
+        setPostItem(res.data.data);
+        setDescription(res.data.data.description.split('. '));
+        setExperience(res.data.data.require.description.split('. '));
+      })
+      .catch((error) => {
+        console.log('error: ', error);
+      });
+  }, [apiPublic, params.id]);
+
+  console.log('postItem: ', postItem);
+  console.log('description: ', description);
+
+  const { days, expired } = ExpiredPostChecking(postItem && postItem!.createAt, postItem && postItem!.duration);
 
   return (
     <div
@@ -72,34 +84,37 @@ async function PostDetailPage({ params }: PostDetailPageProps) {
                 className='w-full border border-slate-300 rounded-sm hover:border-green-500 cursor-default flex flex-col items-start justify-start'
               >
                 <div className='w-full flex flex-col items-start gap-4 p-2'>
-                  <h3 className='text-[26px] text-black font-bold line-clamp-2'>Nhan vien phuc vu</h3>
+                  <h3 className='text-[26px] text-black font-bold line-clamp-2'>{postItem && postItem!.title}</h3>
                   <div className='w-full flex flex-row justify-start gap-4'>
                     <div className='flex flex-row items-center justify-start gap-4'>
                       <SortAscendingOutlined className='text-white font-bold p-3 rounded-full bg-green-500' />
                       <p className='w-full flex flex-col items-start text-[16px] text-black text-start font-bold line-clamp-3 leading-6'>
                         <strong className='font-normal'>Muc luong : </strong>
-                        <span>Thoa thuan</span>
+                        <span>{postItem && !postItem.salary ? 'Thoa thuan' : postItem && !postItem.salary}</span>
                       </p>
                     </div>
                     <div className='flex flex-row items-center justify-start gap-4'>
                       <SortAscendingOutlined className='text-white font-bold p-3 rounded-full bg-green-500' />
                       <p className='w-full flex flex-col items-start text-[16px] text-black text-start font-bold line-clamp-3 leading-6'>
                         <strong className='font-normal'>Dia diem : </strong>
-                        <span>Da Nang</span>
+                        <span>{postItem && postItem!.company.work_place.address.city}</span>
                       </p>
                     </div>
                     <div className='flex flex-row items-center justify-start gap-4'>
                       <SortAscendingOutlined className='text-white font-bold p-3 rounded-full bg-green-500' />
                       <p className='w-full flex flex-col items-start text-[16px] text-black text-start font-bold line-clamp-3 leading-6'>
                         <strong className='font-normal'>Kinh nghiem : </strong>
-                        <span>Khong kinh nghiem</span>
+                        <span>{postItem && postItem!.require.experience}</span>
                       </p>
                     </div>
                   </div>
                   <div className='w-full flex flex-col justify-between py-4 gap-4'>
                     <div className='sm:w-3/4 w-full flex flex-row justify-start items-center gap-8'>
                       <p className='text-[14px] text-slate-800 font-normal py-1 px-2 bg-slate-100 rounded-sm'>
-                        <ClockCircleOutlined className='font-bold text-black mr-2' /> Han nop ho so : 13/03/2025
+                        <ClockCircleOutlined className='font-bold text-black mr-2' /> Han nop ho so :{' '}
+                        <span className={`${expired < days && 'text-orange-600'}`}>
+                          {expired < days ? 'Đã hết hạn ứng tuyển' : postItem && postItem.duration}
+                        </span>
                       </p>
                     </div>
                     <div className='w-full flex gap-2'>
@@ -114,53 +129,28 @@ async function PostDetailPage({ params }: PostDetailPageProps) {
             ))}
           </div>
           <div className='w-full flex flex-col items-start justify-start gap-3'>
-            <p className='text-[16px] text-black font-normal leading-8'>
-              <strong className=''>Mo ta cong viec : </strong> Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Officia, placeat fugit distinctio ipsum eveniet reprehenderit alias. Numquam quae consequatur enim nobis
-              commodi iste cupiditate non. Minus cumque corporis sunt amet. Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Dolorum rem necessitatibus possimus beatae enim adipisci, voluptates dolore neque iste
-              vel quaerat dicta maxime saepe! Sequi modi inventore magni fuga illo.
-            </p>
-            <p className='text-[16px] text-black font-normal leading-8'>
-              <strong className=''>Yeu cau ung vien : </strong> Lorem ipsum dolor sit, amet consectetur adipisicing
-              elit. Officia, placeat fugit distinctio ipsum eveniet reprehenderit alias. Numquam quae consequatur enim
-              nobis commodi iste cupiditate non. Minus cumque corporis sunt amet. Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Eum, explicabo? Cupiditate iusto sit, molestiae sequi consequuntur voluptatem culpa aut
-              veritatis vel blanditiis quo perspiciatis, assumenda deleniti perferendis molestias! Labore, nulla!
-            </p>
+            <RenderContent contents={description} title='Mô tả công việc' />
+            <RenderContent contents={experience} title='Yêu cầu công việc' />
+            <RenderContent contents={experience} title='Quyền lợi' />
+            <RenderContent contents={experience} title='Kỹ năng' />
+
             <div className='w-full'>
-              <strong className='text-[16px] text-black'>Quyen loi : </strong>
+              <strong className='text-[16px] text-black'>Thời gian làm việc :</strong>
               <ul className='list-disc px-4 py-3 flex flex-col gap-3'>
-                <li className='text-[16px] text-black font-normal'>Javascript</li>
-                <li className='text-[16px] text-black font-normal'>ReactJS</li>
-                <li className='text-[16px] text-black font-normal'>Typescript</li>
+                <li className='text-[16px] text-black font-normal'>Từ thứ 2 đến thứ 6, thứ 7 và chủ nhật nghỉ</li>
               </ul>
             </div>
             <div className='w-full'>
-              <strong className='text-[16px] text-black'>Dia diem : </strong>
-              <ul className='list-disc px-4 py-3 flex flex-col gap-3'>
-                <li className='text-[16px] text-black font-normal'>Javascript</li>
-                <li className='text-[16px] text-black font-normal'>ReactJS</li>
-                <li className='text-[16px] text-black font-normal'>Typescript</li>
-              </ul>
-            </div>
-            <div className='w-full'>
-              <strong className='text-[16px] text-black'>Thoi gian lam viec : </strong>
-              <ul className='list-disc px-4 py-3 flex flex-col gap-3'>
-                <li className='text-[16px] text-black font-normal'>Thu 2 - thu 6</li>
-              </ul>
-            </div>
-            <div className='w-full'>
-              <strong className='text-[16px] text-black'>Cach thuc ung tuyen : </strong>
+              <strong className='text-[16px] text-black'>Cách thức ứng tuyển :</strong>
               <ul className='list-disc px-4 py-3 flex flex-col gap-3'>
                 <li className='text-[16px] text-black font-normal'>
-                  Ung vien nop ho so ung tuyen truc tiep bang cach bam Ung tuyen ngay ben duoi!
+                  Ứng viên nộp hồ sơ trực tiếp hoặc trực tuyến bắng cách nhấn vào nút ứng tuyển bên dưới!
                 </li>
               </ul>
             </div>
             <div className='w-full flex gap-2'>
               <button className='w-full px-2 py-2 rounded-md text-white text-[16px] font-bold active:shadow-slate-500 active:shadow-sm cursor-pointer bg-green-500 line-clamp-1'>
-                Ung tuyen ngay
+                Ứng tuyển ngay
               </button>
               <HeartOutlined className='border border-slate-500 hover:border-green-500 rounded-md text-green-500 font-medium cursor-pointer py-2 px-4' />
             </div>
@@ -182,25 +172,25 @@ async function PostDetailPage({ params }: PostDetailPageProps) {
                     "url('https://www.freeiconspng.com/thumbs/business-icon-png/corporate-icon-png-autocorrect-for-business-13.png')"
                 }}
               ></div>
-              <h3 className='text-black font-bold line-clamp-3'>Cong Ty ABC</h3>
+              <h3 className='text-black font-bold line-clamp-3'>{postItem && postItem!.company.title}</h3>
             </div>
             <p className='w-full text-[16px] text-black text-start font-bold line-clamp-2 leading-8'>
               <strong className='font-normal'>
-                <UsergroupAddOutlined /> Quy mo :{' '}
+                <UsergroupAddOutlined /> Quy mô :
               </strong>
-              12 nhan vien
+              {postItem && postItem!.company.scale} nhân viên
             </p>
             <p className='w-full text-[16px] text-black text-start font-bold line-clamp-2 leading-8'>
               <strong className='font-normal'>
-                <SlackSquareOutlined /> Linh vuc :{' '}
+                <SlackSquareOutlined /> Lĩnh vực :
               </strong>
-              Kinh doanh
+              {postItem && postItem!.type_of_post.title}
             </p>
             <p className='w-full text-[16px] text-black text-start font-bold line-clamp-2 leading-8'>
               <strong className='font-normal'>
-                <HomeOutlined /> Dia diem :{' '}
+                <HomeOutlined /> Địa điểm :
               </strong>
-              K29/8 - Tran Duc Thao, Hoa Cuong Nam, Hai Chau, Da Nang
+              {postItem && postItem!.company.work_place.address.city}
             </p>
           </div>
           <div className='w-full flex flex-col items-start justify-start rounded-md shadow-sm shadow-slate-600 gap-4 px-2 py-4'>
@@ -208,29 +198,29 @@ async function PostDetailPage({ params }: PostDetailPageProps) {
             <div className='w-full flex flex-row items-center justify-start gap-4'>
               <SortAscendingOutlined className='text-white font-bold p-3 rounded-full bg-green-500' />
               <p className='w-full flex flex-col items-start text-[16px] text-black text-start font-bold line-clamp-3 leading-6'>
-                <strong className='font-normal'>Cap bac : </strong>
-                <span>Nhan vien</span>
+                <strong className='font-normal'>Cấp bậc : </strong>
+                <span>{postItem && postItem!.require.level}</span>
               </p>
             </div>
             <div className='w-full flex flex-row items-center justify-start gap-4'>
               <SortAscendingOutlined className='text-white font-bold p-3 rounded-full bg-green-500' />
               <p className='w-full flex flex-col items-start text-[16px] text-black text-start font-bold line-clamp-3 leading-6'>
-                <strong className='font-normal'>Hoc van : </strong>
-                <span>Pho thong</span>
+                <strong className='font-normal'>Trình độ : </strong>
+                <span>{postItem && postItem!.require.education}</span>
               </p>
             </div>
             <div className='w-full flex flex-row items-center justify-start gap-4'>
               <SortAscendingOutlined className='text-white font-bold p-3 rounded-full bg-green-500' />
               <p className='w-full flex flex-col items-start text-[16px] text-black text-start font-bold line-clamp-3 leading-6'>
-                <strong className='font-normal'>So luong tuyen : </strong>
-                <span>2 nguoi</span>
+                <strong className='font-normal'>Số luọng tuyển : </strong>
+                <span>{postItem && postItem!.require.quantity} nguoi</span>
               </p>
             </div>
             <div className='w-full flex flex-row items-center justify-start gap-4'>
               <SortAscendingOutlined className='text-white font-bold p-3 rounded-full bg-green-500' />
               <p className='w-full flex flex-col items-start text-[16px] text-black text-start font-bold line-clamp-3 leading-6'>
-                <strong className='font-normal'>Hinh thuc lam viec : </strong>
-                <span>Toan thoi gian</span>
+                <strong className='font-normal'>Hình thức làm việc : </strong>
+                <span>{postItem && postItem!.work_type}</span>
               </p>
             </div>
           </div>
