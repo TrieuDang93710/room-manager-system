@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SearchComponent from '@/components/molecules/Search';
 import TableComponent from '@/components/molecules/Table';
 import ButtonCommon from '@/components/atoms/ButtonCommon';
@@ -8,30 +8,44 @@ import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import { DeleteOutlined, PlusOutlined, ReadOutlined } from '@ant-design/icons';
 import './field.css';
 import AddField from './components/AddField';
+import useField from '@/hooks/useFeild';
+import Remove from './components/Remove';
 
 const FieldManagerPage = () => {
   const [openAddField, setOpenAddField] = useState<boolean>(false);
+  const [openRemoveModal, setOpenRemoveModal] = useState<boolean>(false);
+  const [fieldId, setFieldId] = useState<number>(0);
+  const [fieldSort, setFieldSort] = useState<any[]>([]);
+  const { fields } = useField();
+
+  useEffect(() => {
+    setFieldSort(fields.sort((a: any, b: any) => a.id - b.id));
+  }, [fields]);
 
   const closeAddFieldHandler = () => {
     setOpenAddField(!openAddField);
   };
 
-  const headers = ['Tiêu đề', 'Mô tả', 'Ngày tạo', 'Xử lý'];
+  const closeRemoveHandler = () => {
+    setOpenRemoveModal(!openRemoveModal);
+  };
 
-  const posts = Array.from({ length: 20 }).map((_, index) => ({
-    title: `Kinh doanh ${index + 1}`,
-    field: 'Viết mô tả ở đây',
-    date: '30 - 03 - 2025'
-  }));
+  const headers = ['#', 'Tiêu đề', 'Ngày tạo', 'Xử lý'];
 
-  const renderRow = (post: any) => (
+  const renderRow = (field: any) => (
     <>
-      <td className='truncate px-2'>{post.title}</td>
-      <td className='truncate px-2'>{post.field}</td>
-      <td className='truncate px-2'>{post.date}</td>
+      <td className='truncate px-2'>{field.id}</td>
+      <td className='truncate px-2'>{field.title}</td>
+      <td className='truncate px-2'>{field.createAt}</td>
       <td className='flex items-center justify-center sm:gap-2 px-2'>
         <ReadOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />
-        <DeleteOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />
+        <DeleteOutlined
+          onClick={() => {
+            setOpenRemoveModal(!openRemoveModal);
+            setFieldId(field.id);
+          }}
+          className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
+        />
       </td>
     </>
   );
@@ -64,13 +78,19 @@ const FieldManagerPage = () => {
           <SearchComponent />
         </div>
 
-        <TableComponent headers={headers} data={posts} renderRow={renderRow} />
+        <TableComponent headers={headers} data={fieldSort} renderRow={renderRow} />
 
         <div className='w-full flex justify-end py-1'>
           <PaginationComponent />
         </div>
       </div>
       <AddField openAddField={openAddField} setOpenAddField={setOpenAddField} onClick={closeAddFieldHandler} />
+      <Remove
+        openRemove={openRemoveModal}
+        setOpenRemove={setOpenRemoveModal}
+        onClick={closeRemoveHandler}
+        id={fieldId}
+      />
     </div>
   );
 };

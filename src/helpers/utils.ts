@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import InputTypeEnum from '@/enum/input-type.enum';
-import { checkPassword, checkEmail } from '@/helpers/validate';
+import { checkEmail } from '@/helpers/validate';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -14,7 +14,7 @@ export function handleBlurChecking(
   setValue: (field: string, val: string) => void,
   passConfirm?: string
 ) {
-  if (!value.trim()) {
+  if (value.trim() === '') {
     setValue(field, 'This field cannot be left blank.');
   } else {
     if (type === InputTypeEnum.EMAIL) {
@@ -25,7 +25,8 @@ export function handleBlurChecking(
         setValue(field, '');
       }
     } else if (type === InputTypeEnum.PASSWORD) {
-      const errors: string[] = checkPassword(value);
+      const errors: string[] = [];
+      // const errors: string[] = checkPassword(value);
 
       let error: string;
 

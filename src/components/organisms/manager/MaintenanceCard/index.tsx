@@ -14,10 +14,10 @@ const MaintenanceCard = ({ className, title, count, icon }: MaintenanceCardProps
       <Card className='dark:bg-[#1a1a1a]'>
         <div className='flex justify-between'>
           <div className='flex flex-col items-stretch gap-6'>
-            <p className='text-[#292929] dark:text-[#dedede] font-bold text-[15px]'>{title}</p>
-            <p className='text-[#1b1b1b] dark:text-[#f2f2f2] font-bold text-3xl'>{count}</p>
+            <p className='text-[#292929] dark:text-blue-600 font-bold text-[15px]'>{title}</p>
+            <p className='text-[#1b1b1b] dark:text-blue-600 font-bold text-3xl'>{count}</p>
           </div>
-          <span className='text-[#0e0e0e] dark:text-[#dedede] font-[20px] text-xl'>{icon}</span>
+          <span className='text-[#0e0e0e] dark:text-blue-600 font-[20px] text-xl'>{icon}</span>
         </div>
       </Card>
     </div>

@@ -1,0 +1,44 @@
+.slide_container {
+    @apply w-[90%] relative flex flex-col items-center shadow-sm dark:shadow-md shadow-blue-500 dark:shadow-blue-600 dark:bg-slate-300 gap-3 p-4 mt-4
+}
+
+.h2_heading {
+    @apply text-2xl font-bold py-4 dark:text-blue-600
+}
+
+.slide_content {
+    @apply w-full shadow-sm shadow-blue-700 dark:shadow-md dark:shadow-blue-700 flex flex-row items-center justify-between gap-2 rounded-sm p-4
+}
+
+.slide_content .left_content {
+    @apply w-3/4 h-[40vh] relative flex flex-row items-center justify-center px-2
+}
+
+.left_content div .top_card {
+    @apply absolute top-0 right-0 w-[80%] h-[30vh] bg-green-500
+}
+
+.slide_content .right_content {
+    @apply w-1/3 flex flex-row items-center justify-center p-2
+}
+
+@keyframes card_appear {
+    0% {
+        opacity: 0;
+        left: 3.25rem;
+        bottom: 0;
+    }
+
+    /* 50% {
+        opacity: 0.5;
+    } */
+
+    /* 75% {
+        opacity: 0.75;
+    } */
+
+    100% {
+        opacity: 1;
+        right: 0;
+    }
+}

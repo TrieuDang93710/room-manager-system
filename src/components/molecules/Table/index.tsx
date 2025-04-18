@@ -12,17 +12,17 @@ const TableComponent = <T extends object>({ headers, data, renderRow }: TableCom
         <thead className='w-full border text-slate-50'>
           <tr className='w-full border'>
             {headers.map((th, index) => (
-              <th key={index} className='sticky top-0 bg-green-800 dark:bg-green-800 w-[15%] p-2'>
+              <th key={index} className='sticky top-0 bg-blue-600 dark:bg-blue-600 w-[15%] p-2'>
                 {th}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className='w-full'>
           {data.map((item, index) => (
             <tr
               key={index}
-              className='cursor-default text-center border bg-slate-50 hover:bg-slate-100 dark:text-[#e6e6e6] dark:bg-transparent dark:hover:bg-slate-900'
+              className='w-full cursor-default text-center border bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100'
             >
               {renderRow(item, index)}
             </tr>

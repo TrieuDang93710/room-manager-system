@@ -1,6 +1,6 @@
 
 .selection_box  {
-    @apply px-3 py-1 border-[2px] rounded-sm border-green-600 w-[50%] dark:text-[#fff] dark:border dark:border-[#fff]
+    @apply px-3 py-1 border-[2px] rounded-sm border-blue-600 w-[50%] dark:text-blue-600 dark:border dark:border-blue-600
 }
 
 .selection_box select {

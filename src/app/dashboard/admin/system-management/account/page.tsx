@@ -4,35 +4,67 @@ import ButtonCommon from '@/components/atoms/ButtonCommon';
 import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import SearchComponent from '@/components/molecules/Search';
 import TableComponent from '@/components/molecules/Table';
-import { EditOutlined, MailOutlined, PlusOutlined } from '@ant-design/icons';
+import useUser from '@/hooks/useUser';
+import { DeleteOutlined, EditOutlined, MailOutlined, PlusOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import Approve from './components/Approve';
+import Remove from './components/Remove';
 
 const AccountManagerPage = () => {
-  const headers = ['Họ và tên', 'Địa chỉ email', 'Ngày tạo tài khoản', 'Vai trò', 'Hàng động'];
+  const [openApproveModal, setOpenApproveModal] = useState<boolean>(false);
+  const [openRemoveModal, setOpenRemoveModal] = useState<boolean>(false);
+  const [userId, setUserId] = useState<number>(0);
+  const [userSort, setUserSort] = useState<any[]>([]);
+  const { users } = useUser();
 
-  const account = Array.from({ length: 5 }).map((_, index) => ({
-    username: `Trần Thị Thanh Trúc ${index + 1}`,
-    email: 'tructtt123@gmail.com',
-    date: '15 - 03 - 2025',
-    role: 'Ứng viên'
-  }));
+  useEffect(() => {
+    setUserSort(users.sort((a: any, b: any) => a.id - b.id));
+  }, [users]);
+
+  const closeHandler = () => {
+    setOpenApproveModal(!openApproveModal);
+  };
+
+  const closeRemoveHandler = () => {
+    setOpenRemoveModal(!openRemoveModal);
+  };
+
+  const headers = ['#', 'Họ và tên', 'Địa chỉ email', 'Ngày tạo tài khoản', 'Vai trò', 'Hàng động'];
 
   const renderRow = (account: any) => (
     <>
+      <td className='truncate px-2'>{account.id}</td>
       <td className='truncate px-2'>{account.username}</td>
       <td className='truncate px-2'>{account.email}</td>
-      <td className='truncate px-2'>{account.date}</td>
+      <td className='truncate px-2'>{account.createAt}</td>
       <td className={`truncate px-2 ${account.role === 'Ứng viên' ? 'text-blue-700 font-bold' : ''}`}>
-        {account.role}
+        {account.role[0]}
       </td>
       <td className='flex items-center justify-center sm:gap-2 px-2'>
-        <MailOutlined
-          onClick={() => alert('click me')}
-          className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
-        />
-        <EditOutlined
-          onClick={() => alert('click me')}
-          className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
-        />
+        {!account.block ? (
+          <>
+            <MailOutlined
+              onClick={() => alert('click me')}
+              className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
+            />
+            <EditOutlined
+              onClick={() => {
+                setOpenApproveModal(!openApproveModal);
+                setUserId(account.id);
+              }}
+              className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
+            />
+            <DeleteOutlined
+              onClick={() => {
+                setOpenRemoveModal(!openRemoveModal);
+                setUserId(account.id);
+              }}
+              className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
+            />
+          </>
+        ) : (
+          <p className='p-3'>None action</p>
+        )}
       </td>
     </>
   );
@@ -65,12 +97,19 @@ const AccountManagerPage = () => {
           <SearchComponent />
         </div>
 
-        <TableComponent headers={headers} data={account} renderRow={renderRow} />
+        <TableComponent headers={headers} data={userSort} renderRow={renderRow} />
 
         <div className='w-full flex justify-end py-1'>
           <PaginationComponent />
         </div>
       </div>
+      <Approve setOpenApprove={setOpenApproveModal} openApprove={openApproveModal} onClick={closeHandler} id={userId} />
+      <Remove
+        openRemove={openRemoveModal}
+        setOpenRemove={setOpenRemoveModal}
+        onClick={closeRemoveHandler}
+        id={userId}
+      />
     </div>
   );
 };

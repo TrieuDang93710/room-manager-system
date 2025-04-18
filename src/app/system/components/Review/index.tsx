@@ -9,7 +9,7 @@ const ReviewUs = () => {
         {Array.from({ length: 4 }).map((_, index) => (
           <CardSquare key={index + 1}>
             <p className='text-[13px] text-slate-800 font-normal py-1 line-clamp-4'>
-              <strong className='font-bold text-black'>Mo ta : </strong>Lorem ipsum dolor sit amet, consectetur
+              <strong className='font-bold text-black dark:text-blue-600'>Mo ta : </strong>Lorem ipsum dolor sit amet, consectetur
               adipisicing elit. Quas quisquam possimus perferendis illum nulla incidunt ipsum dignissimos natus. Nihil,
               deleniti aliquam. Vel, officia reiciendis provident unde commodi perferendis. Totam, vel?
             </p>

@@ -12,7 +12,7 @@ interface AddComponentProps {
 const AddComponent = ({ title, onClick, action, isButton, children }: AddComponentProps) => {
   return (
     <div className='w-full flex flex-col items-start justify-start gap-2 px-2'>
-      <h3 className='text-[#334155] text-[14px] font-normal'>
+      <h3 className='text-black dark:text-blue-600 text-[16px] font-normal'>
         <strong>{title} : </strong>
       </h3>
       <div className='w-full flex items-center justify-start gap-3 px-4'>

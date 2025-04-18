@@ -1,37 +1,69 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PostCardSquareComponent } from '@/components/organisms/system/Card/PostCardSquare';
-import { listRoom } from '@/faker/data';
+import useField from '@/hooks/useFeild';
+import usePost from '@/hooks/usePost';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const PostRender = () => {
   const router = useRouter();
-  const [filteredItems] = useState(listRoom);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(2);
+  const { posts } = usePost();
+  const { fields } = useField();
+
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [selectedField, setSelectedField] = useState('all');
+  // const [sortOption, setSortOption] = useState('default');
+  const [currentPage, setCurrentPage] = useState(8);
+  const [itemsPerPage] = useState(8);
+  // const postsLocal = useSelector((state: any) => state.posts);
+
+  const filterItems = (field: any) => {
+    const filtered = field === 'all' ? posts : posts.filter((item: any) => item.type_of_post.title === field);
+
+    setFilteredItems(filtered);
+    setSelectedField(field);
+    setCurrentPage(1);
+  };
+
+  const showAll = () => {
+    filterItems('all');
+    setSelectedField('all');
+    setCurrentPage(1);
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
-  console.log('currentItems: ', currentItems);
+  const itemsRender = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = itemsRender;
+  // const currentItems = !itemsRender ? itemsRender : posts;
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  console.log('filteredItems: ', filteredItems);
 
   return (
     <div className='w-[90%] flex flex-col items-center gap-3 px-2'>
       <h2 className='text-2xl font-bold mt-8'>Bài Đăng Nổi Bật</h2>
       <div className='lg:w-[60%] md:w-3/4 w-full flex md:flex-row flex-1 items-center justify-center gap-2'>
-        {Array.from({ length: 10 }).map((_, index) => (
+        <p
+          onClick={showAll}
+          className={`w-[20%] text-[14px] text-center truncate mb-4 font-medium hover:text-blue-600 hover:underline-offset-1 cursor-pointer ${selectedField === 'all' && 'text-blue-600'}`}
+        >
+          Tất cả
+        </p>
+        {fields.map((item: any) => (
           <p
-            key={index}
-            className='w-[20%] text-[14px] text-center truncate text-slate-950 mb-4 font-medium hover:text-green-500 hover:underline-offset-1 cursor-pointer'
+            key={item.id}
+            onClick={() => filterItems(`${item && item.title}`)}
+            className={`w-[20%] text-[14px] text-center truncate mb-4 font-medium hover:text-blue-600 hover:underline-offset-1 cursor-pointer ${selectedField === `${item.title}` && 'text-blue-600'}`}
           >
-            Kinh doanh {index + 1}
+            {item.title}
           </p>
         ))}
       </div>
       <div className='w-full flex sm:grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around gap-3'>
-        {Array.from({ length: 1 }).map((_, index) => (
-          <PostCardSquareComponent key={index + 1} onClick={() => router.push(`/system/post/${index + 1}`)} />
+        {currentItems.map((item: any) => (
+          <PostCardSquareComponent key={item.id} post={item} onClick={() => router.push(`/system/post/${item.id}`)} />
         ))}
       </div>
       <div className='flex justify-center my-8'>

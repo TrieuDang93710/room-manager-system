@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/helpers/utils';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/auth/useAuth';
 import listFuncInterface from '@/interfaces/listFunction/index';
 import { LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, MessageOutlined } from '@ant-design/icons';
 
@@ -44,11 +44,11 @@ const FunctionListManager = ({
       className={
         hidden
           ? cn(
-              'relative z-30 md:w-1/12 w-1/8 flex flex-col items-center justify-start bg-blue-500 h-screen border border-green-500 p-5',
+              'relative z-30 md:w-1/12 w-1/8 flex flex-col items-center justify-start bg-blue-500 dark:bg-blue-900 h-screen p-5',
               className
             )
           : cn(
-              'relative z-30 md:w-1/6 w-1/4 flex flex-col items-start justify-start bg-blue-500 h-screen border border-green-500 p-5',
+              'relative z-30 md:w-1/6 w-1/4 flex flex-col items-start justify-start bg-blue-500 dark:bg-blue-900 h-screen p-5',
               className
             )
       }

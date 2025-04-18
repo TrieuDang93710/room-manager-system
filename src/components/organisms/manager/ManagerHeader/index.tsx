@@ -13,7 +13,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import Modal from '@/components/molecules/Modal';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/auth/useAuth';
 
 interface ManagerHeaderProps {
   isHiddenMenu?: boolean;
@@ -35,7 +35,7 @@ const ManagerHeader = ({ setIsHiddenMenu, isHiddenMenu }: ManagerHeaderProps) =>
   };
 
   return (
-    <div className='w-full z-20 fixed right-0 shadow-md bg-blue-100 dark:bg-[#0D1116] p-3'>
+    <div className='w-full z-20 fixed right-0 shadow-md bg-blue-100 dark:bg-blue-800 p-3'>
       <div onClick={() => setIsHiddenMenu(!isHiddenMenu)} className='absolute top-5 left-1 md:hidden'>
         <MenuUnfoldOutlined className='text-black dark:text-white text-[16px] font-bold text-xl hover:cursor-pointer' />
       </div>

@@ -6,7 +6,7 @@ import { FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from 
 import { useState } from 'react';
 import CheckboxCard from '@/components/molecules/CheckboxCard';
 import { useRouter } from 'next/navigation';
-import { PostingAgentComponent } from '@/components/organisms/system/Card/PostAgent';
+import { AgentCardComponent } from '@/components/organisms/system/Card/AgentCard';
 
 const BusinessPage = () => {
   const router = useRouter();
@@ -90,7 +90,7 @@ const BusinessPage = () => {
           </div>
           <div className='w-[90%] flex sm:grid md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around gap-4 py-10'>
             {Array.from({ length: 1 }).map((_, index) => (
-              <PostingAgentComponent key={index + 1} onClick={() => router.push(`/system/business/${index + 1}`)} />
+              <AgentCardComponent key={index + 1} onClick={() => router.push(`/system/business/${index + 1}`)} />
             ))}
           </div>
         </div>

@@ -1,0 +1,16 @@
+
+.room_container {
+    @apply w-full flex flex-col items-end gap-6 snap-y pt-20 md:px-3
+}
+
+.room_content {
+    @apply w-full  dark:bg-[#1a1a1a00]
+}
+
+.room_content div p {
+    @apply font-bold dark:text-[#e6e6e6]
+}
+
+.add_button {
+    @apply w-[90%] bg-green-500 dark:bg-green-500 font-bold text-[15px] py-1 rounded-md text-[#fff] hover:bg-green-600 dark:border-[1px] dark:border-[#fff] dark:hover:bg-green-600 dark:hover:text-slate-300 dark:text-white
+}

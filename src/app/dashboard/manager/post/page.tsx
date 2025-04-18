@@ -10,21 +10,21 @@ import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import {
   AppstoreOutlined,
   DeleteOutlined,
-  EyeOutlined,
   PlusOutlined,
   ReadOutlined,
-  TableOutlined,
-  TeamOutlined
+  TableOutlined
 } from '@ant-design/icons';
 import './room.css';
 import AddField from './components/AddField';
-import AddBusiness from './components/AddBusiness';
+import AddBusiness from '../business/components/AddBusiness';
+import usePost from '@/hooks/usePost';
 
 const RoomManagerPage = () => {
   const [openAddPost, setOpenAddPost] = useState<boolean>(false);
   const [openAddField, setOpenAddField] = useState<boolean>(false);
   const [openAddBusiness, setOpenAddBusiness] = useState<boolean>(false);
   const [viewRender, setViewRender] = useState<boolean>(false);
+  const { posts } = usePost();
 
   const closeAddPostHandler = () => {
     setOpenAddPost(!openAddPost);
@@ -38,28 +38,16 @@ const RoomManagerPage = () => {
     setOpenAddBusiness(!openAddBusiness);
   };
 
-  const headers = ['Tiêu đề', 'Lĩnh vực', 'Ngày hết hạn', 'Lượt xem', 'Trạng thái', 'Ứng viên', 'Xử lý'];
+  const headers = ['#', 'Tiêu đề', 'Lĩnh vực', 'Ngày hết hạn', 'Trạng thái', 'Xử lý'];
 
-  const posts = Array.from({ length: 20 }).map((_, index) => ({
-    title: `Nhân viên kinh doanh ${index + 1}`,
-    field: 'Kinh doanh',
-    date: '11 - 03 - 2025',
-    view: '1',
-    status: 'Chưa duyệt'
-  }));
-
-  const renderRow = (post: any) => (
+  const renderRow = (post: any, index: any) => (
     <>
+      <td className='truncate px-2'>{index + 1}</td>
       <td className='truncate px-2'>{post.title}</td>
-      <td className='truncate px-2'>{post.field}</td>
-      <td className='truncate px-2'>{post.date}</td>
-      <td className='truncate px-2'>
-        <EyeOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />{' '}
-        {post.view}
-      </td>
-      <td className='truncate px-2'>{post.status}</td>
-      <td className='truncate px-2'>
-        <TeamOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />{' '}
+      <td className='truncate px-2'>{post.type_of_post.title}</td>
+      <td className='truncate px-2'>{post.duration}</td>
+      <td className={`truncate px-2 ${post && post.status[0] !== 'approved' ? 'text-orange-600' : 'text-green-600'}`}>
+        {post.status[0]}
       </td>
       <td className='flex items-center justify-center sm:gap-2 px-2'>
         <ReadOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />
@@ -69,10 +57,10 @@ const RoomManagerPage = () => {
   );
 
   return (
-    <div className='relative w-full h-screen bg-[#f7f7f7] dark:bg-[#242424] flex flex-col items-end gap-6 snap-y pt-20 md:px-3'>
+    <div className='relative w-full h-screen bg-[#f7f7f7] dark:bg-slate-900 flex flex-col items-end gap-6 snap-y pt-20 md:px-3'>
       <div className='w-full py-2 px-2 flex-col justify-center md:gap-3 gap-y-2'>
-        <div className='w-full flex sm:flex-row flex-col sm:items-center sm:justify-between items-start justify-start border shadow-sm shadow-slate-500 rounded-sm px-2 gap-1'>
-          <h3 className='text-[16px] text-black font-bold hover:text-blue-500 hover:underline-offset-1 cursor-default p-2'>
+        <div className='w-full flex sm:flex-row flex-col sm:items-center sm:justify-between items-start justify-start border shadow-sm dark:border-none dark:bg-blue-800 shadow-slate-500 rounded-sm px-2 gap-1'>
+          <h3 className='text-[16px] text-black dark:text-white font-bold hover:text-blue-500 hover:underline-offset-1 cursor-default p-2'>
             Quản lý bài đăng
           </h3>
           <div className='w-1/2 flex justify-end items-center gap-3'>
@@ -87,16 +75,16 @@ const RoomManagerPage = () => {
               </select>
             </div>
             <p className='text-slate-800 text-[14px] flex items-center gap-2'>
-              <strong className='font-bold'>Hiển thị : </strong>
+              <strong className='font-bold dark:text-white'>Hiển thị : </strong>
               {viewRender ? (
                 <AppstoreOutlined
                   onClick={() => setViewRender(!viewRender)}
-                  className='text-green-500 font-bold text-xl cursor-pointer active:shadow-slate-500 active:shadow-sm'
+                  className='text-blue-600 dark:text-white font-bold text-xl cursor-pointer active:shadow-slate-500 active:shadow-sm'
                 />
               ) : (
                 <TableOutlined
                   onClick={() => setViewRender(!viewRender)}
-                  className='text-green-500 font-bold text-2xl cursor-pointer active:shadow-slate-500 active:shadow-sm'
+                  className='text-blue-600 dark:text-white font-bold text-2xl cursor-pointer active:shadow-slate-500 active:shadow-sm'
                 />
               )}
             </p>
@@ -111,12 +99,12 @@ const RoomManagerPage = () => {
           {viewRender ? (
             <SearchComponent />
           ) : (
-            <div className='border border-slate-300 hover:border-green-500 cursor-pointer rounded-sm px-2 py-1'>
+            <div className='border border-slate-300 dark:border-blue-600 hover:border-green-500 cursor-pointer rounded-sm px-2 py-1'>
               <select className='px-2 border-none bg-transparent'>
-                <option className='border-none bg-transparent checked:bg-transparent' value=''>
+                <option className='border-none bg-transparent dark:text-blue-600 checked:bg-transparent' value=''>
                   All
                 </option>
-                <option className='border-none bg-transparent checked:bg-transparent' value='applied'>
+                <option className='border-none bg-transparent dark:text-blue-600 checked:bg-transparent' value='applied'>
                   10
                 </option>
               </select>
@@ -126,9 +114,9 @@ const RoomManagerPage = () => {
         {viewRender ? (
           <TableComponent headers={headers} data={posts} renderRow={renderRow} />
         ) : (
-          <div className='w-full border h-[60vh] border-green-500 flex flex-col items-center justify-start hide-scrollbar overflow-y-auto gap-4 p-4 mt-4'>
-            {Array.from({ length: 4 }).map((_, index) => (
-              <PostCardRow applied={false} key={index} />
+          <div className='w-full h-[60vh] flex flex-col items-center justify-start hide-scrollbar overflow-y-auto gap-4 p-4 mt-4'>
+            {posts.map((item: any) => (
+              <PostCardRow key={item.id} postItem={item} />
             ))}
           </div>
         )}

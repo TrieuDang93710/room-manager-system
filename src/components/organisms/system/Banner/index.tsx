@@ -1,45 +1,45 @@
-'use client'
-import { useEffect, useState } from 'react'
-import BannerCommon from './banner'
-import { banners } from '@/faker/data'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+'use client';
+import { useEffect, useState } from 'react';
+import BannerCommon from './banner';
+import { banners } from '@/faker/data';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const BannerCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0)
-  const [isHovered, setIsHovered] = useState<boolean>(false)
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const prevSlide = (): void => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + banners.length) % banners.length)
-  }
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + banners.length) % banners.length);
+  };
 
   const nextSlide = (): void => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length)
-  }
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
+  };
 
   useEffect(() => {
     if (!isHovered) {
       const interval = setInterval(() => {
-        nextSlide()
-      }, 6000)
+        nextSlide();
+      }, 6000);
 
       return () => {
-        clearInterval(interval)
-      }
+        clearInterval(interval);
+      };
     }
-  }, [isHovered])
+  }, [isHovered]);
 
   // Handle mouse over event
   const handleMouseOver = (): void => {
-    setIsHovered(true)
-  }
+    setIsHovered(true);
+  };
 
   // Handle mouse leave event
   const handleMouseLeave = (): void => {
-    setIsHovered(false)
-  }
+    setIsHovered(false);
+  };
 
   return (
-    <div className='relative flex flex-col items-center justify-end w-full h-[40vh] md:h-[60vh]'>
+    <div className='relative flex flex-col items-center justify-end w-full h-[40vh] md:h-[60vh] cursor-pointer'>
       <div onMouseEnter={handleMouseOver} onMouseLeave={handleMouseLeave} className='relative w-full h-full'>
         <BannerCommon banners={banners[currentIndex]} />
       </div>
@@ -59,8 +59,9 @@ const BannerCarousel = () => {
           ></div>
         ))}
       </div>
+      <div className='absolute w-full h-full bg-transparent dark:bg-[#11102e7e] dark:hover:bg-transparent'></div>
     </div>
-  )
-}
+  );
+};
 
-export default BannerCarousel
+export default BannerCarousel;

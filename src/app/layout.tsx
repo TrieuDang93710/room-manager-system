@@ -11,6 +11,7 @@ import '@/app/(auth)/sign-in/sign-in.css';
 import '@/app/(auth)/sign-up/sign-up.css';
 import '@/components/molecules/Pagination/pagination.css';
 import '@/components/atoms/Selection/selection.css';
+import StoreProvider from './StoreProvider';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -42,7 +43,7 @@ export default function RootLayout({
         <QueryProvider>
           <ContextProvider>
             <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
-              {children}
+              <StoreProvider>{children}</StoreProvider>
             </ThemeProvider>
           </ContextProvider>
         </QueryProvider>
