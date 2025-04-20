@@ -68,7 +68,8 @@ const ManagerHeader = ({ setIsHiddenMenu, isHiddenMenu }: ManagerHeaderProps) =>
             }
             width='40'
             height='40'
-            className='cursor-pointer'
+            className='cursor-pointer rounded-full'
+            priority={true}
           />
 
           <div className='flex flex-col items-start relative'>
@@ -83,7 +84,7 @@ const ManagerHeader = ({ setIsHiddenMenu, isHiddenMenu }: ManagerHeaderProps) =>
                 <ul className='w-full'>
                   <li className='flex gap-2 text-[#141414] hover:text-[#747474] cursor-pointer font-bold'>
                     <UserAddOutlined />
-                    <Link className='text-[15px]' href={'/dashboard/manager/profile'}>
+                    <Link className='text-[15px]' href={'/dashboard/profile'}>
                       Quản lý hồ sơ
                     </Link>
                   </li>

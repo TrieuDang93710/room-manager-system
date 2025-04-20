@@ -9,33 +9,50 @@ const usePost = () => {
   const apiSecure = useApiSecure();
 
   // Fetch the post with Get method
-  const {
-    data: posts = [],
-    isPending: loading,
-    refetch
-  } = useQuery({
-    queryKey: ['post'],
-    queryFn: async () => {
-      const res = await apiPublic.get('/post');
-      console.log('posts: ', res.data.data.result);
-      return res.data.data.result;
-    }
-  });
+  const usePostsSearch = (searchParams?: {
+    fields?: string;
+    addresses?: string;
+    workTypes?: string;
+    titles?: string;
+  }) => {
+    const {
+      data: posts = [],
+      isPending: loading,
+      refetch
+    } = useQuery({
+      queryKey: ['post', searchParams],
+      queryFn: async () => {
+        const queryStr = new URLSearchParams();
+
+        if (searchParams?.fields) queryStr.append('fields', searchParams.fields);
+        if (searchParams?.addresses) queryStr.append('addresses', searchParams.addresses);
+        if (searchParams?.workTypes) queryStr.append('workTypes', searchParams.workTypes);
+        if (searchParams?.titles) queryStr.append('titles', searchParams.titles);
+
+        console.log('queryStr: ', queryStr);
+
+        const res = await apiPublic.get(`/post/?${queryStr.toString()}`);
+        console.log('posts: ', res.data.data.result);
+        return res.data.data.result;
+      }
+    });
+
+    return { posts, loading, refetch };
+  };
 
   const getPost = useMutation({
     mutationFn: async ({ id }: { id: number }) => {
       console.log('id: ', { id });
-      const res = await apiPublic
-        .get(`/post/${Number(id)}`)
-        // .then((result) => {
-        //   NotificationCustom('success', result.data.message);
-        //   console.log('result: ', result);
-        //   refetch();
-        // })
-        // .catch((error) => {
-        //   console.log('error: ', error);
-        //   NotificationCustom('error', error.message);
-        // });
+      const res = await apiPublic.get(`/post/${Number(id)}`);
+      // .then((result) => {
+      //   NotificationCustom('success', result.data.message);
+      //   console.log('result: ', result);
+      //   refetch();
+      // })
+      // .catch((error) => {
+      //   console.log('error: ', error);
+      //   NotificationCustom('error', error.message);
+      // });
       return res;
     }
   });
@@ -47,7 +64,6 @@ const usePost = () => {
         .patch(`/post/approve/${Number(id)}`, { status })
         .then(() => {
           NotificationCustom('success', 'Đã duyệt thành công');
-          refetch();
         })
         .catch((error) => {
           console.log('error: ', error);
@@ -64,7 +80,6 @@ const usePost = () => {
         .patch(`/post/delete/${Number(id)}`, { status })
         .then(() => {
           NotificationCustom('success', 'Đã xóa thành công');
-          refetch();
         })
         .catch((error) => {
           console.log('error: ', error);
@@ -74,7 +89,7 @@ const usePost = () => {
     }
   });
 
-  return { posts, getPost, loading, refetch, approvePost, removePost };
+  return { usePostsSearch, getPost, approvePost, removePost };
 };
 
 export default usePost;

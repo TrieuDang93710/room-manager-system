@@ -7,13 +7,7 @@ import TableComponent from '@/components/molecules/Table';
 import ButtonCommon from '@/components/atoms/ButtonCommon';
 import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
 import PaginationComponent from '@/components/molecules/Pagination/pagination';
-import {
-  AppstoreOutlined,
-  DeleteOutlined,
-  PlusOutlined,
-  ReadOutlined,
-  TableOutlined
-} from '@ant-design/icons';
+import { AppstoreOutlined, DeleteOutlined, PlusOutlined, ReadOutlined, TableOutlined } from '@ant-design/icons';
 import './room.css';
 import AddField from './components/AddField';
 import AddBusiness from '../business/components/AddBusiness';
@@ -24,7 +18,8 @@ const RoomManagerPage = () => {
   const [openAddField, setOpenAddField] = useState<boolean>(false);
   const [openAddBusiness, setOpenAddBusiness] = useState<boolean>(false);
   const [viewRender, setViewRender] = useState<boolean>(false);
-  const { posts } = usePost();
+  const { usePostsSearch } = usePost();
+  const { posts } = usePostsSearch();
 
   const closeAddPostHandler = () => {
     setOpenAddPost(!openAddPost);
@@ -104,7 +99,10 @@ const RoomManagerPage = () => {
                 <option className='border-none bg-transparent dark:text-blue-600 checked:bg-transparent' value=''>
                   All
                 </option>
-                <option className='border-none bg-transparent dark:text-blue-600 checked:bg-transparent' value='applied'>
+                <option
+                  className='border-none bg-transparent dark:text-blue-600 checked:bg-transparent'
+                  value='applied'
+                >
                   10
                 </option>
               </select>

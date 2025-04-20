@@ -1,9 +1,31 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { AgentCardComponent } from '@/components/organisms/system/Card/AgentCard';
+import { useAuth } from '@/hooks/auth/useAuth';
+import { useApiSecure } from '@/hooks/useApiSecure';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const FollowerManagerPage = () => {
   const router = useRouter();
+  const auth = useAuth();
+  const { user } = auth;
+  const apiSecure = useApiSecure();
+  const [followCompany, setFollowCompany] = useState<any[]>([]);
+
+  useEffect(() => {
+    apiSecure
+      .get(`/applicant/${user && Number(user.applicant.id)}`)
+      .then((result) => {
+        setFollowCompany(result.data.data.companies);
+      })
+      .catch((error) => {
+        console.log('error_applicant: ', error);
+      });
+  }, [apiSecure, user]);
+
+  console.log('followCompany: ', followCompany);
+
   return (
     <div className='relative w-full h-screen bg-[#f7f7f7] dark:bg-slate-900 flex flex-col items-end gap-6 snap-y pt-20 md:px-3'>
       <div className='w-full h-fit py-3 px-3 flex-col justify-center md:gap-3 gap-y-2'>
@@ -13,9 +35,14 @@ const FollowerManagerPage = () => {
           </h3>
         </div>
         <div className='w-full h-[75vh] flex sm:grid md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around hide-scrollbar overflow-y-auto gap-4 p-4 mt-4'>
-          {Array.from({ length: 4 }).map((_, index) => (
-            <AgentCardComponent key={index + 1} onClick={() => router.push(`/system/business/${index + 1}`)} />
-          ))}
+          {followCompany &&
+            followCompany.map((item: any, index: any) => (
+              <AgentCardComponent
+                key={index + 1}
+                companyItem={item}
+                onClick={() => router.push(`/system/business/${index + 1}`)}
+              />
+            ))}
         </div>
       </div>
     </div>

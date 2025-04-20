@@ -1,22 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HomeOutlined } from '@ant-design/icons';
 import CardSquare from '../Square';
 import React from 'react';
 
 interface AgentCardComponentProps {
   onClick?: () => void;
+  companyItem?: any;
 }
 
-export const AgentCardComponent = ({ onClick }: AgentCardComponentProps) => {
+export const AgentCardComponent = ({ onClick, companyItem }: AgentCardComponentProps) => {
   return (
-    <CardSquare>
+    <CardSquare logo={companyItem && companyItem!.logo}>
       <div className='w-full px-2'>
         <p className='text-[13px] text-slate-800 font-normal dark:text-blue-500'>Kinh doanh</p>
-        <h3 className='text-[18px] text-black dark:text-blue-800 font-bold py-2 line-clamp-2'>Tap hoa co Loan</h3>
+        <h3 className='text-[18px] text-black dark:text-blue-800 font-bold py-2 line-clamp-2'>
+          {companyItem && companyItem!.title}
+        </h3>
         <p className='text-[13px] text-slate-800 font-normal py-1'>
           <HomeOutlined className='font-bold text-black dark:text-blue-800 mr-2' /> 29 Tran Duc Thao
         </p>
         <p className='text-[13px] text-slate-800 font-normal py-1'>
-          <strong className='font-bold text-black dark:text-blue-800'>So bai dang : </strong>5
+          <strong className='font-bold text-black dark:text-blue-800'>Quy mô : </strong>
+          {companyItem && companyItem!.scale}
         </p>
       </div>
       <button

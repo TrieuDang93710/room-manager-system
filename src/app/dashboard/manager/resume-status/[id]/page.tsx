@@ -16,7 +16,8 @@ interface ResumeStatusDetailPageProps {
 const ResumeStatusDetailPage = ({ params }: ResumeStatusDetailPageProps) => {
   const headers = ['#', 'Vị trí ứng tuyển', 'Ứng viên', 'Ngày ứng tuyển', 'Hồ sơ ứng tuyển', 'Trạng thái', 'Hành động'];
 
-  const { posts } = usePost();
+  const { usePostsSearch } = usePost();
+  const { posts } = usePostsSearch();
   const dispatch = useDispatch();
   const appliesRedux = useSelector((state: RootState) => state.applies);
   const [numApplies, setNumApplies] = useState<any[]>([]);
@@ -45,7 +46,7 @@ const ResumeStatusDetailPage = ({ params }: ResumeStatusDetailPageProps) => {
     <>
       <td className='truncate p-2'>{index + 1}</td>
       <td className='truncate p-2'>{apply.post.title}</td>
-      <td className='truncate p-2'>{apply.applicant.user.username}</td>
+      <td className='truncate p-2'>{apply.applicant && apply.applicant.user.username}</td>
       <td className='truncate p-2'>{apply.createAt}</td>
       <td className='truncate p-2 flex flex-row items-center justify-center'>
         <p className='text-[13px] text-white font-medium bg-blue-600 w-[80%] active:shadow-sm active:shadow-slate-800 rounded-md px-4 py-1'>

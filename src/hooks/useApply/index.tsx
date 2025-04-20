@@ -21,7 +21,8 @@ const useApply = () => {
 
   const addApply = useMutation({
     mutationFn: async ({ createApplyDto }: { createApplyDto: any }) => {
-      const res = await apiSecure.post('/apply', { createApplyDto });
+      console.log('createApplyDto: ', createApplyDto);
+      const res = await apiSecure.post('/apply', createApplyDto);
       return res;
     }
   });

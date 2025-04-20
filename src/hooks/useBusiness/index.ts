@@ -9,18 +9,28 @@ const useBusiness = () => {
   const apiSecure = useApiSecure();
 
   // Fetch the post with Get method
-  const {
-    data: businesses = [],
-    isPending: loading,
-    refetch
-  } = useQuery({
-    queryKey: ['business'],
-    queryFn: async () => {
-      const res = await apiPublic.get('/companies');
-      console.log('businesses: ', res.data.data.result);
-      return res.data.data.result;
-    }
-  });
+  const useBusinessSearch = (searchParams?: { fields?: string; addresses?: string }) => {
+    const {
+      data: businesses = [],
+      isPending: loading,
+      refetch
+    } = useQuery({
+      queryKey: ['business', searchParams],
+      queryFn: async () => {
+        const queryStr = new URLSearchParams();
+
+        if (searchParams?.fields) queryStr.append('fields', searchParams.fields);
+        if (searchParams?.addresses) queryStr.append('addresses', searchParams.addresses);
+
+        console.log('queryStr: ', queryStr);
+        const res = await apiPublic.get(`/companies/?${queryStr.toString()}`);
+        console.log('businesses: ', res.data.data.result);
+        return res.data.data.result;
+      }
+    });
+
+    return { businesses, refetch, loading };
+  };
 
   const addBusiness = useMutation({
     mutationFn: async (newBusiness: any) => {
@@ -36,7 +46,6 @@ const useBusiness = () => {
         .patch(`/companies/approve/${Number(id)}`, { status })
         .then(() => {
           NotificationCustom('success', 'Đã duyệt thành công');
-          refetch();
         })
         .catch((error) => {
           console.log('error: ', error);
@@ -53,7 +62,6 @@ const useBusiness = () => {
         .patch(`/companies/remove/${Number(id)}`, { status })
         .then(() => {
           NotificationCustom('success', 'Đã xóa thành công');
-          refetch();
         })
         .catch((error) => {
           console.log('error: ', error);
@@ -63,7 +71,7 @@ const useBusiness = () => {
     }
   });
 
-  return { businesses, loading, refetch, addBusiness, approveBusiness, removeBusiness };
+  return { useBusinessSearch, addBusiness, approveBusiness, removeBusiness };
 };
 
 export default useBusiness;

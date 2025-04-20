@@ -12,7 +12,8 @@ import './business.css';
 
 const RoomManagerPage = () => {
   const [openAddBusiness, setOpenAddBusiness] = useState<boolean>(false);
-  const { businesses } = useBusiness();
+  const { useBusinessSearch } = useBusiness();
+  const { businesses } = useBusinessSearch();
 
   const closeAddBusinessHandler = () => {
     setOpenAddBusiness(!openAddBusiness);

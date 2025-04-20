@@ -91,7 +91,7 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
           }
         })
         .then((result) => {
-          setUser(result.data.data[0]);
+          setUser(result.data.data);
         })
         .catch((error) => {
           return error;

@@ -17,7 +17,8 @@ interface ApproveProps {
 
 const Approve = ({ onClick, setOpenApprove, openApprove, id }: ApproveProps) => {
   const [status, setStatus] = useState<string>('');
-  const { approvePost, refetch } = usePost();
+  const { approvePost, usePostsSearch } = usePost();
+  const { refetch } = usePostsSearch();
   const { handleSubmit } = useForm();
 
   const approveHandler = async () => {

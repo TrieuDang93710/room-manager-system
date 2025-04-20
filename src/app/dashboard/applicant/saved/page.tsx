@@ -1,12 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { PostCardSquareComponent } from '@/components/organisms/system/Card/PostCardSquare';
-import usePost from '@/hooks/usePost';
+import { useAuth } from '@/hooks/auth/useAuth';
+import { useApiSecure } from '@/hooks/useApiSecure';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const SavedManagerPage = () => {
   const router = useRouter();
-  const { posts } = usePost();
+  const auth = useAuth();
+  const { user } = auth;
+  const apiSecure = useApiSecure();
+  const [postSaved, setPostSaved] = useState<any[]>([]);
+
+  useEffect(() => {
+    apiSecure
+      .get(`/applicant/${user && Number(user.applicant.id)}`)
+      .then((result) => {
+        setPostSaved(result.data.data.saves);
+      })
+      .catch((error) => {
+        console.log('error_applicant: ', error);
+      });
+  }, [apiSecure, user]);
+
   return (
     <div className='relative w-full h-screen bg-[#f7f7f7] dark:bg-slate-900 flex flex-col items-end gap-6 snap-y pt-20 md:px-3'>
       <div className='w-full h-fit py-3 px-3 flex-col justify-center md:gap-3 gap-y-2'>
@@ -16,13 +33,14 @@ const SavedManagerPage = () => {
           </h3>
         </div>
         <div className='w-full h-[75vh] flex sm:grid md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around hide-scrollbar overflow-y-auto gap-4 p-4 mt-4'>
-          {posts.map((item: any, index: any) => (
-            <PostCardSquareComponent
-              key={index + 1}
-              post={item}
-              onClick={() => router.push(`/system/post/${index + 1}`)}
-            />
-          ))}
+          {postSaved &&
+            postSaved.map((item: any, index: any) => (
+              <PostCardSquareComponent
+                key={index + 1}
+                post={item}
+                onClick={() => router.push(`/system/post/${index + 1}`)}
+              />
+            ))}
         </div>
       </div>
     </div>

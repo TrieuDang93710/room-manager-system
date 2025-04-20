@@ -7,18 +7,37 @@ const useResume = () => {
   const apiSecure = useApiSecure();
 
   // Fetch the post with Get method
-  const {
-    data: resumes = [],
-    isPending: loading,
-    refetch
-  } = useQuery({
-    queryKey: ['resume'],
-    queryFn: async () => {
-      const res = await apiSecure.get('/resume');
-      console.log('resumes: ', res.data.data.result);
-      return res.data.data.result;
-    }
-  });
+  const useResumeSearch = (searchParams?: {
+    titles?: string;
+    jobs?: string;
+    addresses?: string;
+    levels?: string;
+    genders?: string;
+  }) => {
+    const {
+      data: resumes = [],
+      isPending: loading,
+      refetch
+    } = useQuery({
+      queryKey: ['resume', searchParams],
+      queryFn: async () => {
+        const queryStr = new URLSearchParams();
+
+        if (searchParams?.titles) queryStr.append('titles', searchParams.titles);
+        if (searchParams?.jobs) queryStr.append('jobs', searchParams.jobs);
+        if (searchParams?.addresses) queryStr.append('addresses', searchParams.addresses);
+        if (searchParams?.levels) queryStr.append('levels', searchParams.levels);
+        if (searchParams?.genders) queryStr.append('genders', searchParams.genders);
+
+        console.log('queryStr: ', queryStr);
+        const res = await apiSecure.get(`/resume/?${queryStr.toString()}`);
+        console.log('resumes: ', res.data.data.result);
+        return res.data.data.result;
+      }
+    });
+
+    return { resumes, refetch, loading };
+  };
 
   const addNewResume = useMutation({
     mutationFn: async ({ newResume }: { newResume: any }) => {
@@ -83,7 +102,7 @@ const useResume = () => {
     }
   });
 
-  return { resumes, loading, refetch, addNewResume, getOneResume, updateResume, removeResume };
+  return { useResumeSearch, addNewResume, getOneResume, updateResume, removeResume };
 };
 
 export default useResume;

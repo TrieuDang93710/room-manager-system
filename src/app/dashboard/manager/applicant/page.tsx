@@ -17,6 +17,7 @@ const ApplicantManagerPage = ({ params }: ApplicantManagerPageProps) => {
   const headers = ['#', 'Vị trí ứng tuyển', 'Ứng viên', 'Hồ sơ ứng tuyển', 'Trạng thái', 'Nhắn tin'];
 
   const { applies } = useApply();
+  console.log('applies: ', applies)
 
   const renderRow = (apply: any, index: any) => (
     <>

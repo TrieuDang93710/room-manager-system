@@ -17,7 +17,8 @@ interface ApproveProps {
 
 const Approve = ({ onClick, setOpenApprove, openApprove, id }: ApproveProps) => {
   const [status, setStatus] = useState<string>('');
-  const { approveBusiness, refetch } = useBusiness();
+  const { approveBusiness, useBusinessSearch } = useBusiness();
+  const { refetch } = useBusinessSearch();
   const { handleSubmit } = useForm();
 
   const approveHandler = async () => {

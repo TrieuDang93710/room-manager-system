@@ -9,7 +9,7 @@ const funcOfManager = [
 ];
 
 const funcOfApplicant = [
-  { label: 'Hồ Sơ Cá Nhân', icon: <AreaChartOutlined />, path: 'profile' },
+  // { label: 'Hồ Sơ Cá Nhân', icon: <AreaChartOutlined />, path: 'profile' },
   { label: 'Trạng Thái Ứng Tuyển', icon: <HomeOutlined />, path: 'history' },
   { label: 'Quản Lý Đăng Ký', icon: <HomeOutlined />, path: 'resume' },
   { label: 'Người Theo Giỏi', icon: <SettingOutlined />, path: 'follower' },

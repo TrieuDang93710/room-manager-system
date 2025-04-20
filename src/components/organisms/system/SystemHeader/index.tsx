@@ -54,7 +54,8 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
     return () => {
       window.addEventListener('scroll', handleScroll);
     };
-  }, []);useEffect(() => {
+  }, []);
+  useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
       if (offset > 0) {
@@ -77,7 +78,7 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
 
       apiSecure.get(`user/${id}`).then((result) => {
         console.log('user: ', result.data.data);
-        setUser(result.data.data[0]);
+        setUser(result.data.data);
       });
     } else {
       setUser(null);
@@ -111,13 +112,20 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
       {pathname !== '/sign-in' && pathname !== '/sign-up' && <ul className='header_menu'>{menuItem}</ul>}
       {user ? (
         <div className='flex items-center justify-end'>
+          <Button onClick={signOut} className='bg-none mr-4' variant={'outline'} size={'sm'}>
+            Sign out
+          </Button>
           <div className='relative flex items-start justify-center gap-1'>
             <Image
               alt='avatar'
-              src='https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'
+              src={
+                user && user!.avatar
+                  ? user!.avatar
+                  : 'https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'
+              }
               width='40'
               height='40'
-              className='cursor-pointer'
+              className='cursor-pointer rounded-full'
             />
             <div className='flex flex-col items-start relative'>
               <h3 className='font-medium text-[14px] dark:text-[#b4b4b4] dark:hover:text-[#ebebeb] cursor-pointer'>
@@ -136,9 +144,6 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
               <MoonOutlined className='cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full p-3' />
             </li>
           </ul>
-          <Button onClick={signOut} className='bg-none mr-4' variant={'outline'} size={'sm'}>
-            Sign out
-          </Button>
         </div>
       ) : (
         <div className='gap-8 sm:flex hidden'>

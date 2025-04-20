@@ -21,6 +21,18 @@ const renderAddContent = (section: string, onSaveHandler: any, onChangeHandler: 
           ))}
         </AddContent>
       );
+    case 'image':
+    case 'video':
+      return (
+        <AddContent onSave={(e) => onSaveHandler(e, section)}>
+          <input
+            type='file'
+            accept='image/*'
+            className='text-[13px] font-normal'
+            onChange={(e: any) => onChangeHandler(section, e.target.files[0])}
+          />
+        </AddContent>
+      );
     case 'experience':
       return (
         <AddContent onSave={(e) => onSaveHandler(e, section)}>
@@ -122,6 +134,114 @@ const renderAddContent = (section: string, onSaveHandler: any, onChangeHandler: 
             placeholder={`Trân trọng`}
             value={formData.letter.signature}
             onChange={(e) => onChangeHandler('letter', { ...formData.letter, signature: e.target.value })}
+          />
+        </AddContent>
+      );
+    case 'information':
+      return (
+        <AddContent onSave={(e) => onSaveHandler(e, section)}>
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder='Lĩnh vực'
+            value={formData.information.field}
+            onChange={(e) => onChangeHandler('information', { ...formData.information, field: e.target.value })}
+          />
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder={`Email`}
+            value={formData.information.email}
+            onChange={(e) => onChangeHandler('information', { ...formData.information, email: e.target.value })}
+          />
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder={`Số điện thoại`}
+            value={formData.information.phone}
+            onChange={(e) => onChangeHandler('information', { ...formData.information, phone: e.target.value })}
+          />
+        </AddContent>
+      );
+    case 'workPlace':
+      return (
+        <AddContent onSave={(e) => onSaveHandler(e, section)}>
+          <div className='w-full flex flex-row items-center justify-between'>
+            <input
+              className='w-2/3 border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+              type='text'
+              placeholder={`Them ${section} ...`}
+              value={formData.workPlace.coordinate}
+              onChange={(e) => onChangeHandler(section, { ...formData.workPlace, coordinate: e.target.value })}
+            />
+            <input
+              className='w-[30%] border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+              type='text'
+              placeholder='Toa do ...'
+              value={formData.workPlace.latitude}
+              onChange={(e) => onChangeHandler(section, { ...formData.workPlace, latitude: e.target.value })}
+            />
+          </div>
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder='Quoc tich'
+            value={formData.workPlace.national}
+            onChange={(e) => onChangeHandler('workPlace', { ...formData.workPlace, national: e.target.value })}
+          />
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder={`Thanh pho`}
+            value={formData.workPlace.city}
+            onChange={(e) => onChangeHandler('workPlace', { ...formData.workPlace, city: e.target.value })}
+          />
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder={`Huyen`}
+            value={formData.workPlace.district}
+            onChange={(e) => onChangeHandler('workPlace', { ...formData.workPlace, district: e.target.value })}
+          />
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder={`Xa`}
+            value={formData.workPlace.village}
+            onChange={(e) => onChangeHandler('workPlace', { ...formData.workPlace, village: e.target.value })}
+          />
+        </AddContent>
+      );
+    case 'address':
+      return (
+        <AddContent onSave={(e) => onSaveHandler(e, section)}>
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder='Quoc tich'
+            value={formData.address.national}
+            onChange={(e) => onChangeHandler('address', { ...formData.address, national: e.target.value })}
+          />
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder={`Thanh pho`}
+            value={formData.address.city}
+            onChange={(e) => onChangeHandler('address', { ...formData.address, city: e.target.value })}
+          />
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder={`Huyen`}
+            value={formData.address.district}
+            onChange={(e) => onChangeHandler('address', { ...formData.address, district: e.target.value })}
+          />
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder={`Xa`}
+            value={formData.address.village}
+            onChange={(e) => onChangeHandler('address', { ...formData.address, village: e.target.value })}
           />
         </AddContent>
       );
