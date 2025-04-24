@@ -17,7 +17,9 @@ const labels = {
   experience: 'Kinh nghiệm',
   education: 'Giáo dục',
   certificate: 'Chứng chỉ',
-  award: 'Giải thưỡng'
+  award: 'Giải thưỡng',
+  image: 'Hình ảnh',
+  video: 'Video'
 };
 
 export { labels };

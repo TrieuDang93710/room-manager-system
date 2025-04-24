@@ -17,7 +17,8 @@ interface RemoveProps {
 
 const Remove = ({ onClick, setOpenRemove, openRemove, id }: RemoveProps) => {
   const [status, setStatus] = useState<string>('');
-  const { removePost, refetch } = usePost();
+  const { removePost, usePostsSearch } = usePost();
+  const {refetch} = usePostsSearch()
   const { handleSubmit } = useForm();
 
   const removeHandler = async () => {

@@ -25,6 +25,25 @@ const renderContent = (section: string, toggleSection: any, openSections: any, d
           ))}
         </AddComponent>
       );
+    case 'image':
+    case 'video':
+      return (
+        <AddComponent
+          title={labels[section]}
+          action={true}
+          onClick={() => toggleSection(section)}
+          isButton={openSections[section]}
+        >
+          {data[section].map((item: any, index: any) => (
+            <h3
+              key={index}
+              className='text-black dark:text-white text-[14px] font-normal bg-blue-300 px-3 py-1 rounded-lg'
+            >
+              {item.name ? item.name : 'No file selected'}
+            </h3>
+          ))}
+        </AddComponent>
+      );
     case 'experience':
       return (
         <AddComponent
@@ -121,6 +140,66 @@ const renderContent = (section: string, toggleSection: any, openSections: any, d
                 <p className='text-black dark:text-white text-[14px] font-normal line-clamp-1'>{item.signature}</p>
               </div>
             ))}
+          </div>
+        </AddComponent>
+      );
+    case 'information':
+      return (
+        <AddComponent
+          title='Thông tin doanh nghiệp'
+          action={true}
+          onClick={() => toggleSection(section)}
+          isButton={openSections[section]}
+        >
+          <div className={`${data[section] !== null && 'w-[60%]'} flex flex-col items-start justify-start gap-4`}>
+            <div className='w-full flex flex-col items-start justify-start gap-2 p-2 border border-green-500'>
+              <h3 className='text-black dark:text-white text-[16px] font-bold line-clamp-2'>{data[section].field}</h3>
+              <h3 className='text-black dark:text-white text-[16px] font-bold line-clamp-2'>{data[section].email}</h3>
+              <h3 className='text-black dark:text-white text-[16px] font-bold line-clamp-2'>{data[section].phone}</h3>
+              <h3 className='text-black dark:text-white text-[16px] font-bold line-clamp-2'>{data[section].address}</h3>
+            </div>
+          </div>
+        </AddComponent>
+      );
+    case 'workPlace':
+      return (
+        <AddComponent
+          title='Thông tin doanh nghiệp'
+          action={true}
+          onClick={() => toggleSection(section)}
+          isButton={openSections[section]}
+        >
+          <div className={`${data[section] !== null && 'w-[60%]'} flex flex-col items-start justify-start gap-4`}>
+            <div className='w-full flex flex-col items-start justify-start gap-2 p-2 border border-green-500'>
+              <h3 className='text-black dark:text-white text-[16px] font-bold line-clamp-2'>
+                {data[section].coordinate}
+              </h3>
+              <h3 className='text-black dark:text-white text-[16px] font-bold line-clamp-2'>
+                {data[section].latitude}
+              </h3>
+              <h3 className='text-black dark:text-white text-[16px] font-bold line-clamp-4'>
+                {data[section].national} <br /> {data[section].district} <br /> {data[section].city} <br />
+                {data[section].village}
+              </h3>
+            </div>
+          </div>
+        </AddComponent>
+      );
+    case 'address':
+      return (
+        <AddComponent
+          title='Thông tin địa chỉ'
+          action={true}
+          onClick={() => toggleSection(section)}
+          isButton={openSections[section]}
+        >
+          <div className={`${data[section] !== null && 'w-[60%]'} flex flex-col items-start justify-start gap-4`}>
+            <div className='w-full flex flex-col items-start justify-start gap-2 p-2 border border-green-500'>
+              <h3 className='text-black dark:text-white text-[16px] font-bold line-clamp-4'>
+                {data[section].national} <br /> {data[section].district} <br /> {data[section].city} <br />
+                {data[section].village}
+              </h3>
+            </div>
           </div>
         </AddComponent>
       );

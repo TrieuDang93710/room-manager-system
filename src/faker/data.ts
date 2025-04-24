@@ -125,4 +125,31 @@ const approveStatus = [
   { label: 'Hồ sơ không phù hợp', value: 'reject' }
 ];
 
-export { listRoom, chartData, chartDataCircle, pageSizeList, introductions, banners, listLessor, approveStatus };
+const fields = [
+  { label: 'Quản trị kinh doanh', value: 'Quản trị kinh doanh' },
+  { label: 'Kinh tế', value: 'Kinh tế' },
+  { label: 'Công nghệ thông tin', value: 'Công nghệ thông tin' }
+];
+
+const addresses = [
+  { label: 'Đà Nẵng', value: 'Đà Nẵng' },
+  { label: 'Quảng Nam', value: 'Quảng Nam' },
+  { label: 'Huế', value: 'Huế' }
+];
+const workTypes = [
+  { label: 'Toàn thời gian', value: 'fulltime' },
+  { label: 'Bán thời gian', value: 'parttime' }
+];
+export {
+  listRoom,
+  chartData,
+  chartDataCircle,
+  pageSizeList,
+  introductions,
+  banners,
+  listLessor,
+  approveStatus,
+  fields,
+  addresses,
+  workTypes
+};

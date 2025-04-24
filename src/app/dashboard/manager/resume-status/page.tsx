@@ -9,7 +9,8 @@ import { useEffect, useState } from 'react';
 const ResumeStatusPage = () => {
   const headers = ['#', 'Vị trí ứng tuyển', 'Bài viết', 'Lượt xem', 'Số lượng ứng tuyển', 'Chi tiết'];
 
-  const { posts } = usePost();
+  const { usePostsSearch } = usePost();
+  const { posts } = usePostsSearch();
   const [numApplies, setNumApplies] = useState<any[]>([]);
   const [numApplicant, setNumApplicant] = useState<number>(0);
 

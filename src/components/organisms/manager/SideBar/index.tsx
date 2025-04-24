@@ -60,9 +60,10 @@ const FunctionListManager = ({
           src={
             user && user!.avatar ? user.avatar : 'https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'
           }
-          width='60'
-          height='60'
-          className='pb-5'
+          width='80'
+          height='80'
+          className='mb-3 rounded-full'
+          priority={true}
         />
         <p className='text-[#e4e4e4] md:text-[16px] text-[13px] font-bold pt-4 pb-4 text-center'>Quản Lý Chức Năng</p>
       </div>
@@ -98,7 +99,7 @@ const FunctionListManager = ({
                 hidden ? 'justify-center' : 'justify-start'
               }`}
             >
-              <Link href={'/dashboard/message'} onClick={handleSignOut} className='text-start truncate'>
+              <Link href={'/dashboard/message'} className='text-start truncate'>
                 {hidden === true ? <MessageOutlined /> : 'Tin nhắn'}
               </Link>
             </li>

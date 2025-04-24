@@ -10,7 +10,8 @@ import UpdateResume from './components/UpdateResume';
 
 const ResumePage = () => {
   const router = useRouter();
-  const { resumes } = useResume();
+  const { useResumeSearch } = useResume();
+  const { resumes } = useResumeSearch();
   const [addResume, setAddResume] = useState<boolean>(false);
   const [updateResume, setUpdateResume] = useState<boolean>(false);
   const [resumeSort, setResumeSort] = useState<any[]>([]);

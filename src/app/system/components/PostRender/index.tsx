@@ -7,7 +7,9 @@ import { useState } from 'react';
 
 const PostRender = () => {
   const router = useRouter();
-  const { posts } = usePost();
+  const { usePostsSearch } = usePost();
+  const { posts } = usePostsSearch();
+  console.log('posts: ', posts);
   const { fields } = useField();
 
   const [filteredItems, setFilteredItems] = useState([]);

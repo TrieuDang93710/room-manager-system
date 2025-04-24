@@ -14,7 +14,8 @@ const PostManagerPage = () => {
   const [openApproveModal, setOpenApproveModal] = useState<boolean>(false);
   const [openRemoveModal, setOpenRemoveModal] = useState<boolean>(false);
   const [postId, setPostId] = useState<number>(0);
-  const { posts } = usePost();
+  const { usePostsSearch } = usePost();
+  const { posts } = usePostsSearch();
   const [postSort, setPostSort] = useState<any[]>([]);
 
   useEffect(() => {

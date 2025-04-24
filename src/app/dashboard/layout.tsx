@@ -21,7 +21,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const { user } = useAuth();
   let account: string = Role.MANAGER;
 
-  account = user && user.role[0]!;
+  account = user && user!.role[0];
   // account = 'manager';
   console.log('account: ', account);
 

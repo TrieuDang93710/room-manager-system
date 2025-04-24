@@ -5,9 +5,15 @@ import Modal from '@/components/molecules/Modal';
 import { handleBlurChecking } from '@/helpers/utils';
 import useCombinedState from '@/hooks/useCombinedState';
 import { CloseOutlined } from '@ant-design/icons';
-import AddComponent from '@/components/molecules/AddComp';
-import AddContent from '@/components/AddContent';
 import './AddBusiness.css';
+import { addImage, addVideo, addInformation, addWorkPlace } from '@/lib/features/businesses/businessesSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/lib/store';
+import { useForm } from 'react-hook-form';
+import useCloudinary from '@/hooks/useCloudinary';
+import renderContent from '@/components/molecules/renderContent';
+import renderAddContent from '@/components/molecules/renderAddContent';
+import Image from 'next/image';
 
 interface AddBusinessProps {
   openAddBusiness: boolean;
@@ -16,110 +22,133 @@ interface AddBusinessProps {
 }
 
 const AddBusiness = ({ onClick, setOpenAddBusiness, openAddBusiness }: AddBusinessProps) => {
+  const { handleSubmit } = useForm();
+  const { uploadFile } = useCloudinary();
+  const dispatch = useDispatch();
+  const businessData = useSelector((state: RootState) => state.businesses);
+  console.log('businessData: ', businessData);
+
   const [openSections, setOpenSections] = useState<any>({
     image: false,
     video: false,
-    contact: false
+    information: false,
+    workPlace: false
+  });
+
+  const [formData, setFormData] = useState<any>({
+    image: '',
+    video: '',
+    information: { field: '', email: '', phone: '', address: '' },
+    workPlace: {
+      coordinate: '',
+      latitude: '',
+      national: '',
+      city: '',
+      district: '',
+      village: ''
+    }
   });
 
   const [state, setField] = useCombinedState({
-    name: '',
-    address: '',
-    price: '',
-    createBy: '',
-    nameError: '',
-    addressError: '',
-    priceError: '',
-    createByError: ''
+    title: '',
+    description: '',
+    scale: '',
+    titleError: '',
+    descriptionError: '',
+    scaleError: ''
   });
 
+  const [logo, setLogo] = useState<string>('');
+
   const toggleSection = (section: string) => {
-    setOpenSections((prev: { [x: string]: any; }) => ({ ...prev, [section]: !prev[section] }));
+    setOpenSections((prev: { [x: string]: any }) => ({ ...prev, [section]: !prev[section] }));
   };
 
-  const renderAddContent = (section: string) => {
-    switch (section) {
-      case 'image':
-      case 'video':
-        return (
-          <AddContent onSave={(e) => onSave(e, section)}>
-            {Array.from({ length: 1 }).map((_, index) => (
-              <input
-                key={index}
-                className='w-full border border-slate-500 focus:border focus:border-blue-600 rounded-sm px-2 py-1'
-                type='text'
-                placeholder={`Them ${section} ...`}
-              />
-            ))}
-          </AddContent>
-        );
-      case 'contact':
-        return (
-          <AddContent onSave={(e) => onSave(e, section)}>
-            {Array.from({ length: 4 }).map((_, index) => (
-              <input
-                key={index}
-                className='w-full border border-slate-500 focus:border focus:border-blue-600 rounded-sm px-2 py-1'
-                type='text'
-                placeholder={`Them ${section} ...`}
-              />
-            ))}
-          </AddContent>
-        );
-      default:
-        return;
-    }
-  };
-
-  const renderAddComponent = (section: string) => {
-    switch (section) {
-      case 'image':
-      case 'video':
-        return (
-          <AddComponent
-            title={section}
-            action={true}
-            onClick={() => toggleSection(section)}
-            isButton={openSections[section]}
-          >
-            {Array.from({ length: 3 }).map((_, index) => (
-              <h3 key={index} className='text-black dark:text-white text-[16px] font-normal'>
-                Placeholder
-              </h3>
-            ))}
-          </AddComponent>
-        );
-      case 'contact':
-        return (
-          <AddComponent
-            title='Kinh nghiem'
-            action={true}
-            onClick={() => toggleSection(section)}
-            isButton={openSections[section]}
-          >
-            <div className='w-full flex flex-col items-start justify-start gap-4'>
-              {Array.from({ length: 1 }).map((_, index) => (
-                <div
-                  key={index + 1}
-                  className='w-[50%] flex flex-col items-start justify-start gap-4 p-2'
-                >
-                  <div className='w-full flex flex-row items-start justify-start gap-4'>
-                    <h3 className='text-black dark:text-white text-[16px] font-bold line-clamp-1'>email :</h3>
-                    <p className='text-black dark:text-white text-[16px] font-normal'>dangbinhtrieu123@gmail.com</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </AddComponent>
-        );
-      default:
-        return;
-    }
-  };
-
-  const onSave = (e: { preventDefault: () => void }, section: string) => {
+  const onSaveHandler = (e: { preventDefault: () => void }, section: string) => {
     e.preventDefault();
     setOpenSections((prev: any) => ({ ...prev, [section]: false }));
+
+    switch (section) {
+      case 'image':
+        dispatch(addImage(formData.image));
+        break;
+      case 'video':
+        dispatch(addVideo(formData.video));
+        break;
+      case 'information':
+        dispatch(addInformation(formData.information));
+        break;
+      case 'workPlace':
+        dispatch(addWorkPlace(formData.workPlace));
+        break;
+      default:
+        break;
+    }
+  };
+
+  const onChangeHandler = (section: any, value: any) => {
+    setFormData({ ...formData, [section]: value });
+  };
+
+  const addBusinessHandler = async () => {
+    const title = state.title;
+    const description = state.description;
+    const scale = state.scale;
+
+    const logoFile = new FormData();
+    logoFile.append('file', logo);
+
+    const imageFile = new FormData();
+    const image_urls: any = [];
+    businessData.image.map(async (item: any) => {
+      imageFile.append('file', item);
+
+      await uploadFile
+        .mutateAsync({ file: imageFile })
+        .then((result) => {
+          image_urls.push(result.data.data.secure_url);
+        })
+        .catch((error) => console.log('error: ', error));
+    });
+
+    let logo_secure_url;
+
+    await uploadFile
+      .mutateAsync({ file: logoFile })
+      .then((result) => {
+        logo_secure_url = result.data.data.secure_url;
+      })
+      .catch((error) => console.log('error: ', error));
+
+    const businessDto = {
+      title: title,
+      logo: logo_secure_url,
+      description: description,
+      scale: scale,
+      images: image_urls,
+      information: {
+        field: businessData.information.field,
+        email: businessData.information.email,
+        phone: businessData.information.phone,
+        detailAddress:
+          businessData.workPlace.village +
+          businessData.workPlace.district +
+          businessData.workPlace.city +
+          businessData.workPlace.national
+      },
+      work_place: {
+        coordinate: businessData.workPlace.coordinate,
+        latitude: businessData.workPlace.latitude,
+        address: {
+          national: businessData.workPlace.national,
+          city: businessData.workPlace.city,
+          district: businessData.workPlace.district,
+          village: businessData.workPlace.village
+        }
+      }
+    };
+
+    console.log('businessDto: ', businessDto);
   };
 
   return (
@@ -130,39 +159,68 @@ const AddBusiness = ({ onClick, setOpenAddBusiness, openAddBusiness }: AddBusine
       onClose={() => setOpenAddBusiness(false)}
     >
       <div className='modal_container_add_business'>
-        <form>
+        <form onSubmit={handleSubmit(addBusinessHandler)}>
           <div className='modal_header'>
-            <p>Thêm mới</p>
+            <p>Đăng ký công ty</p>
             <CloseOutlined
               onClick={onClick}
               className='cursor-pointer font-bold text-red-500 p-2 rounded-sm hover:bg-[#e3e3e3] dark:text-[#fff]'
             />
           </div>
           <div className='w-full h-[80%] py-1 gap-2 flex flex-col md:flex hide-scrollbar overflow-y-auto'>
+            <div className='w-full flex items-center justify-center p-4 gap-2'>
+              <Image
+                alt='avatar'
+                src='https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'
+                width='80'
+                height='80'
+                className='cursor-pointer'
+              />
+              <div className='w-[30%] flex flex-col items-start justify-center cursor-pointer gap-2'>
+                <input
+                  type='file'
+                  accept='image/*'
+                  className='text-[13px] font-normal'
+                  onChange={(e: any) => setLogo(e.target.files[0])}
+                />
+                <p className='text-black text-[13px] font-normal'> Cap nhat</p>
+              </div>
+            </div>
             <CommonInput
-              onblur={() => handleBlurChecking('text', 'nameError', state.name, setField)}
-              inputValue={state.name}
+              onblur={() => handleBlurChecking('text', 'titleError', state.title, setField)}
+              inputValue={state.title}
               typeInput='text'
               setField={setField}
-              field='name'
-              error={state.nameError}
-              placeholder='Nhap ho va ten ...'
-              label_title='Ten linh vuc'
+              field='title'
+              error={state.titleError}
+              placeholder='Tên công ty ...'
+              label_title='Tên doanh nghiệp'
             />
             <CommonInput
-              onblur={() => handleBlurChecking('text', 'addressError', state.address, setField)}
-              inputValue={state.address}
+              onblur={() => handleBlurChecking('text', 'descriptionError', state.description, setField)}
+              inputValue={state.description}
               typeInput='text'
               setField={setField}
-              field='address'
-              error={state.addressError}
-              placeholder='Nhap mo ta ...'
-              label_title='Mo ta chi tiet'
+              field='description'
+              error={state.descriptionError}
+              placeholder='Nhập mô tả ...'
+              label_title='Mô tả về doang nghiệp'
             />
-            {['image', 'video', 'contact'].map((section) => (
+            <CommonInput
+              onblur={() => handleBlurChecking('text', 'scaleError', state.scale, setField)}
+              inputValue={state.scale}
+              typeInput='number'
+              setField={setField}
+              field='scale'
+              error={state.scaleError}
+              placeholder='Nhập quy mô doanh nghiệp ...'
+              label_title='Quy mô'
+            />
+
+            {['image', 'video', 'information', 'workPlace'].map((section) => (
               <React.Fragment key={section}>
-                {renderAddComponent(section)}
-                {openSections[section] && renderAddContent(section)}
+                {renderContent(section, toggleSection, openSections, businessData)}
+                {openSections[section] && renderAddContent(section, onSaveHandler, onChangeHandler, formData)}
               </React.Fragment>
             ))}
           </div>

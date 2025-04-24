@@ -5,11 +5,7 @@ import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
 import flex from '@/config/flex.config';
 import ExpiredPostChecking from '@/helpers/expired-check';
 import useApiPublic from '@/hooks/useApiPublic';
-import {
-  FilterOutlined,
-  HeartOutlined,
-  HomeOutlined
-} from '@ant-design/icons';
+import { FilterOutlined, HeartOutlined, HomeOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import RenderContent from '../components/RenderContent';
 import usePost from '@/hooks/usePost';
@@ -24,7 +20,9 @@ interface PostDetailPageProps {
 
 function PostDetailPage({ params }: PostDetailPageProps) {
   const apiPublic = useApiPublic();
-  const { posts } = usePost();
+  const { usePostsSearch } = usePost();
+  const { posts } = usePostsSearch();
+  console.log('posts: ', posts);
   const [postItem, setPostItem] = useState<any>(null);
   const [description, setDescription] = useState<string[]>([]);
   const [experience, setExperience] = useState<string[]>([]);
@@ -49,6 +47,7 @@ function PostDetailPage({ params }: PostDetailPageProps) {
     apiPublic
       .get(`post/${params.id}`)
       .then((res) => {
+        console.log('res: ', res);
         setPostItem(res.data.data);
         setDescription(res.data.data.description.split('; '));
         setExperience(res.data.data.require.description.split('; '));

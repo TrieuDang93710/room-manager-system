@@ -77,7 +77,7 @@ const CommonInput = ({
           className={cn(`${isAuth ? 'sign_in_input_style' : 'input_style'} `, inputClassName)}
           type={passHidden ? 'text' : typeInput}
           value={inputValue}
-          onChange={(e) => setField!(field!, e.target.value)}
+          onChange={(e: any) => setField!(field!, e.target.value)}
           placeholder={placeholder}
           required={true}
         />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
 import CommonInput from '@/components/atoms/Input';
@@ -6,10 +7,13 @@ import GoogleMapsWrapper from '@/components/molecules/GoogleMap/google-map-wrapp
 import { LOCATIONS } from '@/components/molecules/GoogleMap/location';
 import flex from '@/config/flex.config';
 import useCombinedState from '@/hooks/useCombinedState';
-import { handleBlurChecking } from '../../../helpers/utils';
 import { ClockCircleOutlined, CloseOutlined, FileSearchOutlined, HomeOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import CheckboxCard from '@/components/molecules/CheckboxCard';
+import usePost from '@/hooks/usePost';
+import { addresses, fields, workTypes } from '@/faker/data';
+import { PostCardSquareComponent } from '@/components/organisms/system/Card/PostCardSquare';
+import { useForm } from 'react-hook-form';
 
 const GoogleMapsSearching = () => {
   const breadcrumbs = [
@@ -26,8 +30,22 @@ const GoogleMapsSearching = () => {
   ];
 
   const [state, setField] = useCombinedState({
-    email: '',
-    emailError: ''
+    titles: ''
+  });
+
+  const [checkedState, setCheckedState] = useCombinedState<any>({
+    field: [''],
+    address: [''],
+    workType: ['']
+  });
+
+  const { handleSubmit, reset } = useForm();
+  const { usePostsSearch } = usePost();
+  const { posts } = usePostsSearch({
+    fields: checkedState.field.toString(),
+    addresses: checkedState.address.toString(),
+    workTypes: checkedState.workType.toString(),
+    titles: state.titles.toString()
   });
 
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -38,6 +56,11 @@ const GoogleMapsSearching = () => {
 
   const handleOpen = () => {
     setOpenModal(!openModal);
+  };
+
+  const searchHandler = () => {
+    console.log('titles: ', state.titles);
+    reset();
   };
 
   return (
@@ -65,7 +88,7 @@ const GoogleMapsSearching = () => {
         <div className='relative md:w-[40%] w-full'>
           <div className='w-full flex flex-row justify-end items-center px-4 py-4 gap-2'>
             <div className='w-3/4 flex justify-end items-center gap-3'>
-              <div className='border border-green-500 rounded-sm'>
+              <div className='border border-blue-600 rounded-sm'>
                 <select className='px-2 border-none' name='' id=''>
                   <option className='border-none' value=''>
                     All
@@ -76,39 +99,42 @@ const GoogleMapsSearching = () => {
                 </select>
               </div>
               <p className='text-slate-800 text-[14px] flex items-center gap-2'>
-                <strong className='font-bold'>Loc nang cao : </strong>
+                <strong className='font-bold dark:text-blue-600'>Loc nang cao : </strong>
                 <FileSearchOutlined
                   onClick={handleOpen}
-                  className='text-green-500 font-bold text-2xl cursor-pointer active:shadow-slate-500 active:shadow-sm'
+                  className='text-blue-600 font-bold text-2xl cursor-pointer active:shadow-slate-500 active:shadow-sm'
                 />
                 <ClockCircleOutlined />
               </p>
             </div>
           </div>
-          <form action='' className='w-full md:right-0.5 gap-3'>
+          <form className='w-full md:right-0.5 gap-3' onSubmit={handleSubmit(() => searchHandler())}>
             <div className={'w-full py-1 ' + flex({ direction: 'col', alignItems: 'start', justifyContent: 'start' })}>
               <CommonInput
-                onblur={() => handleBlurChecking('text', 'emailError', state.email, setField)}
-                inputValue={state.email}
+                inputValue={state.titles}
                 typeInput='text'
                 setField={setField}
-                field='email'
-                error={state.emailError}
-                hidden={true}
-                label_title='Nhap tu khoa de tim kiem'
-                placeholder='Enter a address to get longitude and latitude'
+                field='titles'
+                hidden={false}
+                label_title='Tìm kiếm'
+                placeholder='Nhập tên công việc'
               />
               <button
-                className='w-[90%] m-auto bg-green-500 dark:bg-[#0000] font-bold text-[13px] py-2 px-4 rounded-md text-[#fff] hover:bg-green- active:shadow-sm active:shadow-slate-400 dark:border-[1px] dark:border-[#fff] dark:hover:bg-blue-200 dark:hover:text-[#000] dark:text-white'
+                className='w-[90%] m-auto bg-blue-600 dark:bg-[#0000] font-bold text-[13px] py-2 px-4 rounded-md text-[#fff] hover:bg-green- active:shadow-sm active:shadow-slate-400 dark:border-[1px] dark:border-blue-600 dark:hover:bg-blue-600 dark:hover:text-white dark:text-blue-600'
                 type='submit'
               >
                 SEARCHING
               </button>
             </div>
           </form>
-          <p className='text-slate-800 text-[14px] flex items-center px-4 py-4 gap-2'>
+          {/* <p className='text-slate-800 text-[14px] flex items-center px-4 py-4 gap-2'>
             <strong className='font-bold'>Ket qua : </strong>None
-          </p>
+          </p> */}
+          <div className='w-full flex sm:grid sm:grid-cols-1 flex-col items-center justify-around gap-3 py-4 px-2'>
+            {posts.map((item: any, index: any) => (
+              <PostCardSquareComponent key={index + 1} post={item} />
+            ))}
+          </div>
           <div className={`absolute top-0 right-0 w-full h-full bg-[#3f3f3f5d] ${!openModal && 'hidden'}`}>
             <p
               onClick={handleClose}
@@ -116,12 +142,30 @@ const GoogleMapsSearching = () => {
             >
               <CloseOutlined />
             </p>
-            <div className='absolute top-0 right-0 md:w-1/2 w-3/4 h-full bg-white'>
+            <div className='absolute top-0 right-0 md:w-1/2 w-3/4 h-full bg-white dark:bg-slate-900'>
               <div className='w-full hidden md:flex flex-col items-center justify-start px-4'>
-                <h3 className='text-[18px] text-black font-medium py-2'>Bo loc bai dang</h3>
-                <CheckboxCard title='Linh vuc' />
-                <CheckboxCard title='Dia diem' />
-                <CheckboxCard title='Hinh thuc' />
+                <h3 className='text-[18px] text-black dark:text-blue-600 font-medium py-2'>Bộ tìm kiếm</h3>
+                <CheckboxCard
+                  title='Lĩnh vực'
+                  array={fields}
+                  setCheckedValue={setCheckedState}
+                  checkedLabel='field'
+                  checkedValue={checkedState.field}
+                />
+                <CheckboxCard
+                  title='Địa điểm'
+                  array={addresses}
+                  setCheckedValue={setCheckedState}
+                  checkedLabel='address'
+                  checkedValue={checkedState.address}
+                />
+                <CheckboxCard
+                  title='Loại công việc'
+                  array={workTypes}
+                  setCheckedValue={setCheckedState}
+                  checkedLabel='workType'
+                  checkedValue={checkedState.workType}
+                />
               </div>
             </div>
           </div>

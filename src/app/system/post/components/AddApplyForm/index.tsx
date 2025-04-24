@@ -33,8 +33,12 @@ const AddApplyForm = ({ state, setField, closeHandler, resume, setResume, post, 
   const [postOptionList, setPostOptionList] = useState<OptionInterface[]>([]);
   const [resumeOptionList, setResumeOptionList] = useState<OptionInterface[]>([]);
   const { handleSubmit, reset } = useForm();
-  const { resumes } = useResume();
-  const { refetch, posts } = usePost();
+  const { useResumeSearch } = useResume();
+  const { usePostsSearch } = usePost();
+  const { resumes } = useResumeSearch();
+  console.log('resumes: ', resumes);
+  const { posts, refetch } = usePostsSearch();
+  console.log('posts: ', posts);
   const { addApply } = useApply();
 
   useEffect(() => {
@@ -84,8 +88,8 @@ const AddApplyForm = ({ state, setField, closeHandler, resume, setResume, post, 
     const applyDto = {
       description: title,
       letter: applyData,
-      post: Number(postId),
-      resume: Number(resumeId)
+      resume: Number(resumeId),
+      post: Number(postId)
     };
 
     console.log('applyDto: ', applyDto);

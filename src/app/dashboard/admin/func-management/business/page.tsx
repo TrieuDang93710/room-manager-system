@@ -17,7 +17,8 @@ const BusinessManagerPage = () => {
   const [openRemoveModal, setOpenRemoveModal] = useState<boolean>(false);
   const [businessId, setBusinessId] = useState<number>(0);
   const [businessSort, setBusinessSort] = useState<any[]>([]);
-  const { businesses } = useBusiness();
+  const { useBusinessSearch } = useBusiness();
+  const { businesses } = useBusinessSearch();
 
   useEffect(() => {
     setBusinessSort(businesses.sort((a: any, b: any) => a.id - b.id));

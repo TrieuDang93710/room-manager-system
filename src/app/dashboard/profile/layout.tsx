@@ -1,6 +1,7 @@
 'use client';
 import TabBar from '@/components/molecules/TabBar';
-import React from 'react';
+import React, { Suspense } from 'react';
+import Loading from '../loading';
 
 interface ProfileLayoutProps {
   children: React.ReactNode;
@@ -27,7 +28,7 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
       <div className='w-full bg-blue-100 dark:bg-blue-800 h-fit py-3 px-3 flex-col justify-center md:gap-3 gap-y-2'>
         <TabBar tabs={navigates} />
         <div className='w-full h-[80vh] bg-white dark:bg-slate-900 flex flex-col justify-start items-center rounded-sm overflow-y-auto'>
-          {children}
+          <Suspense fallback={<Loading />}>{children}</Suspense>
         </div>
       </div>
     </div>
