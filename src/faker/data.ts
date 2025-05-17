@@ -45,20 +45,20 @@ const listLessor = [
   }
 ];
 const chartData = [
-  { month: 'January', doanh_thu: 186, chi_phi: 80 },
-  { month: 'February', doanh_thu: 305, chi_phi: 200 },
-  { month: 'March', doanh_thu: 237, chi_phi: 120 },
-  { month: 'April', doanh_thu: 73, chi_phi: 190 },
-  { month: 'May', doanh_thu: 209, chi_phi: 130 },
-  { month: 'June', doanh_thu: 214, chi_phi: 140 }
+  { month: 'January', Tong_bai_dang: 186, Da_huy: 80 },
+  { month: 'February', Tong_bai_dang: 305, Da_huy: 200 },
+  { month: 'March', Tong_bai_dang: 237, Da_huy: 120 },
+  { month: 'April', Tong_bai_dang: 73, Da_huy: 190 },
+  { month: 'May', Tong_bai_dang: 209, Da_huy: 130 },
+  { month: 'June', Tong_bai_dang: 214, Da_huy: 140 }
 ];
 
 const chartDataCircle = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
-  { browser: 'firefox', visitors: 187, fill: 'var(--color-firefox)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
-  { browser: 'other', visitors: 90, fill: 'var(--color-other)' }
+  { browser: 'chrome', visitors: 1, fill: 'var(--color-chrome)' },
+  { browser: 'safari', visitors: 1, fill: 'var(--color-safari)' },
+  // { browser: 'firefox', visitors: 187, fill: 'var(--color-firefox)' },
+  // { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
+  // { browser: 'other', visitors: 90, fill: 'var(--color-other)' }
 ];
 
 const pageSizeList = [

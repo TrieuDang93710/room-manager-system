@@ -14,25 +14,25 @@ const chartConfigCircle = {
     label: 'Visitors'
   },
   chrome: {
-    label: 'Chrome',
+    label: 'Manager',
     color: 'hsl(var(--chart-1))'
   },
   safari: {
-    label: 'Safari',
+    label: 'Applicant',
     color: 'hsl(var(--chart-2))'
   },
-  firefox: {
-    label: 'Firefox',
-    color: 'hsl(var(--chart-3))'
-  },
-  edge: {
-    label: 'Edge',
-    color: 'hsl(var(--chart-4))'
-  },
-  other: {
-    label: 'Other',
-    color: 'hsl(var(--chart-5))'
-  }
+  // firefox: {
+  //   label: 'Firefox',
+  //   color: 'hsl(var(--chart-3))'
+  // },
+  // edge: {
+  //   label: 'Edge',
+  //   color: 'hsl(var(--chart-4))'
+  // },
+  // other: {
+  //   label: 'Other',
+  //   color: 'hsl(var(--chart-5))'
+  // }
 };
 
 export { chartConfig, chartConfigCircle };

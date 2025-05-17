@@ -13,8 +13,8 @@ const TabBar = ({ tabs }: TabBarProps) => {
   return (
     <div className='tab_container'>
       {tabs!.map((item, index) => (
-        <h3 key={index} onClick={() => router.push(`/dashboard/applicant/${item.path}`)}>
-          <Link href={`/dashboard/applicant/${item.path}`}>{item.title}</Link>
+        <h3 key={index} onClick={() => router.push(`/dashboard/${item.path}`)}>
+          <Link href={`/dashboard/${item.path}`}>{item.title}</Link>
         </h3>
       ))}
     </div>

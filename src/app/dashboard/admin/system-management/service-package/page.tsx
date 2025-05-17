@@ -8,33 +8,38 @@ import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import { DeleteOutlined, PlusOutlined, ReadOutlined } from '@ant-design/icons';
 import './service-package.css';
 import AddServicePackage from './components/AddServicePackage';
+import useServicePackage from '@/hooks/usePackage';
 
 const ServicePackageManagerPage = () => {
+  const { packages } = useServicePackage();
   const [openAddServicePackage, setOpenAddServicePackage] = useState<boolean>(false);
 
   const closeAddServicePackageHandler = () => {
     setOpenAddServicePackage(!openAddServicePackage);
   };
 
-  const headers = ['Tiêu đề', 'Gia', 'So luong tin', 'Ngày tạo', 'Xử lý'];
+  const headers = ['Giá', 'Số lượng tin đăng', 'Ngày tạo', 'Trạng Thái', 'Xử lý'];
 
-  const posts = Array.from({ length: 20 }).map((_, index) => ({
-    title: `Tin tuc ${index + 1}`,
-    price: '300.000',
-    quantity: '10',
-    date: '30 - 03 - 2025'
-  }));
-
-  const renderRow = (post: any) => (
+  const renderRow = (pk: any) => (
     <>
-      <td className='truncate px-2'>{post.title}</td>
-      <td className='truncate px-2'>{post.price}</td>
-      <td className='truncate px-2'>{post.quantity}</td>
-      <td className='truncate px-2'>{post.date}</td>
-      <td className='flex items-center justify-center sm:gap-2 px-2'>
-        <ReadOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />
-        <DeleteOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />
+      <td className='truncate px-2'>{pk!.price}</td>
+      <td className='truncate px-2'>{pk!.news_quantity}</td>
+      <td className='truncate px-2'>{pk!.createAt.slice(0, 10)}</td>
+      <td className='truncate px-2'>
+        {pk!.status && (
+          <>
+            <p className={`${pk!.status && 'text-red-500'}`}>Đã xóa</p>
+          </>
+        )}
       </td>
+      {!pk!.status ? (
+        <td className='flex items-center justify-center sm:gap-2 px-2'>
+          <ReadOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />
+          <DeleteOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />
+        </td>
+      ) : (
+        <td className='flex items-center justify-center sm:gap-2 px-2'>None</td>
+      )}
     </>
   );
 
@@ -65,7 +70,7 @@ const ServicePackageManagerPage = () => {
           </div>
           <SearchComponent />
         </div>
-        <TableComponent headers={headers} data={posts} renderRow={renderRow} />
+        <TableComponent headers={headers} data={packages} renderRow={renderRow} />
         <div className='w-full flex justify-end py-1'>
           <PaginationComponent />
         </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import CommonInput from '@/components/atoms/Input';
 import flex from '@/config/flex.config';
@@ -13,6 +14,8 @@ import { useRouter } from 'next/navigation';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { useApiSecure } from '@/hooks/useApiSecure';
 import NotificationCustom from '@/helpers/notify';
+import useUser from '@/hooks/useUser';
+import TimestampConvert from '@/helpers/time-convert';
 
 const SignIn = () => {
   const [passHidden, setPassHidden] = useState<boolean>(false);
@@ -26,12 +29,33 @@ const SignIn = () => {
 
   const { handleSubmit, reset } = useForm();
   const { signIn, setUser, user } = useAuth();
+  const { getUserByEmail } = useUser();
   const apiSecure = useApiSecure();
   const router = useRouter();
 
   const handleSignIn = async () => {
     const email = state.email;
     const password = state.password;
+
+    const result = (await getUserByEmail.mutateAsync({ email: email })).data;
+    console.log('userByEmail: ', result.data);
+    setUser(result.data)
+    const decodedToken = jwt.decode(result.data.token!) as JwtPayload;
+    const decodedRefreshToken = jwt.decode(result.data.refresh_token!) as JwtPayload;
+    console.log(decodedToken, decodedRefreshToken);
+
+    const get_time = new Date().getTime();
+    const datetime = Math.floor(get_time / 1000);
+
+    if (!decodedToken || !decodedRefreshToken) {
+      return 'Error';
+    }
+
+    const token_time_exp = decodedToken.exp! - decodedToken.iat!;
+    const refresh_token_time_exp = decodedRefreshToken.exp! - decodedRefreshToken.iat!;
+    const realtime = datetime - decodedToken.iat!;
+
+    console.log(token_time_exp, refresh_token_time_exp, realtime);
 
     signIn(email, password)
       .then((response) => {
@@ -52,7 +76,6 @@ const SignIn = () => {
             }
           })
           .catch((error) => {
-            console.log('error.response: ', error);
             if (error.response.data) {
               NotificationCustom(`warning`, error.response.data.message);
               reset();
@@ -60,18 +83,20 @@ const SignIn = () => {
             }
           });
       })
-      .catch((error: string) => {
-        console.log('error: ', error);
-        NotificationCustom('error', error);
-        reset();
-        router.push('/sign-in');
+      .catch(async () => {
+        if (
+          (token_time_exp < realtime && TimestampConvert(realtime) <= TimestampConvert(refresh_token_time_exp) - 1) ||
+          TimestampConvert(realtime) > TimestampConvert(refresh_token_time_exp) - 1
+        ) {
+          NotificationCustom('warning', 'Vui lòng làm mới mật khẩu');
+          router.push('/refresh-token');
+        }
+        // NotificationCustom('error', error.message);
       });
   };
 
   return (
-    <div
-      className={'w-full py-10 ' + flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })}
-    >
+    <div className={'w-full py-10 ' + flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })}>
       <div className='sign_in_container'>
         <h2 className='sign_in_title'>Sign In</h2>
         <form className='sign_in_form' onSubmit={handleSubmit(handleSignIn)}>

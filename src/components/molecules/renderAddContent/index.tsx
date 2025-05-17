@@ -245,6 +245,39 @@ const renderAddContent = (section: string, onSaveHandler: any, onChangeHandler: 
           />
         </AddContent>
       );
+    case 'contact_information':
+      return (
+        <AddContent onSave={(e) => onSaveHandler(e, section)}>
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder='Người thực hiện'
+            value={formData.contact_information.createBy}
+            onChange={(e) => onChangeHandler('contact_information', { ...formData.contact_information, createBy: e.target.value })}
+          />
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder={`Email`}
+            value={formData.contact_information.email}
+            onChange={(e) => onChangeHandler('contact_information', { ...formData.contact_information, email: e.target.value })}
+          />
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder={`Số điện thoại`}
+            value={formData.contact_information.phone}
+            onChange={(e) => onChangeHandler('contact_information', { ...formData.contact_information, phone: e.target.value })}
+          />
+          <input
+            className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+            type='text'
+            placeholder={`Ghi chú`}
+            value={formData.contact_information.note}
+            onChange={(e) => onChangeHandler('contact_information', { ...formData.contact_information, note: e.target.value })}
+          />
+        </AddContent>
+      );
     default:
       return;
   }

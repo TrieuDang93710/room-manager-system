@@ -1,4 +1,4 @@
-import API_PUBLIC_URI from '@/lib/constants';
+import { API_PUBLIC_URI } from '@/lib/constants';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 

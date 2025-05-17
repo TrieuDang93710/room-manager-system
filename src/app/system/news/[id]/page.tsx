@@ -1,27 +1,20 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-async-client-component */
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
 import flex from '@/config/flex.config';
+import useApiPublic from '@/hooks/useApiPublic';
 import { FilterOutlined, HomeOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
 interface NewsInfoPageProps {
-  params: Promise<{ id: number }>;
+  params: { id: number };
 }
 
 const NewsInfoPage = async ({ params }: NewsInfoPageProps) => {
-  const id = (await params).id;
-  console.log('id: ', id);
-  // const [filteredItems] = useState(listRoom);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [itemsPerPage] = useState(2);
-
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
-
-  // const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-  // console.log('currentItems: ', currentItems, '\n', 'paginate: ', paginate);
+  const apiPublic = useApiPublic();
+  const [newsItem, setNewsItem] = useState<any>(null);
 
   const breadcrumbs = [
     {
@@ -35,11 +28,55 @@ const NewsInfoPage = async ({ params }: NewsInfoPageProps) => {
       prefixIcon: () => <FilterOutlined />
     },
     {
-      url: `/system/news/${id}`,
+      url: `/system/news/${params.id}`,
       label: 'Thong tin chi tiet',
       prefixIcon: () => <FilterOutlined />
     }
   ];
+
+  useEffect(() => {
+    apiPublic
+      .get(`/news/${Number(params.id)}`)
+      .then((result) => {
+        setNewsItem(result.data.data);
+      })
+      .catch((error) => {
+        console.log('error: ', error);
+      });
+  }, [apiPublic, params.id]);
+
+  const listItem =
+    newsItem &&
+    newsItem.contents.split('; ').map((item: any, index: any) => (
+      <li key={index} className='text-[16px] text-black font-normal leading-8 py-4'>
+        {item}
+      </li>
+    ));
+
+  const listImage =
+    newsItem &&
+    newsItem.image.map((item: string, idx: any) => (
+      // <Image key={idx} alt={`${item}_${idx}`} src={item} width={'100'} height={'100'} />
+      <img key={idx} alt={`${item}_${idx}`} src={item} className='w-full py-4' />
+    ));
+
+  const bannerImage =
+    newsItem && newsItem.banner ? (
+      <div
+        className='w-1/2 h-[20vh] bg-center bg-contain bg-no-repeat'
+        style={{
+          backgroundImage: `url(${newsItem.banner})`
+        }}
+      ></div>
+    ) : (
+      <div
+        className='w-1/2 h-[20vh] bg-center bg-contain bg-no-repeat'
+        style={{
+          backgroundImage:
+            "url('https://www.freeiconspng.com/thumbs/business-icon-png/corporate-icon-png-autocorrect-for-business-13.png')"
+        }}
+      ></div>
+    );
 
   return (
     <div
@@ -59,37 +96,25 @@ const NewsInfoPage = async ({ params }: NewsInfoPageProps) => {
       </div>
       <div className='lg:w-[90%] w-full flex md:flex-row flex-col items-start justify-around my-4 gap-3'>
         <div className='w-full rounded-md shadow-sm shadow-slate-600 flex flex-col justify-start items-center p-4 gap-4'>
-          <div
-            className='w-1/2 h-[20vh] bg-center bg-contain bg-no-repeat'
-            style={{
-              backgroundImage:
-                "url('https://www.freeiconspng.com/thumbs/business-icon-png/corporate-icon-png-autocorrect-for-business-13.png')"
-            }}
-          ></div>
-          <div className='w-full flex flex-col items-start justify-start gap-3'>
+          {bannerImage}
+          <div className='w-[80%] flex flex-col items-start justify-start gap-3'>
             <p className='text-[16px] text-black font-normal leading-8'>
-              <strong className=''>Gioi thieu doanh nghiep : </strong> Lorem ipsum dolor sit, amet consectetur
-              adipisicing elit. Officia, placeat fugit distinctio ipsum eveniet reprehenderit alias. Numquam quae
-              consequatur enim nobis commodi iste cupiditate non. Minus cumque corporis sunt amet. Lorem ipsum dolor sit
-              amet consectetur adipisicing elit. Perferendis, rem! Nam adipisci molestias quo, alias illo quidem! Alias
-              vitae similique quod hic quae, nisi vel consequuntur. Ipsam adipisci et eaque. Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Incidunt, ipsa! Ad unde, ducimus officia ab illum libero maxime, a expedita
-              ut praesentium doloribus consectetur eligendi id, fugiat itaque? Quae, culpa? Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Id voluptate eveniet quidem qui aut? Architecto delectus, officia iusto
-              doloremque error cumque ipsum ducimus laborum quae sequi odit voluptas at aperiam? Lorem ipsum dolor sit
-              amet consectetur adipisicing elit. Laudantium sed accusamus officia vitae minus dicta praesentium
-              repudiandae repellat sequi reprehenderit, repellendus necessitatibus temporibus earum. Dolor id distinctio
-              fugiat consectetur sed?
+              <strong className=''>Thông tin liên hệ : </strong>
             </p>
             <p className='text-[16px] text-black font-normal leading-8'>
-              <strong className=''>Kinh nghiem : </strong> Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Officia, placeat fugit distinctio ipsum eveniet reprehenderit alias. Numquam quae consequatur enim nobis
-              commodi iste cupiditate non. Minus cumque corporis sunt amet. Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Fuga laborum a vero sint exercitationem labore expedita porro explicabo sapiente est!
-              Facere ratione error velit temporibus obcaecati corrupti tenetur labore minima. Lorem ipsum dolor sit
-              amet, consectetur adipisicing elit. Laudantium quasi natus non enim autem labore, in illo. Similique ipsa
-              cum, voluptas nulla porro molestiae eos, veritatis voluptate quas laudantium sit?
+              <strong className='font-normal'>Người thực hiện : </strong>
+              {newsItem!.information?.createBy}
             </p>
+            <p className='text-[16px] text-black font-normal leading-8'>
+              <strong className='font-normal'>Địa chỉ email : </strong>
+              {newsItem!.information?.email}
+            </p>
+            <p className='text-[16px] text-black font-normal leading-8'>
+              <strong className='font-normal'>Số điện thoại : </strong>
+              {newsItem!.information?.phone}
+            </p>
+            <ul className='list-disc list-inside'>{listItem}</ul>
+            {listImage}
           </div>
         </div>
       </div>

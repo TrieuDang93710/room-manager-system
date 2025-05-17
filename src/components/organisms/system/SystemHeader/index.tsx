@@ -128,9 +128,12 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
               className='cursor-pointer rounded-full'
             />
             <div className='flex flex-col items-start relative'>
-              <h3 className='font-medium text-[14px] dark:text-[#b4b4b4] dark:hover:text-[#ebebeb] cursor-pointer'>
+              <Link
+                href={'/dashboard/profile'}
+                className='font-medium text-[14px] dark:text-[#b4b4b4] dark:hover:text-[#ebebeb] cursor-pointer'
+              >
                 {user.username}
-              </h3>
+              </Link>
               <p className='font-medium text-[12px] dark:text-[#b4b4b4] dark:hover:text-[#ebebeb] cursor-pointer'>
                 {user.email}
               </p>

@@ -9,8 +9,20 @@ import ReviewUs from './components/Review';
 import ServicePackage from './components/Service';
 import NewsSlide from './components/NewsSlide';
 import RecruitmentRepresentative from './components/Representative';
+import SyntheticComponent from './components/Synthetic';
+import useBusiness from '@/hooks/useBusiness';
+import usePost from '@/hooks/usePost';
+import useServicePackage from '@/hooks/usePackage';
+import useNews from '@/hooks/useNews';
 
 const SystemPage = () => {
+  const { useBusinessSearch } = useBusiness();
+  const { usePostsSearch } = usePost();
+  const { packages } = useServicePackage();
+  const { newses } = useNews();
+  const { businesses } = useBusinessSearch({});
+  const { posts } = usePostsSearch({});
+
   return (
     <main className='relative w-full min-h-screen md:px-10 px-3 pt-20 font-[family-name:var(--font-geist-sans)] flex flex-col justify-start items-center z-10'>
       <BannerCarousel />
@@ -18,14 +30,10 @@ const SystemPage = () => {
       <PolicyUs />
       <NewsSlide />
       <div className='w-[90%] flex sm:grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around gap-4 py-10 my-4'>
-        {Array.from({ length: 4 }).map((_, index) => (
-          <div
-            key={index + 1}
-            className='w-full h-[20vh] border-[1px] rounded-sm hover:translate-x-1 cursor-pointer border-blue-600 hover:border-blue-600 flex flex-col items-center justify-center'
-          >
-            <p className='text-2xl font-bold dark:text-blue-600'>20 Tin</p>
-          </div>
-        ))}
+        <SyntheticComponent title='Số lượng công ty đã đăng ký' value={businesses.length} />
+        <SyntheticComponent title='Số lượng bài đăng công việc' value={posts.length} />
+        <SyntheticComponent title='Số lượng gói dịch vụ hệ thống' value={packages.length} />
+        <SyntheticComponent title='Tổng tin tức nỗi bậc' value={newses.length} />
       </div>
       <RecruitmentRepresentative />
       <ReviewUs />

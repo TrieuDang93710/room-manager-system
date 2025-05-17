@@ -5,7 +5,8 @@ const funcOfManager = [
   { label: 'Quản Lý Bài Đăng', icon: <HomeOutlined />, path: 'post' },
   { label: 'Quản Lý Công Ty', icon: <HomeOutlined />, path: 'business' },
   { label: 'Quản Lý Trạng Thái', icon: <HomeOutlined />, path: 'resume-status' },
-  { label: 'Quản Lý Ứng Viên', icon: <HomeOutlined />, path: 'applicant' }
+  { label: 'Quản Lý Ứng Viên', icon: <HomeOutlined />, path: 'applicant' },
+  { label: 'Quản Lý Hóa Đơn', icon: <HomeOutlined />, path: 'service-bill' }
 ];
 
 const funcOfApplicant = [
@@ -35,7 +36,8 @@ const funcOfAdmin = [
     children: [
       { label: 'Quản Lý Tin Tuc', icon: <HomeOutlined />, path: 'news' },
       { label: 'Quản Lý Goi Tai Khoang', icon: <HomeOutlined />, path: 'service-package' },
-      { label: 'Quản Lý Tài Khoản', icon: <HomeOutlined />, path: 'account' }
+      { label: 'Quản Lý Tài Khoản', icon: <HomeOutlined />, path: 'account' },
+      { label: 'Hóa Đơn', icon: <HomeOutlined />, path: 'service-bill' }
     ]
   }
 ];
