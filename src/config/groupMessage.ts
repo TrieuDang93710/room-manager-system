@@ -37,6 +37,26 @@ const splitSenderReceiver = (groupedMessages: any, currentUserId: any) => {
   return result;
 };
 
+const splitMessageResponse = (groupedMessages: any, query: any) => {
+  const result: Record<string, { query: any[]; answer: any[] }> = {};
+
+  for (const [date, msgs] of Object.entries(groupedMessages) as [string, any[]][]) {
+    result[date] = {
+      query: [],
+      answer: []
+    };
+
+    msgs.forEach((msg: any) => {
+      if (query === 'query') {
+        result[date].query.push(msg);
+      }
+      result[date].answer.push(msg);
+    });
+  }
+
+  return result;
+};
+
 const mergeSortMessages = (receiverMessages: any, senderMessages: any) => {
   const senderWithSenderTrue = senderMessages.map((message: any) => ({ ...message, sender: true }));
   const receiverWithSenderFalse = receiverMessages.map((message: any) => ({ ...message, sender: false }));
@@ -48,4 +68,4 @@ const mergeSortMessages = (receiverMessages: any, senderMessages: any) => {
   return merged;
 };
 
-export { groupMessagesByDate, splitSenderReceiver, mergeSortMessages };
+export { groupMessagesByDate, splitSenderReceiver, mergeSortMessages, splitMessageResponse };

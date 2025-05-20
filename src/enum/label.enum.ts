@@ -19,7 +19,8 @@ const labels = {
   certificate: 'Chứng chỉ',
   award: 'Giải thưỡng',
   image: 'Hình ảnh',
-  video: 'Video'
+  video: 'Video',
+  banner: 'Ảnh banner'
 };
 
 export { labels };

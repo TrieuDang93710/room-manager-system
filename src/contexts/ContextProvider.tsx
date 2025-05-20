@@ -13,8 +13,11 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import axios from 'axios';
 
 import app from '@/firebase/firebase.config';
-import API_PUBLIC_URI from '@/lib/constants';
+import { API_PUBLIC_URI } from '@/lib/constants';
 import useApiPublic from '@/hooks/useApiPublic';
+import { useRouter } from 'next/navigation';
+import TimestampConvert from '@/helpers/time-convert';
+import NotificationCustom from '@/helpers/notify';
 
 interface AuthContextType {
   loading: boolean;
@@ -37,6 +40,7 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
   const apiPublic = useApiPublic();
+  const router = useRouter();
 
   // register and login on local
   const signIn = (email: string, password: string) => {
@@ -70,9 +74,40 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
   const logout = () => {
     localStorage.removeItem('access-token');
     localStorage.removeItem('ally-supports-cache');
-    localStorage.removeItem('refresh-token');
+    // localStorage.removeItem('refresh-token');
     return signOut(auth);
   };
+
+  useEffect(() => {
+    const token: string | null = localStorage.getItem('access-token');
+    const refreshToken: string | null = localStorage.getItem('refresh-token');
+
+    if (!token) {
+      router.push('/sign-in');
+    }
+
+    const decodedToken = jwt.decode(token!) as JwtPayload;
+    const decodedRefreshToken = jwt.decode(refreshToken!) as JwtPayload;
+
+    if (decodedToken && decodedRefreshToken) {
+      const get_time = new Date().getTime();
+      const datetime = Math.floor(get_time / 1000);
+
+      const token_time_exp = decodedToken.exp! - decodedToken.iat!;
+      const refresh_token_time_exp = decodedRefreshToken.exp! - decodedRefreshToken.iat!;
+      const realtime = datetime - decodedToken.iat!;
+
+      if (
+        (token_time_exp < realtime && TimestampConvert(realtime) <= TimestampConvert(refresh_token_time_exp) - 1) ||
+        TimestampConvert(realtime) > TimestampConvert(refresh_token_time_exp) - 1
+      ) {
+        NotificationCustom('warning', 'You need refresh token');
+        router.push('/refresh-token');
+      } else {
+        return;
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const token: string | null = localStorage.getItem('access-token');

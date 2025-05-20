@@ -1,5 +1,5 @@
 .modal_container_add_field {
-    @apply absolute bg-[#ffffff] dark:bg-[#0a0a0a] w-[50%] h-[50%] p-3 rounded-md shadow-md shadow-[#fff]
+    @apply absolute bg-[#ffffff] dark:bg-[#0a0a0a] w-[80%] h-[80%] p-3 rounded-md shadow-md shadow-[#fff]
 }
 
 .modal_container_add_field form {

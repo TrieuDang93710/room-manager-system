@@ -8,27 +8,24 @@ import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import { DeleteOutlined, PlusOutlined, ReadOutlined } from '@ant-design/icons';
 import './news.css';
 import AddNews from './components/AddNews';
+import useNews from '@/hooks/useNews';
 
 const NewsManagerPage = () => {
+  const { newses } = useNews();
   const [openAddNews, setOpenAddNews] = useState<boolean>(false);
 
   const closeAddNewsHandler = () => {
     setOpenAddNews(!openAddNews);
   };
 
-  const headers = ['Tiêu đề', 'Mô tả', 'Ngày tạo', 'Xử lý'];
+  const headers = ['#', 'Tiêu đề', 'Mô tả', 'Ngày tạo', 'Xử lý'];
 
-  const posts = Array.from({ length: 20 }).map((_, index) => ({
-    title: `Tin tuc ${index + 1}`,
-    field: 'Viết mô tả ở đây',
-    date: '30 - 03 - 2025'
-  }));
-
-  const renderRow = (post: any) => (
+  const renderRow = (nws: any, index: any) => (
     <>
-      <td className='truncate px-2'>{post.title}</td>
-      <td className='truncate px-2'>{post.field}</td>
-      <td className='truncate px-2'>{post.date}</td>
+      <td className='truncate px-2'>{index + 1}</td>
+      <td className='truncate px-2'>{nws!.title}</td>
+      <td className='truncate px-2'>{nws!.contents}</td>
+      <td className='truncate px-2'>{nws!.createAt.slice(0, 10)}</td>
       <td className='flex items-center justify-center sm:gap-2 px-2'>
         <ReadOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />
         <DeleteOutlined className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3' />
@@ -63,7 +60,7 @@ const NewsManagerPage = () => {
           </div>
           <SearchComponent />
         </div>
-        <TableComponent headers={headers} data={posts} renderRow={renderRow} />
+        <TableComponent headers={headers} data={newses} renderRow={renderRow} />
         <div className='w-full flex justify-end py-1'>
           <PaginationComponent />
         </div>

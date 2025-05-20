@@ -2,9 +2,10 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useApiSecure } from '../useApiSecure';
 import NotificationCustom from '@/helpers/notify';
+import useApiPublic from '../useApiPublic';
 
 const useUser = () => {
-  //   const apiPublic = useApiPublic();
+  const apiPublic = useApiPublic();
   const apiSecure = useApiSecure();
 
   // Fetch the post with Get method
@@ -38,7 +39,13 @@ const useUser = () => {
     }
   });
 
-  return { users, refetch, loading, updateProfile };
+  const getUserByEmail = useMutation({
+    mutationFn: async ({ email }: { email: string }) => {
+      return await apiPublic.get(`/user/email/${email}`);
+    }
+  });
+
+  return { users, refetch, loading, updateProfile, getUserByEmail };
 };
 
 export default useUser;

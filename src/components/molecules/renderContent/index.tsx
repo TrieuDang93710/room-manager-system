@@ -203,6 +203,24 @@ const renderContent = (section: string, toggleSection: any, openSections: any, d
           </div>
         </AddComponent>
       );
+    case 'contact_information':
+      return (
+        <AddComponent
+          title='Thông tin liên hệ'
+          action={true}
+          onClick={() => toggleSection(section)}
+          isButton={openSections[section]}
+        >
+          <div className={`${data[section] !== null && 'w-[60%]'} flex flex-col items-start justify-start gap-4`}>
+            <div className='w-full flex flex-col items-start justify-start gap-2 p-2 border border-green-500'>
+              <h3 className='text-black dark:text-white text-[16px] font-bold line-clamp-2'>{data[section]!.createBy}</h3>
+              <h3 className='text-black dark:text-white text-[16px] font-bold line-clamp-2'>{data[section]!.email}</h3>
+              <h3 className='text-black dark:text-white text-[16px] font-bold line-clamp-2'>{data[section]!.phone}</h3>
+              <h3 className='text-black dark:text-white text-[16px] font-bold line-clamp-2'>{data[section]!.note}</h3>
+            </div>
+          </div>
+        </AddComponent>
+      );
     default:
       return;
   }

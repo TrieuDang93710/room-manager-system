@@ -76,8 +76,8 @@ const StatisticalManagerPage = () => {
           </div>
           <div className='w-full dark:bg-[#1a1a1a00] md:pr-10'>
             <Card className='w-full dark:bg-[#ffffff00]'>
-              <p className='text-[#292929] font-bold text-[15px] pb-2 dark:text-blue-600'>Danh Sách Phòng Cho Thuê</p>
-              <p className='text-[#333333] font-bold text-[12px] pb-4 dark:text-blue-600'>Mô tả</p>
+              <p className='text-[#292929] font-bold text-[15px] pb-2 dark:text-blue-600'>Danh Sách Các Bài Đăng</p>
+              <p className='text-[#333333] font-bold text-[12px] pb-4 dark:text-blue-600'>Dưới đây là thống kê các bài đăng mới nhất trên hệ thống.</p>
               <div className='flex items-end justify-end'>
                 <SearchComponent />
               </div>
