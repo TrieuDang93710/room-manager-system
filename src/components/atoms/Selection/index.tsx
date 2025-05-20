@@ -1,25 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cn } from '@/helpers/utils';
 import React from 'react';
 
-interface OptionInterface {
-  value: string;
-  label: string;
-}
-
 interface SelectionComponentProps {
   className?: string;
-  optionList?: (OptionInterface | undefined)[];
-  selectValue?: string;
-  setSelectValue: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  optionList?: any[];
+  value?: string;
+  setValue: (value: any) => void;
 }
-const SelectionComponent = ({ className, optionList, selectValue, setSelectValue }: SelectionComponentProps) => {
+const SelectionComponent = ({ className, optionList, value, setValue }: SelectionComponentProps) => {
   return (
     <div className={cn('selection_box', className)}>
-      <select value={selectValue} onChange={setSelectValue}>
-        {optionList?.map((option, index) =>
-          option ? (
-            <option key={index} value={option.value}>
-              {option.label}
+      <select value={value} onChange={(e) => setValue(e.target.value)}>
+        <option>Chọn</option>
+        {optionList?.map((item, index) =>
+          item ? (
+            <option key={index} value={item.value}>
+              {item.label}
             </option>
           ) : null
         )}

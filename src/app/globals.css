@@ -10,8 +10,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #f4f5f5;
-    --foreground: #070707;
+    --background: #f7f7f7;
+    --foreground: #4b4b4b;
   }
 }
 
@@ -134,9 +134,25 @@ table thead tr th {
   animation: fadeOut 2s ease-in-out;
 }
 
-.react-multi-carousel-track{
+.react-multi-carousel-track {
   width: 100%;
 }
+
+.hide-scrollbar {
+  overflow: auto;
+  /* Allows scrolling */
+
+  -ms-overflow-style: none;
+  /* Hides scrollbar for Internet Explorer and Edge */
+  scrollbar-width: none;
+  /* Hides scrollbar for Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  /* Hides scrollbar for Chrome, Safari, and Opera */
+}
+
 
 /*import css for component*/
 /* @import "../components/organisms/System/Header/navbar.css";

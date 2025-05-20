@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/helpers/utils';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/auth/useAuth';
 import listFuncInterface from '@/interfaces/listFunction/index';
 import { LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, MessageOutlined } from '@ant-design/icons';
 
@@ -44,11 +44,11 @@ const FunctionListManager = ({
       className={
         hidden
           ? cn(
-              'relative z-30 md:w-1/12 w-1/8 flex flex-col items-center justify-start bg-blue-500 h-screen border border-green-500 p-5',
+              'relative z-30 md:w-1/12 w-1/8 flex flex-col items-center justify-start bg-blue-500 dark:bg-blue-900 h-screen p-5',
               className
             )
           : cn(
-              'relative z-30 md:w-1/6 w-1/4 flex flex-col items-start justify-start bg-blue-500 h-screen border border-green-500 p-5',
+              'relative z-30 md:w-1/6 w-1/4 flex flex-col items-start justify-start bg-blue-500 dark:bg-blue-900 h-screen p-5',
               className
             )
       }
@@ -60,9 +60,10 @@ const FunctionListManager = ({
           src={
             user && user!.avatar ? user.avatar : 'https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'
           }
-          width='60'
-          height='60'
-          className='pb-5'
+          width='80'
+          height='80'
+          className='mb-3 rounded-full'
+          priority={true}
         />
         <p className='text-[#e4e4e4] md:text-[16px] text-[13px] font-bold pt-4 pb-4 text-center'>Quản Lý Chức Năng</p>
       </div>
@@ -98,7 +99,7 @@ const FunctionListManager = ({
                 hidden ? 'justify-center' : 'justify-start'
               }`}
             >
-              <Link href={'/dashboard/message'} onClick={handleSignOut} className='text-start truncate'>
+              <Link href={'/dashboard/message'} className='text-start truncate'>
                 {hidden === true ? <MessageOutlined /> : 'Tin nhắn'}
               </Link>
             </li>

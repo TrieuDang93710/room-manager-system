@@ -1,48 +1,64 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FieldTimeOutlined, HomeOutlined } from '@ant-design/icons';
 import CardSquare from '../Square';
 import CurrencyFormatted from '@/config/currency.config';
+import ExpiredPostChecking from '@/helpers/expired-check';
 
 interface PostCardSquareComponentProps {
   onClick?: () => void;
+  post?: any;
 }
 
-export const PostCardSquareComponent = ({ onClick }: PostCardSquareComponentProps) => {
+export const PostCardSquareComponent = ({ onClick, post }: PostCardSquareComponentProps) => {
+  const { days, expired } = ExpiredPostChecking(post!.createAt, post!.duration);
+  console.log('expired: ', expired);
+
   return (
-    <CardSquare>
+    <CardSquare logo={post && post.company.logo}>
       <div className='w-full px-2'>
-        <p className='text-[13px] text-slate-800 font-normal'>Kinh doanh</p>
-        <h3 className='text-[18px] text-black font-bold py-2 line-clamp-2'>Nhan vien phuc vu</h3>
+        <p className='text-[13px] text-slate-800 dark:text-blue-500 font-normal'>{post!.type_of_post.title}</p>
+        <h3 className='text-[18px] text-black dark:text-blue-800 font-bold py-2 line-clamp-2'>{post!.title}</h3>
         <p className='text-[13px] text-slate-800 font-normal py-1'>
-          <HomeOutlined className='font-bold text-black mr-2' /> 29 Tran Duc Thao
+          <HomeOutlined className='font-bold text-black mr-2 dark:text-blue-800' />{' '}
+          {post!.company.work_place.address.village} {post!.company.work_place.address.district}{' '}
+          {post!.company.work_place.address.city} {post!.company.work_place.address.national}
         </p>
         <p className='text-[13px] text-slate-800 font-normal py-1'>
-          <strong className='font-bold text-black'>Hinh thuc : </strong>Toan thoi gian
+          <strong className='font-bold text-black dark:text-blue-800'>Hinh thuc : </strong>
+          {post!.work_type[0]}
         </p>
         <p className='text-[13px] text-slate-800 font-normal py-1'>
-          <strong className='font-bold text-black line-clamp-2'>Yeu cau : </strong>Chi nam, nhanh nhen va thao vac.
+          <strong className='font-bold text-black dark:text-blue-800 line-clamp-2'>Yeu cau : </strong>
+          {post!.require.experience}
         </p>
         <p className='text-[13px] text-slate-800 font-normal py-1'>
-          <strong className='font-bold text-black'>Luong : </strong>
+          <strong className='font-bold text-black dark:text-blue-800'>Luong : </strong>
           {CurrencyFormatted({ value: 20000, code: 'VND' })} / gio
         </p>
-        <div className='w-full flex justify-between'>
-          <p className='text-[13px] text-slate-800 font-normal py-1'>
-            <strong className='font-bold text-black'>Time : </strong>06/03/2025
+        <div className='w-full flex flex-col items-start'>
+          <p className={`text-[13px] font-normal text-slate-800 py-1 text-left line-clamp-1 ${expired < days && 'text-red-600'}`}>
+            <strong className='font-bold text-black dark:text-blue-800'>Time : </strong>
+            {expired < days ? 'Đã hết hạn ứng tuyển' : post!.duration}
           </p>
-          <p className='text-[13px] text-slate-800 font-normal py-1'>
-            <strong className='font-bold text-black'>
-              <FieldTimeOutlined /> :{' '}
-            </strong>
-            1 days
-          </p>
+          {expired >= days && (
+            <p className='text-[13px] text-slate-800 font-normal py-1'>
+              <strong className='font-bold text-black dark:text-blue-800'>
+                <FieldTimeOutlined /> :{' '}
+              </strong>
+              {expired.toFixed()} days
+            </p>
+          )}
         </div>
-        <p className='text-[13px] text-slate-800 font-normal py-1'>
-          <strong className='font-bold text-black'>Cap nhat : </strong>2 ngay truoc.
-        </p>
+        {expired >= days && (
+          <p className='text-[13px] text-slate-800 font-normal py-1'>
+            <strong className='font-bold text-black dark:text-blue-800'>Cap nhat : </strong>
+            {days.toFixed()} ngay truoc.
+          </p>
+        )}
       </div>
       <button
         onClick={onClick}
-        className='w-1/2 py-2 rounded-md text-green-500 text-[16px] font-bold hover:bg-green-200 hover:text-green-800 active:shadow-sm active:shadow-gray-600'
+        className='w-1/2 py-2 rounded-sm text-blue-800 text-[16px] font-bold bg-blue-100 dark:bg-blue-300 hover:bg-blue-200 hover:text-blue-800 active:shadow-sm active:shadow-gray-600'
       >
         Xem them
       </button>

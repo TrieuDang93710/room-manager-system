@@ -14,7 +14,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
       <NavbarCommon isOpen={isOpen} setIsOpen={setIsOpen} />
       <main
         className={
-          'w-full min-h-screen md:px-10 px-3 font-[family-name:var(--font-geist-sans)] z-10 ' +
+          'w-full min-h-screen md:px-10 px-3 font-[family-name:var(--font-geist-sans)] py-28 z-10 ' +
           flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })
         }
         style={{

@@ -3,12 +3,14 @@ import { AreaChartOutlined, BookOutlined, HomeOutlined, SettingOutlined } from '
 const funcOfManager = [
   { label: 'Thống Kê', icon: <AreaChartOutlined />, path: 'statistical' },
   { label: 'Quản Lý Bài Đăng', icon: <HomeOutlined />, path: 'post' },
+  { label: 'Quản Lý Công Ty', icon: <HomeOutlined />, path: 'business' },
   { label: 'Quản Lý Trạng Thái', icon: <HomeOutlined />, path: 'resume-status' },
-  { label: 'Quản Lý Ứng Viên', icon: <HomeOutlined />, path: 'applicant' }
+  { label: 'Quản Lý Ứng Viên', icon: <HomeOutlined />, path: 'applicant' },
+  { label: 'Quản Lý Hóa Đơn', icon: <HomeOutlined />, path: 'service-bill' }
 ];
 
 const funcOfApplicant = [
-  { label: 'Hồ Sơ Cá Nhân', icon: <AreaChartOutlined />, path: 'profile' },
+  // { label: 'Hồ Sơ Cá Nhân', icon: <AreaChartOutlined />, path: 'profile' },
   { label: 'Trạng Thái Ứng Tuyển', icon: <HomeOutlined />, path: 'history' },
   { label: 'Quản Lý Đăng Ký', icon: <HomeOutlined />, path: 'resume' },
   { label: 'Người Theo Giỏi', icon: <SettingOutlined />, path: 'follower' },
@@ -34,7 +36,8 @@ const funcOfAdmin = [
     children: [
       { label: 'Quản Lý Tin Tuc', icon: <HomeOutlined />, path: 'news' },
       { label: 'Quản Lý Goi Tai Khoang', icon: <HomeOutlined />, path: 'service-package' },
-      { label: 'Quản Lý Tài Khoản', icon: <HomeOutlined />, path: 'account' }
+      { label: 'Quản Lý Tài Khoản', icon: <HomeOutlined />, path: 'account' },
+      { label: 'Hóa Đơn', icon: <HomeOutlined />, path: 'service-bill' }
     ]
   }
 ];

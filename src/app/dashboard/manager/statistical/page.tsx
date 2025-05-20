@@ -11,22 +11,22 @@ import { CartesianGrid, Line, LineChart, Pie, PieChart, XAxis } from 'recharts';
 
 const StatisticalManagerPage = () => {
   return (
-    <div className='relative w-full h-screen bg-[#f7f7f7] dark:bg-[#242424] flex flex-col items-end gap-6 snap-y pt-20 md:px-3'>
+    <div className='relative w-full h-screen flex flex-col items-end gap-6 snap-y pt-20 md:px-3'>
       <div className='w-full h-fit py-3 px-3 flex-col justify-center md:gap-3 gap-y-2'>
-        <div className='flex sm:flex-row flex-col sm:items-center sm:justify-start items-start justify-start border shadow-sm shadow-slate-500 rounded-sm px-2 py-1 gap-1'>
-          <h3 className='text-[16px] text-black font-bold hover:text-blue-500 hover:underline-offset-1 cursor-default px-2 py-1'>
+        <div className='flex sm:flex-row flex-col sm:items-center sm:justify-start items-start justify-start border shadow-sm shadow-slate-500 dark:bg-blue-700 dark:border-none rounded-sm px-2 py-1 gap-1'>
+          <h3 className='text-[16px] text-black dark:text-white font-bold hover:text-blue-500 hover:underline-offset-1 cursor-default px-2 py-1'>
             Thống kê chung
           </h3>
         </div>
-        <div className='w-full border h-[75vh] border-green-500 flex flex-col items-center justify-start overflow-y-auto gap-4 p-4 mt-4'>
-          <div className='w-full py-3 md:flex justify-center items-center md:gap-3 gap-y-2'>
+        <div className='w-full h-[75vh] flex flex-col items-center justify-start hide-scrollbar overflow-y-auto gap-4 p-4 mt-4'>
+          <div className='w-full py-3 flex flex-row justify-center items-center md:gap-3 gap-y-2'>
             {listRoom.map((r) => {
               return <MaintenanceCard key={r._id} title='Tổng Phòng' icon={<BarChartOutlined />} />;
             })}
           </div>
-          <div className='w-full py-3 md:pr-10 md:flex md:gap-3 gap-y-2'>
+          <div className='w-full py-3 md:pr-10 flex flex-row items-start justify-center gap-3 gap-y-2'>
             <Card className='md:w-1/2 w-full dark:bg-[#1a1a1a] mb-5'>
-              <p className='text-[#292929] dark:text-[#e6e6e6] font-bold text-[15px] pb-3'>Thống Kê Doanh Thu</p>
+              <p className='text-[#292929] dark:text-blue-600 font-bold text-[15px] pb-3'>Thống Kê Doanh Thu</p>
               <Card className='w-full dark:bg-[#ffffff00]'>
                 <ChartContainer className='dark:bg-[#1a1a1a]' config={chartConfig}>
                   <LineChart
@@ -60,7 +60,7 @@ const StatisticalManagerPage = () => {
               </Card>
             </Card>
             <Card className='md:w-1/2 w-full dark:bg-[#1a1a1a]'>
-              <p className='text-[#292929] font-bold text-[15px] pb-10 dark:text-[#e6e6e6]'>Các Khoản Chi</p>
+              <p className='text-[#292929] font-bold text-[15px] pb-10 dark:text-blue-600'>Các Khoản Chi</p>
               <Card className='w-full dark:bg-[#ffffff00]'>
                 <ChartContainer
                   config={chartConfigCircle}
@@ -76,8 +76,8 @@ const StatisticalManagerPage = () => {
           </div>
           <div className='w-full dark:bg-[#1a1a1a00] md:pr-10'>
             <Card className='w-full dark:bg-[#ffffff00]'>
-              <p className='text-[#292929] font-bold text-[15px] pb-2 dark:text-[#e6e6e6]'>Danh Sách Phòng Cho Thuê</p>
-              <p className='text-[#333333] font-bold text-[12px] pb-4 dark:text-[#e6e6e6]'>Mô tả</p>
+              <p className='text-[#292929] font-bold text-[15px] pb-2 dark:text-blue-600'>Danh Sách Các Bài Đăng</p>
+              <p className='text-[#333333] font-bold text-[12px] pb-4 dark:text-blue-600'>Dưới đây là thống kê các bài đăng mới nhất trên hệ thống.</p>
               <div className='flex items-end justify-end'>
                 <SearchComponent />
               </div>

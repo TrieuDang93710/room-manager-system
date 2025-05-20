@@ -4,5 +4,5 @@
 }
 
 .tab_container h3 {
-    @apply text-[16px] text-black font-bold hover:text-blue-500 hover:underline-offset-1 cursor-default px-2 py-1
+    @apply text-[16px] text-black dark:text-white font-bold hover:text-blue-500 hover:underline-offset-1 cursor-default px-2 py-1
 }

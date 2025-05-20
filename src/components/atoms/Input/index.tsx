@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import { useState } from 'react';
+import React from 'react';
 import SelectionComponent from '../Selection';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { cn } from '@/helpers/utils';
@@ -10,13 +11,13 @@ interface OptionInterface {
   label: string;
 }
 interface CommonInputProps {
-  typeInput: string;
+  typeInput?: string;
   inputValue?: string;
   error?: string;
-  field: string;
-  setField: (field: string, value: string) => void;
+  field?: string;
+  setField?: (field: string, value: string) => void;
   // setInputValue: (value: string) => void,
-  onblur: () => void;
+  onblur?: () => void;
   label_title?: string;
   labelTileClassName?: string;
   inputClassName?: string;
@@ -28,6 +29,8 @@ interface CommonInputProps {
   passHidden?: boolean;
   setPassHidden?: (value: boolean) => void;
   placeholder?: string;
+  selectValue?: string;
+  setSelectValue?: (value: string) => void;
 }
 
 const CommonInput = ({
@@ -47,15 +50,10 @@ const CommonInput = ({
   passHidden,
   iconPass,
   setPassHidden,
-  placeholder
+  placeholder,
+  selectValue,
+  setSelectValue
 }: CommonInputProps) => {
-  const [selectValue, setSelectValue] = useState<string>('');
-
-  const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectValue = e.target.value;
-    setSelectValue(selectValue);
-  };
-
   return (
     <div className={`group_input ${passHidden && 'relative justify-end'}`}>
       <label
@@ -70,8 +68,8 @@ const CommonInput = ({
         <SelectionComponent
           className='w-full border-gray-300 border'
           optionList={optionList}
-          selectValue={selectValue}
-          setSelectValue={handlePageSizeChange}
+          value={selectValue}
+          setValue={setSelectValue!}
         />
       ) : (
         <input
@@ -79,7 +77,7 @@ const CommonInput = ({
           className={cn(`${isAuth ? 'sign_in_input_style' : 'input_style'} `, inputClassName)}
           type={passHidden ? 'text' : typeInput}
           value={inputValue}
-          onChange={(e) => setField(field, e.target.value)}
+          onChange={(e: any) => setField!(field!, e.target.value)}
           placeholder={placeholder}
           required={true}
         />

@@ -4,7 +4,7 @@ import shopping_cart from '@/public/svgs/shopping_cart.svg';
 import key from '@/public/svgs/key.svg';
 import quality from '@/public/svgs/quality.svg';
 
-import {} from './../public/images/banner_1.jpg'
+import {} from './../public/images/banner_1.jpg';
 
 // const banner_1 = './../public/images/banner_1.jpg';
 // const banner_2 = '../images/banner_2.jpg';
@@ -45,20 +45,20 @@ const listLessor = [
   }
 ];
 const chartData = [
-  { month: 'January', doanh_thu: 186, chi_phi: 80 },
-  { month: 'February', doanh_thu: 305, chi_phi: 200 },
-  { month: 'March', doanh_thu: 237, chi_phi: 120 },
-  { month: 'April', doanh_thu: 73, chi_phi: 190 },
-  { month: 'May', doanh_thu: 209, chi_phi: 130 },
-  { month: 'June', doanh_thu: 214, chi_phi: 140 }
+  { month: 'January', Tong_bai_dang: 186, Da_huy: 80 },
+  { month: 'February', Tong_bai_dang: 305, Da_huy: 200 },
+  { month: 'March', Tong_bai_dang: 237, Da_huy: 120 },
+  { month: 'April', Tong_bai_dang: 73, Da_huy: 190 },
+  { month: 'May', Tong_bai_dang: 209, Da_huy: 130 },
+  { month: 'June', Tong_bai_dang: 214, Da_huy: 140 }
 ];
 
 const chartDataCircle = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
-  { browser: 'firefox', visitors: 187, fill: 'var(--color-firefox)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
-  { browser: 'other', visitors: 90, fill: 'var(--color-other)' }
+  { browser: 'chrome', visitors: 1, fill: 'var(--color-chrome)' },
+  { browser: 'safari', visitors: 1, fill: 'var(--color-safari)' },
+  // { browser: 'firefox', visitors: 187, fill: 'var(--color-firefox)' },
+  // { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
+  // { browser: 'other', visitors: 90, fill: 'var(--color-other)' }
 ];
 
 const pageSizeList = [
@@ -97,20 +97,59 @@ const banners: BannerInterface[] = [
     title: 'Khu Trọ Cao Cấp',
     subTitle: 'Giá Cả Sinh Viên',
     descriptions: 'K29/8 Trần Đức Tháo - Phường Hòa Cường Nam - Quận Hải Châu - Tp Đà Nẵng',
-    image_url: 'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
+    image_url:
+      'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
   },
   {
     title: 'Khu Trọ Cao Cấp',
     subTitle: 'Giá Cả Sinh Viên',
     descriptions: 'K29/8 Trần Đức Tháo - Phường Hòa Cường Nam - Quận Hải Châu - Tp Đà Nẵng',
-    image_url: 'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
+    image_url:
+      'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
   },
   {
     title: 'Khu Trọ Cao Cấp',
     subTitle: 'Giá Cả Sinh Viên',
     descriptions: 'K29/8 Trần Đức Tháo - Phường Hòa Cường Nam - Quận Hải Châu - Tp Đà Nẵng',
-    image_url: 'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
+    image_url:
+      'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
   }
 ];
 
-export { listRoom, chartData, chartDataCircle, pageSizeList, introductions, banners, listLessor };
+const approveStatus = [
+  { label: 'Đã duyệt', value: 'approved' },
+  { label: 'Không phù hợp', value: 'reject' },
+  { label: 'Xóa', value: 'cancelled' },
+  { label: 'Đã xem hồ sơ', value: 'seen' },
+  { label: 'Hồ sơ phù hợp', value: 'success' },
+  { label: 'Hồ sơ không phù hợp', value: 'reject' }
+];
+
+const fields = [
+  { label: 'Quản trị kinh doanh', value: 'Quản trị kinh doanh' },
+  { label: 'Kinh tế', value: 'Kinh tế' },
+  { label: 'Công nghệ thông tin', value: 'Công nghệ thông tin' }
+];
+
+const addresses = [
+  { label: 'Đà Nẵng', value: 'Đà Nẵng' },
+  { label: 'Quảng Nam', value: 'Quảng Nam' },
+  { label: 'Huế', value: 'Huế' }
+];
+const workTypes = [
+  { label: 'Toàn thời gian', value: 'fulltime' },
+  { label: 'Bán thời gian', value: 'parttime' }
+];
+export {
+  listRoom,
+  chartData,
+  chartDataCircle,
+  pageSizeList,
+  introductions,
+  banners,
+  listLessor,
+  approveStatus,
+  fields,
+  addresses,
+  workTypes
+};

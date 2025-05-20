@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
 import flex from '@/config/flex.config';
@@ -6,9 +7,11 @@ import { FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from 
 import { useState } from 'react';
 import CardSquare from '@/components/organisms/system/Card/Square';
 import { useRouter } from 'next/navigation';
+import useNews from '@/hooks/useNews';
 
 const NewsPage = () => {
   const router = useRouter();
+  const { newses } = useNews();
   const [filteredItems] = useState(listRoom);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(2);
@@ -83,22 +86,23 @@ const NewsPage = () => {
             </div>
           </div>
           <div className='w-[90%] flex sm:grid md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around gap-4 py-10'>
-            {Array.from({ length: 3 }).map((_, index) => (
-              <CardSquare key={index}>
+            {newses.map((item: any, index: any) => (
+              <CardSquare key={index + 1} logo={item!.banner && item!.banner}>
                 <div className='w-full px-2'>
-                  <p className='text-[13px] text-slate-800 font-normal'>Kinh doanh</p>
-                  <h3 className='text-[18px] text-black font-bold py-2 line-clamp-2'>Tin tuc moi trong ngay</h3>
+                  <p className='text-[13px] text-slate-800 font-normal'>
+                    {item!.information?.field && item!.information?.field}
+                  </p>
+                  <h3 className='text-[18px] text-black font-bold py-2 line-clamp-1'>{item!.title}</h3>
                   <p className='text-[13px] text-slate-800 font-normal py-1 line-clamp-3'>
-                    <strong className='font-bold text-black'>Mo ta : </strong>Lorem ipsum dolor sit amet consectetur,
-                    adipisicing elit. Praesentium, dolores assumenda. Minima, quaerat laboriosam distinctio iusto itaque
-                    tempora commodi deserunt. Magnam ea unde animi commodi officiis doloribus, dicta quae laboriosam.
+                    <strong className='font-bold text-black'>Mô tả : </strong>
+                    {item!.contents}
                   </p>
                 </div>
                 <button
                   onClick={() => router.push(`/system/news/${index + 1}`)}
                   className='w-1/2 py-2 rounded-md text-green-500 text-[16px] font-bold hover:bg-green-200 hover:text-green-800 active:shadow-sm active:shadow-gray-600'
                 >
-                  Xem them
+                  Xem thêm
                 </button>
               </CardSquare>
             ))}

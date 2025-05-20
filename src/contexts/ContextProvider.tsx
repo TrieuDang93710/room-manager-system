@@ -13,7 +13,11 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import axios from 'axios';
 
 import app from '@/firebase/firebase.config';
-import API_PUBLIC_URI from '@/lib/constants';
+import { API_PUBLIC_URI } from '@/lib/constants';
+import useApiPublic from '@/hooks/useApiPublic';
+import { useRouter } from 'next/navigation';
+import TimestampConvert from '@/helpers/time-convert';
+import NotificationCustom from '@/helpers/notify';
 
 interface AuthContextType {
   loading: boolean;
@@ -22,6 +26,8 @@ interface AuthContextType {
   setUser: React.Dispatch<React.SetStateAction<any>>;
   loginWithEmailAndPassword: (email: string, password: string) => Promise<any>;
   registerWithEmailAndPassword: (email: string, password: string) => Promise<any>;
+  signIn: (email: string, password: string) => Promise<any>;
+  signUp: (username: string, email: string, password: string, role?: string[]) => Promise<any>;
   loginWithGmail: () => Promise<any>;
   logout: () => Promise<any>;
 }
@@ -33,7 +39,22 @@ const googleProvider = new GoogleAuthProvider();
 export const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const apiPublic = useApiPublic();
+  const router = useRouter();
 
+  // register and login on local
+  const signIn = (email: string, password: string) => {
+    setLoading(true);
+    return apiPublic.post('/auth/sign-in', { email, password });
+  };
+
+  const signUp = (username: string, email: string, password: string, role?: string[]) => {
+    setLoading(true);
+    const body = { username: username, email: email, password: password, role: role };
+    return apiPublic.post('/auth/sign-up', body);
+  };
+
+  // register and login on firebase
   const registerWithEmailAndPassword = (email: string, password: string) => {
     setLoading(true);
     const response = createUserWithEmailAndPassword(auth, email, password);
@@ -53,43 +74,51 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
   const logout = () => {
     localStorage.removeItem('access-token');
     localStorage.removeItem('ally-supports-cache');
-    localStorage.removeItem('refresh-token');
-    // localStorage.removeItem('genius-token');
-    // localStorage.removeItem('token');
-    // localStorage.removeItem('chakra-ui-color-mode');
+    // localStorage.removeItem('refresh-token');
     return signOut(auth);
   };
 
-  // useEffect(() => {
-  //   const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-  //     if (currentUser) {
-  //       console.log('currentUser: ', currentUser);
-  //       setUser(currentUser);
-  //       if (currentUser) {
-  //         const userInfo = {
-  //           email: currentUser.email
-  //         };
-  //         axios.post(`${process.env.VITE_URL_API_ON_LOCAL}/auth/sign-in`, userInfo).then((res) => {
-  //           if (res.data.token) {
-  //             localStorage.setItem('access-token', res.data.token);
-  //           }
-  //         });
-  //       } else {
-  //         localStorage.removeItem('access-token');
-  //       }
-  //       setLoading(false);
-  //     }
-  //   });
-  //   return () => {
-  //     return unSubscribe();
-  //   };
-  // }, []);
+  useEffect(() => {
+    const token: string | null = localStorage.getItem('access-token');
+    const refreshToken: string | null = localStorage.getItem('refresh-token');
+
+    if (!token) {
+      router.push('/sign-in');
+    }
+
+    const decodedToken = jwt.decode(token!) as JwtPayload;
+    const decodedRefreshToken = jwt.decode(refreshToken!) as JwtPayload;
+
+    if (decodedToken && decodedRefreshToken) {
+      const get_time = new Date().getTime();
+      const datetime = Math.floor(get_time / 1000);
+
+      const token_time_exp = decodedToken.exp! - decodedToken.iat!;
+      const refresh_token_time_exp = decodedRefreshToken.exp! - decodedRefreshToken.iat!;
+      const realtime = datetime - decodedToken.iat!;
+
+      if (
+        (token_time_exp < realtime && TimestampConvert(realtime) <= TimestampConvert(refresh_token_time_exp) - 1) ||
+        TimestampConvert(realtime) > TimestampConvert(refresh_token_time_exp) - 1
+      ) {
+        NotificationCustom('warning', 'You need refresh token');
+        router.push('/refresh-token');
+      } else {
+        return;
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const token: string | null = localStorage.getItem('access-token');
 
     if (token) {
-      const { id } = jwt.decode(token!) as JwtPayload
+      const { id } = jwt.decode(token!) as JwtPayload;
+
+      if (!id) {
+        throw new Error('Not found token');
+      }
+
       axios
         .get(`${API_PUBLIC_URI}/user/${id}`, {
           headers: {
@@ -97,7 +126,7 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
           }
         })
         .then((result) => {
-          setUser(result.data.data[0]);
+          setUser(result.data.data);
         })
         .catch((error) => {
           return error;
@@ -111,6 +140,8 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
     setUser,
     loginWithEmailAndPassword,
     registerWithEmailAndPassword,
+    signIn,
+    signUp,
     loginWithGmail,
     logout
   };

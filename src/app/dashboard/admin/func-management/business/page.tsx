@@ -6,32 +6,68 @@ import ButtonCommon from '@/components/atoms/ButtonCommon';
 import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import { DeleteOutlined, PlusOutlined, ReadOutlined } from '@ant-design/icons';
 import './business.css';
+import useBusiness from '@/hooks/useBusiness';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import Approve from './components/Approve';
+import Remove from './components/Remove';
 
 const BusinessManagerPage = () => {
-  const headers = ['Tiêu đề', 'Mô tả', 'Ngày tạo', 'Trang thai', 'Xử lý'];
+  const [openApproveModal, setOpenApproveModal] = useState<boolean>(false);
+  const [openRemoveModal, setOpenRemoveModal] = useState<boolean>(false);
+  const [businessId, setBusinessId] = useState<number>(0);
+  const [businessSort, setBusinessSort] = useState<any[]>([]);
+  const { useBusinessSearch } = useBusiness();
+  const { businesses } = useBusinessSearch();
 
-  const posts = Array.from({ length: 20 }).map((_, index) => ({
-    title: `Kinh doanh ${index + 1}`,
-    field: 'Viết mô tả ở đây',
-    date: '30 - 03 - 2025',
-    status: 'cho duyet'
-  }));
+  useEffect(() => {
+    setBusinessSort(businesses.sort((a: any, b: any) => a.id - b.id));
+  }, [businesses]);
 
-  const renderRow = (post: any) => (
+  const closeHandler = () => {
+    setOpenApproveModal(!openApproveModal);
+  };
+
+  const closeRemoveHandler = () => {
+    setOpenRemoveModal(!openRemoveModal);
+  };
+
+  const headers = ['#', 'Logo', 'Tên công ty', 'Ngày tạo', 'Trạng thái', 'Xử lý'];
+
+  const renderRow = (company: any) => (
     <>
-      <td className='truncate px-2'>{post.title}</td>
-      <td className='truncate px-2'>{post.field}</td>
-      <td className='truncate px-2'>{post.date}</td>
-      <td className='truncate px-2'>{post.status}</td>
+      <td className='truncate px-2'>{company.id}</td>
+      <td className='truncate px-2'>
+        {company.logo && <Image height={30} width={30} alt={`logo_${company.id}`} src={`${company.logo}`} />}
+      </td>
+      <td className='truncate text-center px-2'>{company.title}</td>
+      <td className='truncate px-2'>{company.createAt}</td>
+      <td
+        className={`truncate px-2 ${company && company.status[0] !== 'approved' ? 'text-orange-600' : 'text-green-600'}`}
+      >
+        {company.status[0]}
+      </td>
       <td className='flex items-center justify-center sm:gap-2 px-2'>
-        <ReadOutlined
-          onClick={() => alert('Click me')}
-          className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
-        />
-        <DeleteOutlined
-          onClick={() => alert('Click me')}
-          className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
-        />
+        {company.status[0] !== 'cancelled' ? (
+          <>
+            <ReadOutlined
+              onClick={() => {
+                setOpenApproveModal(!openApproveModal);
+                setBusinessId(company.id);
+              }}
+              className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
+            />
+            <DeleteOutlined
+              onClick={() => {
+                setOpenRemoveModal(!openRemoveModal);
+                setBusinessId(company.id);
+              }}
+              className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
+            />
+          </>
+        ) : (
+          <p className='p-3'>None action</p>
+        )}
       </td>
     </>
   );
@@ -64,12 +100,24 @@ const BusinessManagerPage = () => {
           <SearchComponent />
         </div>
 
-        <TableComponent headers={headers} data={posts} renderRow={renderRow} />
+        <TableComponent headers={headers} data={businessSort} renderRow={renderRow} />
 
         <div className='w-full flex justify-end py-1'>
           <PaginationComponent />
         </div>
       </div>
+      <Approve
+        setOpenApprove={setOpenApproveModal}
+        openApprove={openApproveModal}
+        onClick={closeHandler}
+        id={businessId}
+      />
+      <Remove
+        openRemove={openRemoveModal}
+        setOpenRemove={setOpenRemoveModal}
+        onClick={closeRemoveHandler}
+        id={businessId}
+      />
     </div>
   );
 };

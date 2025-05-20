@@ -8,5 +8,5 @@
 }
 
 .button_manager_style {
-    @apply w-[90%] bg-green-500 dark:bg-green-500 font-bold text-[15px] py-2 rounded-md text-[#fff] hover:bg-green-600 dark:border-[1px] dark:border-[#fff] dark:hover:bg-green-600 dark:hover:text-slate-300 dark:text-white
+    @apply w-[90%] bg-blue-500 dark:bg-transparent dark:border dark:border-blue-600 font-bold text-[15px] py-2 rounded-md text-[#fff] hover:bg-blue-400 dark:hover:bg-blue-500 dark:hover:text-white dark:text-blue-600
 }

@@ -3,11 +3,11 @@
 }
 
 .sign_up_title {
-    @apply text-3xl text-center text-slate-100 font-bold px-2 py-4
+    @apply text-3xl text-slate-100 font-bold flex px-2 py-2 
 }
 
 .sign_up_form {
-    @apply w-full flex flex-col items-center gap-2
+    @apply w-full flex flex-col items-center gap-2 
 }
 
 /* .sign_in_content {

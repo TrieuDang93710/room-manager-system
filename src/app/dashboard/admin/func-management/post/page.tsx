@@ -4,38 +4,65 @@ import ButtonCommon from '@/components/atoms/ButtonCommon';
 import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import SearchComponent from '@/components/molecules/Search';
 import TableComponent from '@/components/molecules/Table';
-import { EditOutlined, PlusOutlined, ReadOutlined } from '@ant-design/icons';
-import PostStatus from '@/enum/post.enum';
+import { DeleteOutlined, PlusOutlined, ReadOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import usePost from '@/hooks/usePost';
+import Approve from './components/Approve';
+import Remove from './components/Remove';
 
 const PostManagerPage = () => {
-  const headers = ['Tiêu đề', 'Lĩnh vực', 'Ngày ứng tuyển', 'Trạng thái', 'Hàng động'];
+  const [openApproveModal, setOpenApproveModal] = useState<boolean>(false);
+  const [openRemoveModal, setOpenRemoveModal] = useState<boolean>(false);
+  const [postId, setPostId] = useState<number>(0);
+  const { usePostsSearch } = usePost();
+  const { posts } = usePostsSearch();
+  const [postSort, setPostSort] = useState<any[]>([]);
 
-  const post = Array.from({ length: 5 }).map((_, index) => ({
-    title: `Nhân viên phục vụ ${index + 1}`,
-    field: 'Dịch vụ',
-    date: '15 - 03 - 2025',
-    status: 'Đang chờ duyệt'
-  }));
+  useEffect(() => {
+    setPostSort(posts.sort((a: any, b: any) => a.id - b.id));
+  }, [posts]);
 
-  const renderRow = (applicant: any) => (
+  const closeHandler = () => {
+    setOpenApproveModal(!openApproveModal);
+  };
+
+  const closeRemoveHandler = () => {
+    setOpenRemoveModal(!openRemoveModal);
+  };
+
+  const headers = ['#', 'Tiêu đề', 'Lĩnh vực', 'Doanh nghiệp', 'Địa điểm', 'Trạng thái', 'Hàng động'];
+
+  const renderRow = (post: any) => (
     <>
-      <td className='truncate px-2'>{applicant.title}</td>
-      <td className='truncate px-2'>{applicant.field}</td>
-      <td className='truncate px-2'>{applicant.date}</td>
-      <td
-        className={`truncate px-2 ${applicant.status === PostStatus.PENDING ? 'text-purple-700 font-bold' : ''}`}
-      >
-        {applicant.status}
+      <td className='truncate px-2'>{post.id}</td>
+      <td className='truncate px-2'>{post.title}</td>
+      <td className='truncate px-2'>{post.type_of_post.title}</td>
+      <td className='truncate px-2'>{post.company.title}</td>
+      <td className='truncate px-2'>{post.company.work_place.address.city}</td>
+      <td className={`truncate px-2 ${post.status[0] !== 'approved' ? 'text-orange-600 font-bold' : 'text-green-600'}`}>
+        {post.status[0]}
       </td>
       <td className='flex items-center justify-center sm:gap-2 px-2'>
-        <ReadOutlined
-          onClick={() => alert('click me')}
-          className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
-        />
-        <EditOutlined
-          onClick={() => alert('click me')}
-          className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
-        />
+        {post.status[0] !== 'cancelled' ? (
+          <>
+            <ReadOutlined
+              onClick={() => {
+                setOpenApproveModal(!openApproveModal);
+                setPostId(post.id);
+              }}
+              className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
+            />
+            <DeleteOutlined
+              onClick={() => {
+                setOpenRemoveModal(!openRemoveModal);
+                setPostId(post.id);
+              }}
+              className='cursor-pointer rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 p-3'
+            />
+          </>
+        ) : (
+          <p className='p-3'>None</p>
+        )}
       </td>
     </>
   );
@@ -68,12 +95,20 @@ const PostManagerPage = () => {
           <SearchComponent />
         </div>
 
-        <TableComponent headers={headers} data={post} renderRow={renderRow} />
+        <TableComponent headers={headers} data={postSort} renderRow={renderRow} />
 
         <div className='w-full flex justify-end py-1'>
           <PaginationComponent />
         </div>
       </div>
+
+      <Approve setOpenApprove={setOpenApproveModal} openApprove={openApproveModal} onClick={closeHandler} id={postId} />
+      <Remove
+        openRemove={openRemoveModal}
+        setOpenRemove={setOpenRemoveModal}
+        onClick={closeRemoveHandler}
+        id={postId}
+      />
     </div>
   );
 };

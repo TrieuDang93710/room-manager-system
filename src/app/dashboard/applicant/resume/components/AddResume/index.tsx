@@ -1,14 +1,31 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+'use client';
 import React, { useState } from 'react';
-import Image from 'next/image';
 import CommonInput from '@/components/atoms/Input';
 import Modal from '@/components/molecules/Modal';
 import useCombinedState from '@/hooks/useCombinedState';
-import { CloseOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 import { handleBlurChecking } from '@/helpers/utils';
 import './AddResume.css';
-import AddComponent from '@/components/molecules/AddComp';
-import AddContent from '@/components/AddContent';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addAward,
+  addCertificate,
+  addEducation,
+  addExperience,
+  addExpertise,
+  addHobby,
+  addLanguage,
+  addSkill
+} from '@/lib/features/resumes/resumesSlice';
+import { RootState } from '@/lib/store';
+import { useForm } from 'react-hook-form';
+import Image from 'next/image';
+import useCloudinary from '@/hooks/useCloudinary';
+import useResume from '@/hooks/useResume';
+import renderContent from '@/components/molecules/renderContent';
+import renderAddContent from '@/components/molecules/renderAddContent';
 
 interface AddResumeProps {
   addResume: boolean;
@@ -16,198 +33,144 @@ interface AddResumeProps {
 }
 
 const AddResume = ({ addResume, setAddResume }: AddResumeProps) => {
+  const { handleSubmit } = useForm();
+  const { uploadFile } = useCloudinary();
+  const { addNewResume } = useResume();
+  const dispatch = useDispatch();
+  const resumeData = useSelector((state: RootState) => state.resumes);
+
   const [openSections, setOpenSections] = useState<any>({
     expertise: false,
     hobby: false,
     experience: false,
+    education: false,
     certificate: false,
     award: false,
     language: false,
     skill: false
   });
 
-  const [state, setField] = useCombinedState({
-    name: '',
-    address: '',
-    price: '',
-    createBy: '',
-    nameError: '',
-    addressError: '',
-    priceError: '',
-    createByError: ''
+  const [formData, setFormData] = useState<any>({
+    expertise: '',
+    hobby: '',
+    language: '',
+    skill: '',
+    experience: { title: '', year: '', company: '', detail: '' },
+    education: { title: '', year: '' },
+    certificate: { title: '', year: '' },
+    award: { title: '', year: '' }
   });
 
+  const [state, setField] = useCombinedState({
+    title: '',
+    level: '',
+    job: '',
+    target: '',
+    description: '',
+    titleError: '',
+    levelError: '',
+    jobError: '',
+    targetError: '',
+    descriptionError: ''
+  });
+
+  const [image, setImage] = useState<any>(null);
+  const [cv, setCV] = useState<any>(null);
+
   const toggleSection = (section: string) => {
-    setOpenSections((prev: { [x: string]: any; }) => ({ ...prev, [section]: !prev[section] }));
+    setOpenSections((prev: { [x: string]: any }) => ({ ...prev, [section]: !prev[section] }));
   };
 
-  const renderAddContent = (section: string) => {
-    switch (section) {
-      case 'expertise':
-      case 'hobby':
-      case 'language':
-      case 'skill':
-        return (
-          <AddContent onSave={(e) => onSave(e, section)}>
-            {Array.from({ length: 1 }).map((_, index) => (
-              <input
-                key={index}
-                className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
-                type='text'
-                placeholder={`Them ${section} ...`}
-              />
-            ))}
-          </AddContent>
-        );
-      case 'experience':
-        return (
-          <AddContent onSave={(e) => onSave(e, section)}>
-            {Array.from({ length: 4 }).map((_, index) => (
-              <input
-                key={index}
-                className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
-                type='text'
-                placeholder={`Them ${section} ...`}
-              />
-            ))}
-          </AddContent>
-        );
-      case 'certificate':
-        return (
-          <AddContent onSave={(e) => onSave(e, section)}>
-            <div className='w-full flex flex-row items-center justify-between'>
-              <input
-                className='w-2/3 border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
-                type='text'
-                placeholder={`Them ${section} ...`}
-              />
-              <input
-                className='w-[30%] border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
-                type='text'
-                placeholder='Thoi gian ...'
-              />
-            </div>
-          </AddContent>
-        );
-      case 'award':
-        return (
-          <AddContent onSave={(e) => onSave(e, section)}>
-            <div className='w-full flex flex-row items-center justify-between'>
-              <input
-                className='w-2/3 border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
-                type='text'
-                placeholder={`Them ${section} ...`}
-              />
-              <input
-                className='w-[30%] border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
-                type='text'
-                placeholder='Thoi gian ...'
-              />
-            </div>
-          </AddContent>
-        );
-      default:
-        return;
-    }
-  };
-
-  const renderAddComponent = (section: string) => {
-    switch (section) {
-      case 'expertise':
-      case 'hobby':
-      case 'language':
-      case 'skill':
-        return (
-          <AddComponent
-            title={section}
-            action={true}
-            onClick={() => toggleSection(section)}
-            isButton={openSections[section]}
-          >
-            {Array.from({ length: 3 }).map((_, index) => (
-              <h3 key={index} className='text-black text-[16px] font-normal'>
-                Placeholder
-              </h3>
-            ))}
-          </AddComponent>
-        );
-      case 'experience':
-        return (
-          <AddComponent
-            title='Kinh nghiem'
-            action={true}
-            onClick={() => toggleSection(section)}
-            isButton={openSections[section]}
-          >
-            <div className='w-full flex flex-col items-start justify-start gap-4'>
-              {Array.from({ length: 1 }).map((_, index) => (
-                <div
-                  key={index + 1}
-                  className='w-2/3 flex flex-col items-start justify-start gap-4 p-2 border border-green-500'
-                >
-                  <div className='w-full flex flex-row items-start justify-between'>
-                    <div className='w-1/3 flex flex-col items-start justify-center gap-2'>
-                      <h3 className='text-black text-[20px] font-bold line-clamp-2'>Nhan vien sale</h3>
-                      <p className='text-black text-[14px] font-normal line-clamp-1'>Cong ty ABC</p>
-                    </div>
-                    <p className='text-black text-[16px] font-medium'>2018 - 2020</p>
-                  </div>
-                  <ul className='list-disc flex flex-col items-start justify-start gap-2 px-8'>
-                    {Array.from({ length: 4 }).map((_, index) => (
-                      <li key={index + 1} className='text-black text-[16px] font-normal line-clamp-2'>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </AddComponent>
-        );
-      case 'certificate':
-        return (
-          <AddComponent
-            title='Chung chi'
-            action={true}
-            onClick={() => toggleSection(section)}
-            isButton={openSections[section]}
-          >
-            <div className='w-full flex flex-col items-start justify-start gap-4'>
-              {Array.from({ length: 2 }).map((_, index) => (
-                <div key={index} className='w-1/3 flex flex-row items-center justify-between'>
-                  <h3 className='text-black text-[20px] font-bold line-clamp-2'>Nhan vien sale</h3>
-                  <p className='text-black text-[16px] font-medium'>2018 - 2020</p>
-                </div>
-              ))}
-            </div>
-          </AddComponent>
-        );
-      case 'award':
-        return (
-          <AddComponent
-            title='Giai thuong'
-            action={true}
-            onClick={() => toggleSection(section)}
-            isButton={openSections[section]}
-          >
-            <div className='w-full flex flex-col items-start justify-start gap-4'>
-              {Array.from({ length: 2 }).map((_, index) => (
-                <div key={index} className='w-1/3 flex flex-row items-center justify-between'>
-                  <h3 className='text-black text-[20px] font-bold line-clamp-2'>Nhan vien sale</h3>
-                  <p className='text-black text-[16px] font-medium'>2018 - 2020</p>
-                </div>
-              ))}
-            </div>
-          </AddComponent>
-        );
-      default:
-        return;
-    }
-  };
-
-  const onSave = (e: { preventDefault: () => void }, section: string) => {
+  const onSaveHandler = (e: { preventDefault: () => void }, section: string) => {
     e.preventDefault();
     setOpenSections((prev: any) => ({ ...prev, [section]: false }));
+
+    switch (section) {
+      case 'expertise':
+        dispatch(addExpertise(formData.expertise));
+        break;
+      case 'hobby':
+        dispatch(addHobby(formData.hobby));
+        break;
+      case 'language':
+        dispatch(addLanguage(formData.language));
+        break;
+      case 'skill':
+        dispatch(addSkill(formData.skill));
+        break;
+      case 'experience':
+        dispatch(addExperience(formData.experience));
+        break;
+      case 'certificate':
+        dispatch(addCertificate(formData.certificate));
+        break;
+      case 'education':
+        dispatch(addEducation(formData.education));
+        break;
+      case 'award':
+        dispatch(addAward(formData.award));
+        break;
+      default:
+        break;
+    }
+  };
+
+  const onChangeHandler = (section: any, value: any) => {
+    setFormData({ ...formData, [section]: value });
+  };
+
+  const addResumeHandler = async () => {
+    const fullname = state.title;
+    const level = state.level;
+    const job = state.job;
+    const target = state.target;
+    const description = state.description;
+
+    const imgFile = new FormData();
+    imgFile.append('file', image);
+    const cvFile = new FormData();
+    cvFile.append('file', cv);
+
+    let image_secure_url;
+    let cv_secure_url;
+
+    await uploadFile
+      .mutateAsync({ file: imgFile })
+      .then((result) => {
+        console.log('result: ', result.data);
+        image_secure_url = result.data.data.secure_url;
+      })
+      .catch((error) => console.log('error: ', error));
+
+    await uploadFile
+      .mutateAsync({ file: cvFile })
+      .then((result) => {
+        console.log('result: ', result.data);
+        cv_secure_url = result.data.data.secure_url;
+      })
+      .catch((error) => console.log('error: ', error));
+
+    const resumeDto = {
+      title: fullname,
+      level: level,
+      job: job,
+      target: target,
+      description: description,
+      image: image_secure_url,
+      cv: cv_secure_url,
+      experiences: resumeData.experience,
+      certificates: resumeData.certificate,
+      education: resumeData.education,
+      awards: resumeData.award,
+      skills: resumeData.skill.toString().replaceAll(',', '; '),
+      languages: resumeData.language.toString().replaceAll(',', '; '),
+      expertise: resumeData.expertise.toString().replaceAll(',', '; '),
+      hobbies: resumeData.hobby.toString().replaceAll(',', '; ')
+    };
+
+    console.log('resumeDto: ', resumeDto);
+
+    await addNewResume.mutateAsync({ newResume: resumeDto });
   };
 
   return (
@@ -218,59 +181,104 @@ const AddResume = ({ addResume, setAddResume }: AddResumeProps) => {
       onClose={() => setAddResume(false)}
     >
       <div className='modal_container'>
-        <form>
+        <form onSubmit={handleSubmit(addResumeHandler)}>
           <div className='modal_header'>
-            <p>Thêm mới</p>
+            <p>Thêm mới hồ sơ</p>
             <CloseOutlined
               onClick={() => setAddResume(!addResume)}
               className='cursor-pointer font-bold text-red-500 p-2 rounded-sm hover:bg-[#e3e3e3] dark:text-[#fff]'
             />
           </div>
-          <div className='w-full h-[80%] py-1 gap-2 flex flex-col md:flex overflow-y-auto'>
+          <div className='w-full h-[80%] py-1 gap-2 flex flex-col items-center md:flex hide-scrollbar overflow-y-auto'>
             <div className='w-full flex items-center justify-center p-4 gap-2'>
               <Image
                 alt='avatar'
-                src={'https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'}
+                src='https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'
                 width='80'
                 height='80'
                 className='cursor-pointer'
               />
-              <div className='flex flex-col items-center cursor-pointer'>
-                <UploadOutlined className='hover:bg-blue-50 active:shadow-sm active:shadow-slate-400 p-2 rounded-full' />
-                <p className='text-black text-[16px] font-medium'> Cap nhat</p>
+              <div className='w-[30%] flex flex-col items-start justify-center cursor-pointer gap-2'>
+                <input
+                  type='file'
+                  accept='image/*'
+                  className='text-[13px] font-normal'
+                  onChange={(e: any) => setImage(e.target.files[0])}
+                />
+                <p className='text-black text-[13px] font-normal'> Cap nhat</p>
               </div>
             </div>
-            <div className='flex flex-row items-center justify-center cursor-pointer'>
-              <UploadOutlined className='hover:bg-blue-50 active:shadow-sm active:shadow-slate-400 p-2 rounded-full' />
-              <p className='text-black text-[16px] font-medium'> Upload CV</p>
+            <div className='w-[50%] flex flex-row items-center justify-center cursor-pointer gap-2'>
+              <input
+                type='file'
+                className='w-[50%] text-[13px] font-normal'
+                onChange={(e: any) => setCV(e.target.files[0])}
+              />
+              <p className='text-black text-[13px] font-normal'> Upload CV</p>
+            </div>
+            <div className='w-full flex flex-row items-center justify-center mt-2'>
+              <CommonInput
+                onblur={() => handleBlurChecking('text', 'titleError', state.title, setField)}
+                inputValue={state.title}
+                typeInput='text'
+                setField={setField}
+                field='title'
+                error={state.titleError}
+                placeholder=''
+                label_title='Họ và Tên'
+              />
+              <CommonInput
+                onblur={() => handleBlurChecking('text', 'jobError', state.job, setField)}
+                inputValue={state.job}
+                typeInput='text'
+                setField={setField}
+                field='job'
+                error={state.jobError}
+                placeholder=''
+                label_title='Vị trí công việc'
+              />
+            </div>
+            <div className='w-full flex flex-row items-center justify-center mt-2'>
+              <CommonInput
+                onblur={() => handleBlurChecking('text', 'levelError', state.level, setField)}
+                inputValue={state.level}
+                typeInput='text'
+                setField={setField}
+                field='level'
+                error={state.levelError}
+                placeholder=''
+                label_title='Cấp bậc'
+              />
+              <CommonInput
+                onblur={() => handleBlurChecking('text', 'targetError', state.target, setField)}
+                inputValue={state.target}
+                typeInput='text'
+                setField={setField}
+                field='target'
+                error={state.targetError}
+                placeholder=''
+                label_title='Mục tiêu'
+              />
             </div>
             <CommonInput
-              onblur={() => handleBlurChecking('text', 'nameError', state.name, setField)}
-              inputValue={state.name}
+              onblur={() => handleBlurChecking('text', 'descriptionError', state.description, setField)}
+              inputValue={state.description}
               typeInput='text'
               setField={setField}
-              field='name'
-              error={state.nameError}
-              placeholder='Nhap ho va ten ...'
-              label_title='Ho va Ten'
-            />
-            <CommonInput
-              onblur={() => handleBlurChecking('text', 'addressError', state.address, setField)}
-              inputValue={state.address}
-              typeInput='text'
-              setField={setField}
-              field='address'
-              error={state.addressError}
-              placeholder='Nhap mo ta ...'
-              label_title='Mo ta'
+              field='description'
+              error={state.descriptionError}
+              placeholder=''
+              label_title='Nhập ghi chú'
             />
 
-            {['expertise', 'hobby', 'experience', 'certificate', 'award', 'language', 'skill'].map((section) => (
-              <React.Fragment key={section}>
-                {renderAddComponent(section)}
-                {openSections[section] && renderAddContent(section)}
-              </React.Fragment>
-            ))}
+            {['expertise', 'hobby', 'experience', 'certificate', 'education', 'award', 'language', 'skill'].map(
+              (section) => (
+                <React.Fragment key={section}>
+                  {renderContent(section, toggleSection, openSections, resumeData)}
+                  {openSections[section] && renderAddContent(section, onSaveHandler, onChangeHandler, formData)}
+                </React.Fragment>
+              )
+            )}
           </div>
           <button className='modal_button' type='submit'>
             SAVE
