@@ -107,7 +107,7 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
         return;
       }
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     const token: string | null = localStorage.getItem('access-token');

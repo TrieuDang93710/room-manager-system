@@ -1,16 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HomeOutlined } from '@ant-design/icons';
 import CardSquare from '../Square';
 
 interface ApplicantCardComponentProps {
-  onClick?: () => void;
+  onClick: (id: any) => void;
+  itemDetail: any;
 }
 
-export const ApplicantCardComponent = ({ onClick }: ApplicantCardComponentProps) => {
+export const ApplicantCardComponent = ({ onClick, itemDetail }: ApplicantCardComponentProps) => {
+  if (!itemDetail) {
+    return 'Error';
+  }
+
   return (
     <CardSquare>
       <div className='w-full px-2'>
-        <p className='text-[13px] text-slate-800 font-normal'>Nhan vien phuc vu</p>
-        <h3 className='text-[18px] text-black font-bold py-2 line-clamp-2'>Dang Binh Trieu</h3>
+        <p className='text-[13px] text-slate-800 font-normal'>{itemDetail && itemDetail!.job}</p>
+        <h3 className='text-[18px] text-black font-bold py-2 line-clamp-2'>{itemDetail && itemDetail!.title}</h3>
         <p className='text-[13px] text-slate-800 font-normal py-1'>
           <HomeOutlined className='font-bold text-black mr-2' /> 29 Tran Duc Thao
         </p>
@@ -32,7 +38,7 @@ export const ApplicantCardComponent = ({ onClick }: ApplicantCardComponentProps)
       </div>
       <button
         onClick={onClick}
-        className='w-1/2 py-2 rounded-md text-green-500 text-[16px] font-bold hover:bg-green-200 hover:text-green-800 active:shadow-sm active:shadow-gray-600'
+        className='w-1/2 py-2 z-50 rounded-md text-blue-600 text-[16px] font-bold hover:bg-blue-200 hover:text-blue-600 active:shadow-sm active:shadow-gray-600 cursor-pointer'
       >
         Xem them
       </button>

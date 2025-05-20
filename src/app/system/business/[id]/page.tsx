@@ -1,27 +1,31 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-async-client-component */
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
 import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
 import flex from '@/config/flex.config';
+import useApiPublic from '@/hooks/useApiPublic';
 import { FilterOutlined, HomeOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
 
 interface BusinessInfoPageProps {
-  params: Promise<{ id: number }>;
+  params: { id: number };
 }
 
-const BusinessInfoPage = async ({ params }: BusinessInfoPageProps) => {
-  const id = (await params).id;
-  console.log('id: ', id);
-  // const [filteredItems] = useState(listRoom);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [itemsPerPage] = useState(2);
+// export async function generateStaticParams() {
+//   const res = await fetch('https://api.yourservice.com/endpoint');
+//   const data = await res.json();
 
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+//   const results = data.result;
 
-  // const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+//   return results.map((item: { id: { toString: () => any; }; }) => ({ id: item.id.toString() }));
+// }
+
+const BusinessInfoPage = ({ params }: BusinessInfoPageProps) => {
+  const id = params.id;
+  const apiPublic = useApiPublic();
+  const [itemDetail, setItemDetail] = useState<any>(null);
 
   const breadcrumbs = [
     {
@@ -41,29 +45,34 @@ const BusinessInfoPage = async ({ params }: BusinessInfoPageProps) => {
     }
   ];
 
+  useEffect(() => {
+    apiPublic
+      .get(`/companies/${Number(id)}`)
+      .then((result) => {
+        console.log('result: ', result.data.data);
+        setItemDetail(result.data.data);
+      })
+      .catch((error) => {
+        console.log('error: ', error);
+      });
+  }, [apiPublic, id]);
+
   return (
     <div
       className={
-        'w-full min-h-screen md:px-10 flex flex-col items-center px-3 pt-20 z-10' +
+        'w-full min-h-screen md:px-10 flex flex-col items-center px-3 pt-20 z-10 ' +
         flex({ direction: 'col', justifyContent: 'start', alignItems: 'center' })
       }
     >
-      <div
-        className='w-full h-[20vh] px-2 bg-center bg-cover bg-no-repeat flex flex-row items-center justify-start'
-        style={{
-          backgroundImage:
-            "url('https://taggd.in/wp-content/uploads/2022/12/Job-Prospects-for-Freshers-in-Pharmaceutical-Industry-Banner.png')"
-        }}
-      >
+      <div className='w-[80%] flex flex-row items-center justify-start'>
         <BreadCrumbCommon breadcrumbs={breadcrumbs} currentUrl='/' mode='dark' />
       </div>
-      <div className='lg:w-[90%] w-full flex md:flex-row flex-col items-start justify-around my-4 gap-3'>
+      <div className='w-[80%] flex md:flex-row flex-col items-start justify-around my-4 gap-3'>
         <div className='md::w-2/3 w-full rounded-md shadow-sm shadow-slate-600 flex flex-col justify-start items-center p-4 gap-4'>
           <div
             className='w-1/2 h-[20vh] bg-center bg-contain bg-no-repeat'
             style={{
-              backgroundImage:
-                "url('https://www.freeiconspng.com/thumbs/business-icon-png/corporate-icon-png-autocorrect-for-business-13.png')"
+              backgroundImage: `url(${itemDetail && itemDetail!.logo})`
             }}
           ></div>
           <div className='w-full flex flex-col items-start justify-start gap-3'>
