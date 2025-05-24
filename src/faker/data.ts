@@ -1,14 +1,18 @@
-import BannerInterface from '@/interfaces/banner/banner';
-// import svg
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import shopping_cart from '@/public/svgs/shopping_cart.svg';
 import key from '@/public/svgs/key.svg';
 import quality from '@/public/svgs/quality.svg';
+import business from '@/public/images/business.png';
+import logistic from '@/public/images/logistic.png';
+import it from '@/public/images/IT.png';
+import care from '@/public/images/care.png';
+import build from '@/public/images/build.png';
+import car from '@/public/images/car.png';
+import banner_1 from '@/public/images/banner_2.jpg';
+import banner_2 from '@/public/images/banner_3.jpg';
+import banner_3 from '@/public/images/banner_4.jpg';
 
 import {} from './../public/images/banner_1.jpg';
-
-// const banner_1 = './../public/images/banner_1.jpg';
-// const banner_2 = '../images/banner_2.jpg';
-// const banner_3 = '../images/banner_3.jpg';
 
 const listRoom = [
   {
@@ -55,7 +59,7 @@ const chartData = [
 
 const chartDataCircle = [
   { browser: 'chrome', visitors: 1, fill: 'var(--color-chrome)' },
-  { browser: 'safari', visitors: 1, fill: 'var(--color-safari)' },
+  { browser: 'safari', visitors: 1, fill: 'var(--color-safari)' }
   // { browser: 'firefox', visitors: 187, fill: 'var(--color-firefox)' },
   // { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
   // { browser: 'other', visitors: 90, fill: 'var(--color-other)' }
@@ -92,27 +96,15 @@ const introductions = [
   }
 ];
 
-const banners: BannerInterface[] = [
+const banners: any[] = [
   {
-    title: 'Khu Trọ Cao Cấp',
-    subTitle: 'Giá Cả Sinh Viên',
-    descriptions: 'K29/8 Trần Đức Tháo - Phường Hòa Cường Nam - Quận Hải Châu - Tp Đà Nẵng',
-    image_url:
-      'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
+    image_url: banner_1.src
   },
   {
-    title: 'Khu Trọ Cao Cấp',
-    subTitle: 'Giá Cả Sinh Viên',
-    descriptions: 'K29/8 Trần Đức Tháo - Phường Hòa Cường Nam - Quận Hải Châu - Tp Đà Nẵng',
-    image_url:
-      'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
+    image_url: banner_2.src
   },
   {
-    title: 'Khu Trọ Cao Cấp',
-    subTitle: 'Giá Cả Sinh Viên',
-    descriptions: 'K29/8 Trần Đức Tháo - Phường Hòa Cường Nam - Quận Hải Châu - Tp Đà Nẵng',
-    image_url:
-      'https://static.vecteezy.com/system/resources/previews/001/829/377/non_2x/agents-who-find-jobs-for-job-seekers-and-companies-that-need-professional-workers-for-career-interview-flat-illustration-concept-for-landing-page-web-ui-banner-flyer-poster-template-background-free-vector.jpg'
+    image_url: banner_3.src
   }
 ];
 
@@ -140,6 +132,53 @@ const workTypes = [
   { label: 'Toàn thời gian', value: 'fulltime' },
   { label: 'Bán thời gian', value: 'parttime' }
 ];
+
+const filterPost = [
+  { title: 'address', value: ['Đà Nẵng', 'Quảng Nam', 'Quảng Ngãi'] },
+  { title: 'salary', value: ['1 - 2 triệu', '3 triệu', '> 5 triệu'] },
+  { title: 'experience', value: ['Không yêu cầu', 'Dưới 1 năm kinh nghiệm', '2 năm kinh nghiệm'] },
+  { title: 'job', value: ['Dà Nẵng', 'Quảng Nam', 'Quảng Ngãi'] }
+];
+
+const featuredIndustry = [
+  {
+    id: 1,
+    image: business.src,
+    title: 'Kinh doanh - Bán hàng',
+    quantity: 11230
+  },
+  {
+    id: 2,
+    image: logistic.src,
+    title: 'Quản lý chuổi cung ứng',
+    quantity: 11230
+  },
+  {
+    id: 3,
+    image: it.src,
+    title: 'Công nghệ thông tin',
+    quantity: 11230
+  },
+  {
+    id: 4,
+    image: care.src,
+    title: 'Chăm só khách hàng',
+    quantity: 11230
+  },
+  {
+    id: 5,
+    image: build.src,
+    title: 'Công nghệ xây dựng',
+    quantity: 11230
+  },
+  {
+    id: 6,
+    image: car.src,
+    title: 'Công nghệ ô tô',
+    quantity: 11230
+  }
+];
+
 export {
   listRoom,
   chartData,
@@ -151,5 +190,7 @@ export {
   approveStatus,
   fields,
   addresses,
-  workTypes
+  workTypes,
+  filterPost,
+  featuredIndustry
 };

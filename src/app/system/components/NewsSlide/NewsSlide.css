@@ -1,9 +1,9 @@
 .slide_container {
-    @apply w-[90%] relative flex flex-col items-center shadow-sm dark:shadow-md shadow-blue-500 dark:shadow-blue-600 dark:bg-slate-300 gap-3 p-4 mt-4
+    @apply w-[60%] relative flex flex-col items-center shadow-sm dark:shadow-md shadow-blue-500 dark:shadow-blue-600 dark:bg-slate-300 gap-3 p-4 mt-8
 }
 
 .h2_heading {
-    @apply text-2xl font-bold py-4 dark:text-blue-600
+    @apply text-2xl font-bold py-4 text-blue-600 dark:text-blue-600
 }
 
 .slide_content {

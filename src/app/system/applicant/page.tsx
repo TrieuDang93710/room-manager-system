@@ -3,12 +3,14 @@
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
 import flex from '@/config/flex.config';
 import { addresses, fields, listRoom, workTypes } from '@/faker/data';
-import { FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from '@ant-design/icons';
+import { BellOutlined, FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import CheckboxCard from '@/components/molecules/CheckboxCard';
 import { useRouter } from 'next/navigation';
 import { ApplicantCardComponent } from '@/components/organisms/system/Card/ApplicantCard';
 import useCombinedState from '@/hooks/useCombinedState';
+import { Button } from '@/components/ui/button';
+import useResume from '@/hooks/useResume';
 
 const ApplicantPage = () => {
   const router = useRouter();
@@ -16,6 +18,8 @@ const ApplicantPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(2);
   const [viewRender, setViewRender] = useState<boolean>(false);
+  const { useResumeSearch } = useResume();
+  const { resumes } = useResumeSearch();
 
   const [checkedState, setCheckedState] = useCombinedState<any>({
     field: [''],
@@ -48,24 +52,36 @@ const ApplicantPage = () => {
     setViewRender(!viewRender);
   };
 
+  const handleDetailResume = (id: any) => {
+    router.push(`/system/applicant/${id}`);
+  };
+
   return (
     <div
       className={
-        'w-full min-h-screen md:px-10 px-3 pt-20  z-10' +
+        'w-full min-h-screen md:px-10 px-3 pt-5 z-10 ' +
         flex({ direction: 'col', justifyContent: 'start', alignItems: 'center' })
       }
     >
-      <div
-        className='w-full h-[20vh] px-2 bg-center bg-cover bg-no-repeat flex flex-row items-center justify-start'
-        style={{
-          backgroundImage:
-            "url('https://taggd.in/wp-content/uploads/2022/12/Job-Prospects-for-Freshers-in-Pharmaceutical-Industry-Banner.png')"
-        }}
-      >
+      <div className='w-[80%] flex flex-row items-center justify-between gap-3'>
+        <p className='text-[14px] font-bold text-black text-center'>
+          Tổng 49.562 công ty đăng việc làm [Update 23/05/2025]
+        </p>
+        <Button
+          onClick={() => alert('Click me')}
+          className='hover:text-white border-blue-600 hover:bg-blue-600 text-blue-600 font-bold rounded-full md:px-8 px-4'
+          variant={'outline'}
+          size={'lg'}
+        >
+          <BellOutlined />
+          <p className='hidden md:block'>Tạo thông báo việc làm</p>
+        </Button>
+      </div>
+      <div className='w-[80%] flex flex-row items-center justify-start'>
         <BreadCrumbCommon breadcrumbs={breadcrumbs} currentUrl='/' mode='dark' />
       </div>
-      <div className='w-full flex flex-row items-start justify-around my-4 gap-3'>
-        <div className='w-[20%] min-h-screen border dark:border-blue-600 shadow-md shadow-blue-950 dark:shadow-blue-800 hidden md:flex flex-col items-center justify-start px-4'>
+      <div className='w-[80%] flex flex-row items-start justify-around my-4 gap-3'>
+        <div className='w-[20%] min-h-screen border dark:border-blue-600 shadow-sm shadow-blue-950 dark:shadow-blue-800 hidden md:flex flex-col items-center justify-start px-4'>
           <h3 className='text-[18px] text-black dark:text-blue-600 font-medium py-2'>Bộ tìm kiếm</h3>
           <CheckboxCard
             title='Trình độ'
@@ -123,8 +139,12 @@ const ApplicantPage = () => {
             </div>
           </div>
           <div className='w-[90%] flex sm:grid md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around gap-4 py-10'>
-            {Array.from({ length: 2 }).map((_, index) => (
-              <ApplicantCardComponent key={index + 1} onClick={() => router.push(`/system/applicant/${index + 1}`)} />
+            {resumes.map((item: any) => (
+              <ApplicantCardComponent
+                key={item.id}
+                itemDetail={item}
+                onClick={() => handleDetailResume(Number(item.id))}
+              />
             ))}
           </div>
         </div>

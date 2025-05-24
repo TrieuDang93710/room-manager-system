@@ -3,13 +3,22 @@
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
 import flex from '@/config/flex.config';
 import { addresses, fields, listRoom, workTypes } from '@/faker/data';
-import { FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from '@ant-design/icons';
+import {
+  BellOutlined,
+  FileSearchOutlined,
+  FilterOutlined,
+  HomeOutlined,
+  LeftOutlined,
+  RightOutlined,
+  TableOutlined
+} from '@ant-design/icons';
 import { useState } from 'react';
 import CheckboxCard from '@/components/molecules/CheckboxCard';
 import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
 import { PostCardSquareComponent } from '@/components/organisms/system/Card/PostCardSquare';
 import usePost from '@/hooks/usePost';
 import useCombinedState from '@/hooks/useCombinedState';
+import { Button } from '@/components/ui/button';
 
 const RentOfRoomPage = () => {
   const [filteredItems] = useState(listRoom);
@@ -66,21 +75,27 @@ const RentOfRoomPage = () => {
   return (
     <div
       className={
-        'w-full min-h-screen md:px-10 px-3 pt-20  z-10' +
+        'w-full min-h-screen md:px-10 px-3 pt-5 z-10 ' +
         flex({ direction: 'col', justifyContent: 'start', alignItems: 'center' })
       }
     >
-      <div
-        className='w-full h-[20vh] px-2 bg-center bg-cover bg-no-repeat flex flex-row items-center justify-start'
-        style={{
-          backgroundImage:
-            "url('https://taggd.in/wp-content/uploads/2022/12/Job-Prospects-for-Freshers-in-Pharmaceutical-Industry-Banner.png')"
-        }}
-      >
+      <div className='w-[80%] flex flex-row items-center justify-between gap-3'>
+        <p className='text-[14px] font-bold text-black text-center'>Tuyển dụng 49.562 việc làm [Update 23/05/2025]</p>
+        <Button
+          onClick={() => alert('Click me')}
+          className='hover:text-white border-blue-600 hover:bg-blue-600 text-blue-600 font-bold rounded-full md:px-8 px-4'
+          variant={'outline'}
+          size={'lg'}
+        >
+          <BellOutlined />
+          <p className='hidden md:block'>Tạo thông báo việc làm</p>
+        </Button>
+      </div>
+      <div className='w-[80%] flex flex-row items-center justify-start'>
         <BreadCrumbCommon breadcrumbs={breadcrumbs} currentUrl='/' mode='dark' />
       </div>
-      <div className='w-full flex flex-row items-start justify-around my-4 gap-3'>
-        <div className='w-[20%] min-h-screen border dark:border-blue-600 shadow-md shadow-blue-950 dark:shadow-blue-800 hidden md:flex flex-col items-center justify-start px-4'>
+      <div className='w-[80%] flex flex-row items-start justify-around my-4 gap-3'>
+        <div className='w-[20%] min-h-screen border dark:border-blue-600 shadow-sm shadow-blue-950 dark:shadow-blue-800 hidden md:flex flex-col items-center justify-start px-4'>
           <h3 className='text-[18px] text-black dark:text-blue-600 font-medium py-2'>Bộ tìm kiếm</h3>
           <CheckboxCard
             title='Lĩnh vực'
@@ -105,6 +120,29 @@ const RentOfRoomPage = () => {
           />
         </div>
         <div className='w-full flex flex-col items-center justify-start'>
+          <div className='w-full flex flex-row items-center justify-between p-4'>
+            <p className='inline-flex items-center justify-around'>
+              Tìm kiếm theo:
+            </p>
+            <ul className='relative w-[80%] h-full flex flex-row items-center justify-start px-16 gap-4'>
+              <Button
+                onClick={() => alert('Click me')}
+                className='absolute left-2 w-9 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white font-bold rounded-full flex justify-center items-center p-2'
+                variant={'outline'}
+                size={'sm'}
+              >
+                <LeftOutlined className='hidden md:block' />
+              </Button>
+              <Button
+                onClick={() => alert('Click me')}
+                className='absolute right-2 w-9 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white font-bold rounded-full flex justify-center items-center p-2'
+                variant={'outline'}
+                size={'sm'}
+              >
+                <RightOutlined className='hidden md:block' />
+              </Button>
+            </ul>
+          </div>
           <div className='w-full shadow-sm shadow-slate-600 dark:border-none dark:bg-blue-800 dark:rounded-sm flex flex-row justify-between items-center px-4 py-2 gap-2'>
             <p className='md:hidden text-slate-800 text-[14px] flex items-center gap-2'>
               <strong className='font-bold'>Loc : </strong>

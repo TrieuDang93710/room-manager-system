@@ -13,6 +13,7 @@ type CommonInformationProps = object;
 const CommonInformation = ({}: CommonInformationProps) => {
   const { getOneResume } = useResume();
   const pathName = usePathname();
+  console.log('pathName: ', pathName)
   const [resumeItem, setResumeItem] = useState<any>(null);
 
   const resumeId = Number(pathName.split('/')[4]);
