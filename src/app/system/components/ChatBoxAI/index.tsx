@@ -12,7 +12,11 @@ import useApiChatbot from '@/hooks/useApiChatbot';
 import { addMessageResponse, addQuery } from '@/lib/features/chatbot/chatbotSlice';
 import { groupMessagesByDate, mergeSortMessages, splitMessageResponse } from '@/config/groupMessage';
 
-const ChatBoxAI = () => {
+interface ChatBoxAIProps {
+  openChatAI: boolean;
+}
+
+const ChatBoxAI = ({ }: ChatBoxAIProps) => {
   const router = useRouter();
   const auth = useAuth();
   const apiChatbot = useApiChatbot();
@@ -39,8 +43,10 @@ const ChatBoxAI = () => {
   };
 
   return (
-    <div className='right-4 bottom-24 fixed md:w-1/3 sm:w-3/4 w-full h-[65vh] z-20 rounded-md bg-blue-100 border border-blue-600 animate-fade'>
-      <div className='relative w-full h-[65vh] bg-[#0000003e] overflow-y-auto hide-scrollbar rounded-md gap-4 p-4'>
+    <div
+      className={`right-4 bottom-24 fixed md:w-1/3 sm:w-3/4 w-full h-[65vh] z-20 rounded-md bg-blue-100 border border-blue-600 animate-fade`}
+    >
+      <div className='absolute w-full h-[65vh] bg-[#0000003e] overflow-y-auto hide-scrollbar rounded-md gap-4 p-4'>
         <div className='fixed top-36 right-4 md:w-1/3 sm:w-3/4 w-full flex items-center justify-between truncate gap-2 p-4 bg-[#f7f7f7] dark:bg-[#333333] rounded-md rounded-br-none rounded-bl-none border border-slate-400 border-b-0'>
           <div className='flex items-center justify-start gap-2'>
             <Image

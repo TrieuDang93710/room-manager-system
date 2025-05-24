@@ -10,15 +10,15 @@ interface ProfileLayoutProps {
 const navigates = [
   {
     title: 'Thông tin chung',
-    path: 'profile/'
+    path: '/dashboard/profile/'
   },
   {
     title: 'Thông tin liên hệ',
-    path: 'profile/contact'
+    path: '/dashboard/profile/contact'
   },
   {
     title: 'Cài đặt tài khoản',
-    path: 'profile/setting'
+    path: '/dashboard/profile/setting'
   }
 ];
 

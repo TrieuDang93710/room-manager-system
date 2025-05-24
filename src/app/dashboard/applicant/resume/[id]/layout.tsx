@@ -8,21 +8,31 @@ interface ResumeDetailLayoutProps {
   children: React.ReactNode;
 }
 
+// export async function generateStaticParams() {
+//   const res = await fetch('https://api.yourservice.com/endpoint');
+//   const data = await res.json();
+
+//   const results = data.result;
+
+//   return results.map((item: { id: { toString: () => any; }; }) => ({ id: item.id.toString() }));
+// }
+
+
 const ResumeDetailLayout = ({ params, children }: ResumeDetailLayoutProps) => {
   const id = params.id;
 
   const navigates = [
     {
       title: 'Thông tin chung',
-      path: `resume/${id}`
+      path: `/dashboard/applicant/resume/${id}`
     },
     {
       title: 'Thông tin liên hệ',
-      path: `resume/${id}/contact`
+      path: `/dashboard/applicant/resume/${id}/contact`
     },
     {
       title: 'Kinh nghiem & Chuyen mon',
-      path: `resume/${id}/more-detail`
+      path: `/dashboard/applicant/resume/${id}/more-detail`
     }
   ];
 

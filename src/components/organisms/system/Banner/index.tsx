@@ -39,7 +39,7 @@ const BannerCarousel = () => {
   };
 
   return (
-    <div className='relative flex flex-col items-center justify-end w-full h-[40vh] md:h-[60vh] cursor-pointer'>
+    <div className='relative flex flex-col items-center justify-end w-full h-[30vh] md:h-[40vh] rounded-xl cursor-pointer'>
       <div onMouseEnter={handleMouseOver} onMouseLeave={handleMouseLeave} className='relative w-full h-full'>
         <BannerCommon banners={banners[currentIndex]} />
       </div>

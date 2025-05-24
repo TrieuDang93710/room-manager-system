@@ -1,6 +1,5 @@
-
 .header_nav {
-    @apply w-full flex justify-between items-center bg-blue-50 dark:bg-blue-900 dark:shadow-slate-300 border rounded-none px-2 fixed z-20
+    @apply w-full flex justify-between items-center bg-white dark:bg-blue-900 dark:shadow-slate-300 border rounded-none px-2 fixed z-30
 }
 
 .header_logo {
@@ -8,9 +7,19 @@
 }
 
 .header_menu {
-    @apply w-[50%] list-none md:flex gap-2 hidden
+    @apply w-[50%] list-none md:flex items-center justify-center gap-2 hidden
 }
 
 .menu_item {
-    @apply text-[14px] py-2 px-2 rounded-sm active:shadow active:shadow-slate-500 hover:cursor-pointer hover:border hover:border-blue-600 dark:hover:bg-slate-700 truncate
+    @apply flex gap-1 text-[14px] py-2 px-2 font-medium rounded-sm active:shadow active:shadow-slate-500 hover:cursor-pointer hover:border hover:border-blue-600 hover:text-blue-600 dark:hover:bg-slate-700 truncate
 }
+
+/* .menu_item_card_arrow {
+    position: absolute;
+    z-index: 999;
+    width: 25px;
+    height: 25px;
+    bottom: -15px;
+    right: 0;
+    background-color: blue;
+} */

@@ -1,11 +1,16 @@
 'use client';
-import { Suspense, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import Image from 'next/image';
 import FooterCommon from '@/components/organisms/system/Footer';
 import NavbarCommon from '@/components/organisms/system/SystemHeader';
 import ChatBoxAI from './components/ChatBoxAI';
 import ModalResponsive from './components/Modal';
 import Loading from './loading';
+import MenuBoxComponent from '@/components/organisms/system/SystemHeader/components/MenuBox';
+import PostFilter from './components/PostFilter';
+import { job_menu, profile_menu } from '@/faker/menu';
+
+import chat_bot from '@/public/images/chat_ai.svg';
 
 interface SystemLayoutProps {
   children: React.ReactNode;
@@ -13,31 +18,64 @@ interface SystemLayoutProps {
 
 const SystemLayout = ({ children }: SystemLayoutProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [menuBox, setMenuBox] = useState(false);
   const [openChatAI, setOpenChatAI] = useState<boolean>(false);
+  const [selectedMenuItem, setSelectedMenuItem] = useState<string>();
+  const [animateIcon, setAnimateIcon] = useState<boolean>(false);
+
+  const menuItem = selectedMenuItem?.toLocaleLowerCase().replaceAll(' ', '_').toString();
 
   const openChatHandler = () => {
     setOpenChatAI(!openChatAI);
   };
 
+  let menuContent;
+
+  switch (menuItem) {
+    case 'việc_làm':
+      menuContent = job_menu;
+      break;
+    case 'tạo_hồ_sơ':
+      menuContent = profile_menu;
+      break;
+    default:
+      break;
+  }
+
+  setTimeout(() => {
+    setAnimateIcon(!animateIcon);
+  }, 1000);
+
   return (
-    <div className='relative w-full z-10'>
-      <NavbarCommon isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className='right-4 bottom-10 fixed z-20' onClick={openChatHandler}>
+    <div className='relative w-full font-[family-name:var(--font-geist-sans)] flex flex-col items-center justify-start z-10'>
+      <NavbarCommon
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        menuBox={menuBox}
+        setMenuBox={setMenuBox}
+        selectedMenuItem={selectedMenuItem}
+        setSelectedMenuItem={setSelectedMenuItem}
+      />
+      <MenuBoxComponent menuBox={menuBox} setMenuBox={setMenuBox} menus={menuContent} />
+      <PostFilter />
+      <div
+        className={`right-4 bottom-10 fixed z-20 ${animateIcon ? 'scale-150 duration-700 opacity-100' : 'scale-100 duration-700 opacity-100'}`}
+        onClick={openChatHandler}
+      >
         <Image
           alt='ai_logo'
-          src={'https://www.svgrepo.com/show/190330/chat.svg'}
-          width='60'
-          height='60'
+          src={chat_bot}
+          width='40'
+          height='40'
           className='cursor-pointer active:shadow-sm active:shadow-slate-400'
         />
       </div>
-      {openChatAI && <ChatBoxAI />}
+      {openChatAI && <ChatBoxAI openChatAI={openChatAI} />}
       <Suspense fallback={<Loading />}>{children}</Suspense>
-      {/* <Loading /> */}
       <FooterCommon />
       <ModalResponsive isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };
 
-export default SystemLayout;
+export default SystemLayout

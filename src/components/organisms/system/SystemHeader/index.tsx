@@ -8,17 +8,29 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Button } from '@/components/ui/button';
-import { MenuUnfoldOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons';
+import { DownOutlined, MenuUnfoldOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { useApiSecure } from '@/hooks/useApiSecure';
 import './header.css';
+import job_logo from '@/public/svgs/job.svg';
 
 interface NavbarCommonProps {
   isOpen?: boolean;
   setIsOpen: (value: boolean) => void;
+  menuBox?: boolean;
+  setMenuBox?: (value: boolean) => void;
+  selectedMenuItem?: string;
+  setSelectedMenuItem?: (value: string) => void;
 }
 
-const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
+const NavbarCommon = ({
+  isOpen,
+  setIsOpen,
+  setMenuBox,
+  menuBox,
+  setSelectedMenuItem,
+  selectedMenuItem
+}: NavbarCommonProps) => {
   const [sticky, setSticky] = useState<boolean>(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -26,35 +38,7 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
   const apiSecure = useApiSecure();
   const auth = useAuth();
   const { user, setUser, logout } = auth;
-  const menus = [
-    { path: '', label: 'Trang chủ' },
-    { path: 'system/post-filter', label: 'Tìm kiếm' },
-    { path: 'system/post-map', label: 'Tìm kiếm trên bản đồ' },
-    { path: 'system/business', label: 'Doanh nghiệp' },
-    { path: 'system/applicant', label: 'Ứng viên' },
-    { path: 'system/news', label: 'Tin tức' }
-  ];
 
-  const menuItem = menus.map((item, index) => (
-    <li key={index} className='menu_item'>
-      <Link href={`/${item.path}`}>{item.label}</Link>
-    </li>
-  ));
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 0) {
-        setSticky(true);
-      } else {
-        setSticky(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.addEventListener('scroll', handleScroll);
-    };
-  }, []);
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -94,6 +78,31 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
     router.push('/sign-in');
   };
 
+  const menus = [
+    { path: '#', label: 'Việc làm' },
+    { path: '#', label: 'Tạo hồ sơ' }
+  ];
+
+  const menuItem = menus.map((item, index) => (
+    <li
+      key={index}
+      onMouseEnter={() => {
+        setSelectedMenuItem!(item.label);
+        if (
+          selectedMenuItem?.trim().toLocaleLowerCase().toString() === item.label?.trim().toLocaleLowerCase().toString()
+        ) {
+          setMenuBox!(!menuBox);
+        } else {
+          setMenuBox!(!menuBox);
+        }
+      }}
+      className={`menu_item relative`}
+    >
+      <Link href={item.path}>{item.label}</Link>
+      <DownOutlined className='text-[10px]' />
+    </li>
+  ));
+
   return (
     <nav className={`header_nav ${sticky && 'shadow-md transition-all duration-300 ease-in-out hide-scrollbar'}`}>
       <div className='header_logo'>
@@ -102,14 +111,21 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
           className='font-bold text-xl md:hidden hover:cursor-pointer hover:text-slate-700 dark:text-white dark:hover:text-slate-300'
         />
         <div className='sm:flex hidden flex-col justify-center items-center py-1 px-2'>
-          <Image alt='logo' src='https://www.svgrepo.com/show/513695/broccoli.svg' width={30} height={30} />
-          <Link className='text-[13px] font-bold text-gradient-to-bl text-green-500' href={'/'}>
-            green life
+          <Image alt='logo' src={job_logo} width={30} height={30} />
+          <Link className='text-[14px] font-bold text-gradient-to-bl text-blue-600' href={'/'}>
+            Jobs 24/7
           </Link>
         </div>
         <h2 className='text-green-600 text-2xl font-bold sm:hidden py-4 px-2'>CHÀO MỪNG MỌI NGƯỜI</h2>
       </div>
-      {pathname !== '/sign-in' && pathname !== '/sign-up' && <ul className='header_menu'>{menuItem}</ul>}
+      {pathname !== '/sign-in' && pathname !== '/sign-up' && (
+        <ul className='header_menu'>
+          {menuItem}
+          <li className='menu_item'>
+            <Link href='system/news'>Tin tức</Link>
+          </li>
+        </ul>
+      )}
       {user ? (
         <div className='flex items-center justify-end'>
           <Button onClick={signOut} className='bg-none mr-4' variant={'outline'} size={'sm'}>
@@ -152,13 +168,13 @@ const NavbarCommon = ({ isOpen, setIsOpen }: NavbarCommonProps) => {
         <div className='gap-8 sm:flex hidden'>
           <div className='flex gap-3 px-2'>
             <Button onClick={() => router.push('/sign-in')} className='bg-none' variant={'outline'} size={'sm'}>
-              Sign in
+              Đăng nhập
             </Button>
             <Button onClick={() => router.push('/sign-up')} className='bg-none' variant={'outline'} size={'sm'}>
-              Sign up
+              Đăng ký
             </Button>
             <Button onClick={() => router.push('/sign-in-manager')} className='bg-none' variant={'outline'} size={'sm'}>
-              Post
+              Đăng tuyển và tìm hồ sơ
             </Button>
           </div>
           <ul className='list-none md:flex px-3 hidden'>

@@ -13,6 +13,16 @@ interface ChatPageProps {
   params: { id: number };
 }
 
+// export async function generateStaticParams() {
+//   const res = await fetch('https://api.yourservice.com/endpoint');
+//   const data = await res.json();
+
+//   const results = data.result;
+
+//   return results.map((item: { id: { toString: () => any; }; }) => ({ id: item.id.toString() }));
+// }
+
+
 const ChatPage = ({ params }: ChatPageProps) => {
   const { useBusinessSearch } = useBusiness();
   const { businesses } = useBusinessSearch({});

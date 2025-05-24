@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Link from 'next/link';
 import './Tabbar.css';
 import { useRouter } from 'next/navigation';
@@ -13,8 +13,8 @@ const TabBar = ({ tabs }: TabBarProps) => {
   return (
     <div className='tab_container'>
       {tabs!.map((item, index) => (
-        <h3 key={index} onClick={() => router.push(`/dashboard/${item.path}`)}>
-          <Link href={`/dashboard/${item.path}`}>{item.title}</Link>
+        <h3 key={index} onClick={() => router.push(`${item.path}`)}>
+          <Link href={`${item.path}`}>{item.title}</Link>
         </h3>
       ))}
     </div>

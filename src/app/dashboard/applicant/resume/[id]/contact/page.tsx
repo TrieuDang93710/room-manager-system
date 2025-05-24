@@ -30,6 +30,7 @@ const Contact = () => {
     getOneResume
       .mutateAsync({ id: resumeId })
       .then((res) => {
+        console.log('res: ', res);
         setResumeItem(res.data.data);
       })
       .catch((error) => {

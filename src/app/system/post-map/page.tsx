@@ -7,13 +7,14 @@ import GoogleMapsWrapper from '@/components/molecules/GoogleMap/google-map-wrapp
 import { LOCATIONS } from '@/components/molecules/GoogleMap/location';
 import flex from '@/config/flex.config';
 import useCombinedState from '@/hooks/useCombinedState';
-import { ClockCircleOutlined, CloseOutlined, FileSearchOutlined, HomeOutlined } from '@ant-design/icons';
+import { BellOutlined, ClockCircleOutlined, CloseOutlined, FileSearchOutlined, HomeOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import CheckboxCard from '@/components/molecules/CheckboxCard';
 import usePost from '@/hooks/usePost';
 import { addresses, fields, workTypes } from '@/faker/data';
 import { PostCardSquareComponent } from '@/components/organisms/system/Card/PostCardSquare';
 import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
 
 const GoogleMapsSearching = () => {
   const breadcrumbs = [
@@ -66,20 +67,26 @@ const GoogleMapsSearching = () => {
   return (
     <div
       className={
-        'w-full min-h-screen md:px-10 px-3 pt-20  z-10' +
+        'w-full min-h-screen md:px-10 px-3 pt-20  z-10 ' +
         flex({ direction: 'col', justifyContent: 'start', alignItems: 'center' })
       }
     >
-      <div
-        className='w-full h-[20vh] px-2 my-4 bg-center bg-cover bg-no-repeat flex flex-row items-center justify-start'
-        style={{
-          backgroundImage:
-            "url('https://taggd.in/wp-content/uploads/2022/12/Job-Prospects-for-Freshers-in-Pharmaceutical-Industry-Banner.png')"
-        }}
-      >
+      <div className='w-[80%] flex flex-row items-center justify-between gap-3'>
+        <p className='text-[14px] font-bold text-black text-center'>Tuyển dụng 49.562 việc làm [Update 23/05/2025]</p>
+        <Button
+          onClick={() => alert('Click me')}
+          className='hover:text-white border-blue-600 hover:bg-blue-600 text-blue-600 font-bold rounded-full md:px-8 px-4'
+          variant={'outline'}
+          size={'lg'}
+        >
+          <BellOutlined />
+          <p className='hidden md:block'>Tạo thông báo việc làm</p>
+        </Button>
+      </div>
+      <div className='w-[80%] flex flex-row items-center justify-start'>
         <BreadCrumbCommon breadcrumbs={breadcrumbs} currentUrl='/' mode='dark' />
       </div>
-      <div className='w-full relative flex md:flex-row flex-col gap-3 px-2'>
+      <div className='w-[80%] relative flex md:flex-row flex-col justify-between gap-3 px-2 py-4'>
         <div className='md:w-[60%] w-full'>
           <GoogleMapsWrapper>
             <GoogleMaps locations={LOCATIONS} />
