@@ -71,8 +71,10 @@ const GoogleMapsSearching = () => {
         flex({ direction: 'col', justifyContent: 'start', alignItems: 'center' })
       }
     >
-      <div className='w-[80%] flex flex-row items-center justify-between gap-3'>
-        <p className='text-[14px] font-bold text-black text-center'>Tuyển dụng 49.562 việc làm [Update 23/05/2025]</p>
+      <div className='sm:w-[80%] w-full flex flex-row items-center justify-between gap-3 px-2'>
+        <p className='text-[14px] font-bold text-black sm:text-center text-start'>
+          Tuyển dụng 49.562 việc làm [Update 23/05/2025]
+        </p>
         <Button
           onClick={() => alert('Click me')}
           className='hover:text-white border-blue-600 hover:bg-blue-600 text-blue-600 font-bold rounded-full md:px-8 px-4'
@@ -83,10 +85,10 @@ const GoogleMapsSearching = () => {
           <p className='hidden md:block'>Tạo thông báo việc làm</p>
         </Button>
       </div>
-      <div className='w-[80%] flex flex-row items-center justify-start'>
+      <div className='sm:w-[80%] w-full flex flex-row items-center justify-start'>
         <BreadCrumbCommon breadcrumbs={breadcrumbs} currentUrl='/' mode='dark' />
       </div>
-      <div className='w-[80%] relative flex md:flex-row flex-col justify-between gap-3 px-2 py-4'>
+      <div className='sm:w-[80%] w-full relative flex md:flex-row flex-col justify-between gap-3 px-2 py-4'>
         <div className='md:w-[60%] w-full'>
           <GoogleMapsWrapper>
             <GoogleMaps locations={LOCATIONS} />

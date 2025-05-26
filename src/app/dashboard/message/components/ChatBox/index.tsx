@@ -42,7 +42,7 @@ const ChatBox = ({ receiverId }: ChatBoxProps) => {
   return (
     <div className='relative w-full h-[65vh] bg-blue-200 dark:bg-blue-900 gap-4 overflow-y-auto hide-scrollbar'>
       {receiverUser && (
-        <div className='fixed z-20 w-[55%] flex items-start justify-start truncate gap-2 px-2 py-2 bg-[#f7f7f7] dark:bg-blue-800 border border-slate-400 border-b-0'>
+        <div className='sm:fixed z-20 w-[55%] flex items-start justify-start truncate gap-2 px-2 py-2 bg-[#f7f7f7] dark:bg-blue-800 border border-slate-400 border-b-0'>
           <Image
             alt='avatar'
             src={receiverUser?.avatar}
@@ -61,18 +61,19 @@ const ChatBox = ({ receiverId }: ChatBoxProps) => {
         </div>
       )}
       <div className='w-full flex flex-col items-center justify-start gap-4 z-10 pt-24'>
-        {Object.entries(groupedSplit).map(([date, { sender, receiver }]) => (
-          <div key={date} className='relative w-full flex flex-col items-start justify-center p-4 gap-4'>
-            <p className='absolute top-[-40px] left-[40%] text-white text-[14px] bg-slate-400 dark:bg-[#2525253b] rounded-md px-8 py-1'>
-              {format(new Date(date), 'EEE d/M/yyyy')}
-            </p>
-            <div className='w-full flex flex-col items-center justify-between'>
-              {mergeSortMessages(sender, receiver).map((mgs, index) => (
-                <Message key={index} sender={!mgs.sender} messageItem={mgs} receiverId={receiverId} />
-              ))}
+        {groupedSplit &&
+          Object.entries(groupedSplit).map(([date, { sender, receiver }]) => (
+            <div key={date} className='relative w-full flex flex-col items-start justify-center p-4 gap-4'>
+              <p className='absolute top-[-40px] left-[40%] text-white text-[14px] bg-slate-400 dark:bg-[#2525253b] rounded-md px-8 py-1'>
+                {format(new Date(date), 'EEE d/M/yyyy')}
+              </p>
+              <div className='w-full flex flex-col items-center justify-between'>
+                {mergeSortMessages(sender, receiver).map((mgs, index) => (
+                  <Message key={index} sender={!mgs.sender} messageItem={mgs} receiverId={receiverId} />
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

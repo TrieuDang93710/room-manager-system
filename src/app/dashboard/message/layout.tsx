@@ -17,7 +17,7 @@ const MessageLayout = ({ children }: MessageLayoutProps) => {
             Nhan tin
           </h3>
         </div>
-        <div className='w-full flex flex-row justify-between bg-blue-100 dark:bg-blue-800 p-4 gap-2'>
+        <div className='w-full flex sm:flex-row flex-col sm:justify-between justify-start items-start bg-blue-100 dark:bg-blue-800 p-4 gap-2'>
           <SideBarUser />
           <Suspense fallback={<Loading />}>{children}</Suspense>
         </div>

@@ -109,7 +109,7 @@ const SideBarUser = () => {
   }
 
   return (
-    <div className='w-[25%] h-[65vh] bg-white dark:bg-blue-900 flex flex-col items-start justify-start rounded-sm gap-4 p-4'>
+    <div className='sm:w-[25%] w-full sm:h-[65vh] h-fit bg-white dark:bg-blue-900 flex flex-col items-start justify-start rounded-sm gap-4 p-4'>
       <div className='w-full flex flex-col items-start gap-2'>
         <label className='text-[#333333] font-bold text-[13px] dark:text-blue-600' htmlFor=''>
           Tìm Kiếm

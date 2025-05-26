@@ -4,19 +4,13 @@ import TabBar from '@/components/molecules/TabBar';
 import Loading from '@/app/system/loading';
 
 interface ResumeDetailLayoutProps {
-  params: { id: number };
   children: React.ReactNode;
+  params: { id: number };
 }
 
-// export async function generateStaticParams() {
-//   const res = await fetch('https://api.yourservice.com/endpoint');
-//   const data = await res.json();
-
-//   const results = data.result;
-
-//   return results.map((item: { id: { toString: () => any; }; }) => ({ id: item.id.toString() }));
+// export function generateStaticParams() {
+//   return [{ id: [1, 2, 3, 4, 5] }];
 // }
-
 
 const ResumeDetailLayout = ({ params, children }: ResumeDetailLayoutProps) => {
   const id = params.id;

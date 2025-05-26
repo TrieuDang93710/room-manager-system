@@ -12,7 +12,7 @@ const MenuBoxComponent = ({ menuBox, setMenuBox, menus }: MenuBoxComponentProps)
   return (
     <div
       onMouseLeave={() => setMenuBox(false)}
-      className={`menu_box_container transition transform opacity duration-700 ease-in-out ${menuBox ? 'translate-y-0 opacity-100 duration-700 ease-in-out z-30' : 'translate-y-full opacity-0 duration-700 ease-in-out z-10'}`}
+      className={`menu_box_container transition transform opacity duration-700 ease-in-out ${menuBox ? 'translate-y-0 opacity-100 duration-1000 ease-in-out z-30' : '-translate-y-full opacity-0 duration-1000 ease-in-out z-10'}`}
     >
       <div className='w-[30%] h-full flex flex-col items-start justify-start'>
         <h3 className='text-[16px] font-medium text-slate-500 hover:text-blue-600 px-2'>

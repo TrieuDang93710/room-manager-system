@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from '@/components/ui/button';
+import useField from '@/hooks/useFeild';
 import { ArrowRightOutlined, CloseOutlined, SearchOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 
@@ -8,6 +10,7 @@ interface CategoryCardProps {
 }
 
 const CategoryCard = ({ openCategoryCard, setOpenCategoryCard }: CategoryCardProps) => {
+  const { fields } = useField();
   return (
     <div
       className={`absolute top-20 w-full md:h-[60vh] h-[5vh] flex flex-col items-center justify-start bg-white md:rounded-2xl rounded-xl py-4 px-4 gap-2 z-20 ${openCategoryCard ? 'translate-y-full opacity-0 hidden duration-700' : 'translate-y-0 opacity-100 duration-500'}`}
@@ -31,14 +34,14 @@ const CategoryCard = ({ openCategoryCard, setOpenCategoryCard }: CategoryCardPro
             Nhóm nghề
           </h3>
           <ul className='w-full h-[30vh] list-none list-inside flex flex-col items-start justify-start pb-3 overflow-y-auto hide-scrollbar gap-2'>
-            {Array.from({ length: 9 }).map((_, index) => (
-              <li key={index} className='w-full flex flex-row items-center justify-start py-2 rounded-md'>
+            {fields.map((item: any) => (
+              <li key={item.id} className='w-full flex flex-row items-center justify-start py-2 rounded-md'>
                 <input type='checkbox' className='size-5 outline-black' />
                 <Link
                   href={'#'}
                   className='w-full text-[14px] font-medium text-black hover:text-blue-600 flex items-center justify-between px-4'
                 >
-                  <p>Kinh doanh/Bán hàng</p> <ArrowRightOutlined />
+                  <p>{item.title}</p> <ArrowRightOutlined />
                 </Link>
               </li>
             ))}

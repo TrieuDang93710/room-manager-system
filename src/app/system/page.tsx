@@ -14,13 +14,6 @@ const SystemPage = () => {
   const [postId, setPostId] = useState<number>(0);
 
   return (
-    // <main className='relative w-full min-h-screen md:px-10 px-3 pt-10 font-[family-name:var(--font-geist-sans)] flex flex-col justify-start items-center z-10'>
-    //   <PostRender />
-    //   <FeaturedIndustry />
-    //   <RecruitmentRepresentative />
-    //   <ReviewUs />
-    //   <ServicePackage />
-    // </main>
     <SystemLayout>
       <PostRender
         openPostDetailCard={openPostDetailCard}

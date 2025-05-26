@@ -51,7 +51,7 @@ const AddResume = ({ addResume, setAddResume }: AddResumeProps) => {
   });
 
   const [formData, setFormData] = useState<any>({
-    expertise: '',
+    expertise: { title: '', level: '' },
     hobby: '',
     language: '',
     skill: '',
@@ -164,7 +164,7 @@ const AddResume = ({ addResume, setAddResume }: AddResumeProps) => {
       awards: resumeData.award,
       skills: resumeData.skill.toString().replaceAll(',', '; '),
       languages: resumeData.language.toString().replaceAll(',', '; '),
-      expertise: resumeData.expertise.toString().replaceAll(',', '; '),
+      expertise: resumeData.expertise,
       hobbies: resumeData.hobby.toString().replaceAll(',', '; ')
     };
 

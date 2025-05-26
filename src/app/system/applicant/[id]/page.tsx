@@ -11,15 +11,6 @@ interface ApplicantInfoPageProps {
   params: { id: number };
 }
 
-// export async function generateStaticParams() {
-//   const res = await fetch('https://api.yourservice.com/endpoint');
-//   const data = await res.json();
-
-//   const results = data.result;
-
-//   return results.map((item: { id: { toString: () => any; }; }) => ({ id: item.id.toString() }));
-// }
-
 const ApplicantInfoPage = ({ params }: ApplicantInfoPageProps) => {
   const id = params.id;
   const apiSecure = useApiSecure();
@@ -62,10 +53,10 @@ const ApplicantInfoPage = ({ params }: ApplicantInfoPageProps) => {
         flex({ direction: 'col', justifyContent: 'start', alignItems: 'center' })
       }
     >
-      <div className='w-[80%] flex flex-row items-center justify-start'>
+      <div className='sm:w-[80%] w-full flex flex-row items-center justify-start px-2'>
         <BreadCrumbCommon breadcrumbs={breadcrumbs} currentUrl='/' mode='dark' />
       </div>
-      <div className='w-[80%] flex sm:flex-row flex-col items-start justify-around my-4 gap-3'>
+      <div className='sm:w-[80%] w-full flex sm:flex-row flex-col items-start justify-around my-4 px-2 gap-3'>
         <div className='sm:w-2/3 rounded-md shadow-sm shadow-slate-600 flex flex-col justify-start items-center p-4 gap-4'>
           <div
             className='w-1/2 h-[20vh] bg-center bg-contain bg-no-repeat'

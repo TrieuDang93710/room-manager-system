@@ -3,7 +3,6 @@ import AddContent from '@/components/AddContent';
 
 const renderAddContent = (section: string, onSaveHandler: any, onChangeHandler: any, formData: any) => {
   switch (section) {
-    case 'expertise':
     case 'hobby':
     case 'language':
     case 'skill':
@@ -19,6 +18,27 @@ const renderAddContent = (section: string, onSaveHandler: any, onChangeHandler: 
               onChange={(e) => onChangeHandler(section, e.target.value)}
             />
           ))}
+        </AddContent>
+      );
+    case 'expertise':
+      return (
+        <AddContent onSave={(e) => onSaveHandler(e, section)}>
+          <div className='w-full flex flex-row items-center justify-between'>
+            <input
+              className='w-2/3 border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+              type='text'
+              placeholder={`Thêm ${section} ...`}
+              value={formData[section].title}
+              onChange={(e) => onChangeHandler(section, { ...formData[section], title: e.target.value })}
+            />
+            <input
+              className='w-[30%] border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
+              type='text'
+              placeholder='Mức độ / 100'
+              value={formData[section].level}
+              onChange={(e) => onChangeHandler(section, { ...formData[section], level: e.target.value })}
+            />
+          </div>
         </AddContent>
       );
     case 'image':
@@ -253,28 +273,36 @@ const renderAddContent = (section: string, onSaveHandler: any, onChangeHandler: 
             type='text'
             placeholder='Người thực hiện'
             value={formData.contact_information.createBy}
-            onChange={(e) => onChangeHandler('contact_information', { ...formData.contact_information, createBy: e.target.value })}
+            onChange={(e) =>
+              onChangeHandler('contact_information', { ...formData.contact_information, createBy: e.target.value })
+            }
           />
           <input
             className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
             type='text'
             placeholder={`Email`}
             value={formData.contact_information.email}
-            onChange={(e) => onChangeHandler('contact_information', { ...formData.contact_information, email: e.target.value })}
+            onChange={(e) =>
+              onChangeHandler('contact_information', { ...formData.contact_information, email: e.target.value })
+            }
           />
           <input
             className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
             type='text'
             placeholder={`Số điện thoại`}
             value={formData.contact_information.phone}
-            onChange={(e) => onChangeHandler('contact_information', { ...formData.contact_information, phone: e.target.value })}
+            onChange={(e) =>
+              onChangeHandler('contact_information', { ...formData.contact_information, phone: e.target.value })
+            }
           />
           <input
             className='w-full border border-slate-500 focus:border focus:border-green-500 rounded-sm px-2 py-1'
             type='text'
             placeholder={`Ghi chú`}
             value={formData.contact_information.note}
-            onChange={(e) => onChangeHandler('contact_information', { ...formData.contact_information, note: e.target.value })}
+            onChange={(e) =>
+              onChangeHandler('contact_information', { ...formData.contact_information, note: e.target.value })
+            }
           />
         </AddContent>
       );

@@ -3,7 +3,7 @@
 }
 
 .header_logo {
-    @apply flex justify-start items-center gap-4 truncate
+    @apply flex justify-start items-center px-8 gap-4 truncate
 }
 
 .header_menu {

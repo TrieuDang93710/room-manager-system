@@ -29,7 +29,15 @@ interface OptionInterface {
   label: string;
 }
 
-const AddApplyForm = ({ state, setField, closeHandler, resume, setResume, post, setPost }: AddApplyFormProps) => {
+const AddApplyForm = ({
+  state,
+  setField,
+  closeHandler,
+  resume,
+  setResume,
+  post,
+  setPost
+}: AddApplyFormProps) => {
   const [postOptionList, setPostOptionList] = useState<OptionInterface[]>([]);
   const [resumeOptionList, setResumeOptionList] = useState<OptionInterface[]>([]);
   const { handleSubmit, reset } = useForm();

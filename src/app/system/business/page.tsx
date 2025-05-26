@@ -59,8 +59,8 @@ const BusinessPage = () => {
         flex({ direction: 'col', justifyContent: 'start', alignItems: 'center' })
       }
     >
-      <div className='w-[80%] flex flex-row items-center justify-between gap-3'>
-        <p className='text-[14px] font-bold text-black text-center'>
+      <div className='sm:w-[80%] w-full flex flex-row items-center justify-between gap-3 px-2'>
+        <p className='text-[14px] font-bold text-black sm:text-center text-start'>
           Tổng 49.562 công ty đăng việc làm [Update 23/05/2025]
         </p>
         <Button
@@ -73,10 +73,10 @@ const BusinessPage = () => {
           <p className='hidden md:block'>Tạo thông báo việc làm</p>
         </Button>
       </div>
-      <div className='w-[80%] flex flex-row items-center justify-start'>
+      <div className='sm:w-[80%] w-full flex flex-row items-center justify-start'>
         <BreadCrumbCommon breadcrumbs={breadcrumbs} currentUrl='/' mode='dark' />
       </div>
-      <div className='w-[80%] min-h-screen flex flex-row items-start justify-around my-4 gap-3'>
+      <div className='sm:w-[80%] w-full min-h-screen flex flex-row items-start justify-around my-4 gap-3'>
         <div className='w-[20%] min-h-screen border dark:border-blue-600 shadow-sm shadow-blue-950 dark:shadow-blue-800 hidden md:flex flex-col items-center justify-start px-4'>
           <h3 className='text-[18px] text-black dark:text-blue-600 font-medium py-2'>Bộ tìm kiếm</h3>
           <CheckboxCard

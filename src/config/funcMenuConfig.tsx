@@ -3,7 +3,7 @@ import { AreaChartOutlined, BookOutlined, HomeOutlined, SettingOutlined } from '
 const funcOfManager = [
   { label: 'Thống Kê', icon: <AreaChartOutlined />, path: 'statistical' },
   { label: 'Quản Lý Bài Đăng', icon: <HomeOutlined />, path: 'post' },
-  { label: 'Quản Lý Công Ty', icon: <HomeOutlined />, path: 'business' },
+  { label: 'Đăng Ký Công Ty', icon: <HomeOutlined />, path: 'business' },
   { label: 'Quản Lý Trạng Thái', icon: <HomeOutlined />, path: 'resume-status' },
   { label: 'Quản Lý Ứng Viên', icon: <HomeOutlined />, path: 'applicant' },
   { label: 'Quản Lý Hóa Đơn', icon: <HomeOutlined />, path: 'service-bill' }
@@ -25,6 +25,7 @@ const funcOfAdmin = [
     path: 'func-management',
     children: [
       { label: 'Quản Lý Linh Vuc', icon: <HomeOutlined />, path: 'field' },
+      { label: 'Quản Lý Nhóm nghề', icon: <HomeOutlined />, path: 'category' },
       { label: 'Quản Lý Doanh Nghiep', icon: <HomeOutlined />, path: 'business' },
       { label: 'Quản Lý Bai Dang', icon: <HomeOutlined />, path: 'post' }
     ]

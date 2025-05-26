@@ -1,5 +1,5 @@
 'use client';
-import { FilterOutlined, HomeOutlined } from '@ant-design/icons';
+import { BellOutlined, FilterOutlined, HomeOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -8,6 +8,7 @@ import flex from '@/config/flex.config';
 import { listRoom } from '@/faker/data';
 import { STRIPE_SECRET_KEY } from '@/lib/constants';
 import CheckoutForm from './components/CheckoutForm';
+import { Button } from '@/components/ui/button';
 
 const stripePromise = loadStripe(`${STRIPE_SECRET_KEY}`);
 
@@ -40,20 +41,29 @@ const PaymentPage = () => {
   return (
     <div
       className={
-        'w-full min-h-screen md:px-10 px-3 pt-20  z-10' +
+        'w-full min-h-screen md:px-10 px-3 pt-20  z-10 ' +
         flex({ direction: 'col', justifyContent: 'start', alignItems: 'center' })
       }
     >
-      <div
-        className='w-full h-[20vh] px-2 bg-center bg-cover bg-no-repeat flex flex-row items-center justify-start'
-        style={{
-          backgroundImage:
-            "url('https://taggd.in/wp-content/uploads/2022/12/Job-Prospects-for-Freshers-in-Pharmaceutical-Industry-Banner.png')"
-        }}
-      >
+      <div className='w-[80%] flex flex-row items-center justify-between gap-3'>
+        <p className='text-[14px] font-bold text-black text-center'>
+          Tổng 49.562 công ty đăng việc làm [Update 23/05/2025]
+        </p>
+        <Button
+          onClick={() => alert('Click me')}
+          className='hover:text-white border-blue-600 hover:bg-blue-600 text-blue-600 font-bold rounded-full md:px-8 px-4'
+          variant={'outline'}
+          size={'lg'}
+        >
+          <BellOutlined />
+          <p className='hidden md:block'>Tạo thông báo việc làm</p>
+        </Button>
+      </div>
+      <div className='w-[80%] flex flex-row items-center justify-start'>
         <BreadCrumbCommon breadcrumbs={breadcrumbs} currentUrl='/' mode='dark' />
       </div>
-      <div className='w-full flex flex-row items-start justify-around my-4 gap-3'>
+      <div className='w-[80%] flex flex-col items-start justify-start my-4 gap-3'>
+        <h2 className='text-xl font-bold py-4'>Gói dịch vụ được chọn</h2>
         <div className='w-full flex flex-col items-center justify-start'>
           <Elements stripe={stripePromise}>
             <CheckoutForm price={200000} />
