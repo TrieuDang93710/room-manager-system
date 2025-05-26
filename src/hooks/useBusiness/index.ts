@@ -33,9 +33,9 @@ const useBusiness = () => {
   };
 
   const addBusiness = useMutation({
-    mutationFn: async (newBusiness: any) => {
-      // const res = await apiPublic.post('/companies', newBusiness);
-      return newBusiness;
+    mutationFn: async ({ newBusiness }: { newBusiness: any }) => {
+      const res = await apiSecure.post('/companies', newBusiness);
+      return res;
     }
   });
 

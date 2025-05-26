@@ -59,7 +59,7 @@ const ApplyCard = ({ postItem, onClick, expired, days }: ApplyCardProps) => {
                   onClick={onClick}
                   className='w-full px-2 py-2 rounded-sm text-white text-[16px] font-bold active:shadow-blue-500 active:shadow-sm cursor-pointer bg-blue-500 line-clamp-1'
                 >
-                  Ung tuyen ngay
+                  Ứng tuyển ngay
                 </button>
                 <HeartOutlined className='border border-blue-600 hover:border-blue-500 text-blue-600 rounded-md font-medium cursor-pointer py-2 px-4' />
               </div>

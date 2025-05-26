@@ -35,7 +35,7 @@ const ManagerHeader = ({ setIsHiddenMenu, isHiddenMenu }: ManagerHeaderProps) =>
   };
 
   return (
-    <div className='w-full z-20 fixed right-0 flex items-center justify-end shadow-md bg-blue-100 dark:bg-blue-800 p-3'>
+    <div className='w-full z-20 fixed right-0 flex items-center justify-end shadow-md bg-white dark:bg-blue-800 p-3'>
       <div className='md:w-[80%] w-[95%] flex items-center justify-between'>
         <div onClick={() => setIsHiddenMenu(!isHiddenMenu)} className='absolute top-5 left-1 md:hidden'>
           <MenuUnfoldOutlined className='text-black dark:text-white text-[16px] font-bold text-xl hover:cursor-pointer' />

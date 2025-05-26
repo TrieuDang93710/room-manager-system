@@ -7,7 +7,7 @@ const ServicePackage = () => {
   const { packages } = useServicePackage();
 
   return (
-    <div className='w-[70%] flex flex-col items-center pb-8'>
+    <div className='sm:w-[70%] w-full flex flex-col items-center pb-8'>
       <h2 className='text-2xl font-bold text-blue-600 py-2'>Các Gói Dịch Vụ</h2>
       <div className='w-[80%] flex sm:grid md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around gap-4 py-10'>
         <div className='w-full border-[1px] rounded-sm py-2 cursor-pointer border-slate-500 dark:border-blue-600 flex flex-col items-center justify-start gap-2'>

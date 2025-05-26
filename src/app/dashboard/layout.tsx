@@ -19,6 +19,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [selectedMenu, setSelectedMenu] = useState<number>(0);
   const [functions, setFunctions] = useState<listFuncInterface[]>([]);
   const { user } = useAuth();
+  console.log('user: ', user)
   let account: string = Role.MANAGER;
 
   account = user && user!.role[0];

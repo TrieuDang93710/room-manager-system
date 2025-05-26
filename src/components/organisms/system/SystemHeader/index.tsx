@@ -127,8 +127,8 @@ const NavbarCommon = ({
         </ul>
       )}
       {user ? (
-        <div className='flex items-center justify-end'>
-          <Button onClick={signOut} className='bg-none mr-4' variant={'outline'} size={'sm'}>
+        <div className='flex flex-row items-center justify-end sm:px-2 px-8'>
+          <Button onClick={signOut} className='hidden sm:block bg-none mr-4' variant={'outline'} size={'sm'}>
             Sign out
           </Button>
           <div className='relative flex items-start justify-center gap-1'>
@@ -143,7 +143,7 @@ const NavbarCommon = ({
               height='40'
               className='cursor-pointer rounded-full'
             />
-            <div className='flex flex-col items-start relative'>
+            <div className='hidden sm:flex flex-col items-start relative'>
               <Link
                 href={'/dashboard/profile'}
                 className='font-medium text-[14px] dark:text-[#b4b4b4] dark:hover:text-[#ebebeb] cursor-pointer'

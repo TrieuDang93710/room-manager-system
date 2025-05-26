@@ -8,9 +8,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-type CommonInformationProps = object;
-
-const CommonInformation = ({}: CommonInformationProps) => {
+const CommonInformation = () => {
   const { getOneResume } = useResume();
   const pathName = usePathname();
   console.log('pathName: ', pathName)

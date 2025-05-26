@@ -123,7 +123,7 @@ const UpdateUser = ({ updateUser, setUpdateUser }: UpdateUserProps) => {
     console.log('userDto: ', userDto);
 
     await updateProfile.mutateAsync({ updateUserDto: userDto });
-    refetch();
+    await refetch();
   };
 
   return (

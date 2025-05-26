@@ -1,47 +1,62 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useState } from 'react';
 import CommonInput from '@/components/atoms/Input';
 import Modal from '@/components/molecules/Modal';
 import { handleBlurChecking } from '@/helpers/utils';
 import useCombinedState from '@/hooks/useCombinedState';
 import { CloseOutlined } from '@ant-design/icons';
-import './AddField.css';
+import './AddCategory.css';
 import { useForm } from 'react-hook-form';
 import useApiPublic from '@/hooks/useApiPublic';
-import useField from '@/hooks/useFeild';
 import NotificationCustom from '@/helpers/notify';
+import useCategory from '@/hooks/useCategory';
+import useField from '@/hooks/useFeild';
 
-interface AddFieldProps {
-  openAddField: boolean;
-  setOpenAddField: (value: boolean) => void;
+interface OptionInterface {
+  value: string;
+  label: string;
+}
+
+interface AddCategoryProps {
+  openAddCategory: boolean;
+  setOpenAddCategory: (value: boolean) => void;
   onClick: () => void;
 }
 
-const AddField = ({ onClick, setOpenAddField, openAddField }: AddFieldProps) => {
-  const [state, setField] = useCombinedState({
-    title: '',
-    description: '',
-    slug: '',
-    titleError: '',
-    descriptionError: '',
-    slugError: ''
-  });
-
+const AddCategory = ({ onClick, setOpenAddCategory, openAddCategory }: AddCategoryProps) => {
+  const [fieldOptionList, setFieldOptionList] = useState<OptionInterface[]>([]);
+  const { fields } = useField();
   const { handleSubmit, reset } = useForm();
   const apiPublic = useApiPublic();
-  const { refetch } = useField();
+  const { refetch } = useCategory();
 
-  const addFieldHandler = () => {
+  const [filedId, setFiledId] = useState<string>('');
+  const [state, setCategory] = useCombinedState({
+    title: '',
+    description: '',
+    titleError: '',
+    descriptionError: ''
+  });
+
+  useEffect(() => {
+    const fieldOption = fields.map((item: any) => ({ label: item.title, value: item.id }));
+    setFieldOptionList(fieldOption);
+  }, [fields]);
+
+  const addCategoryHandler = () => {
     const title = state.title;
     const description = state.description;
-    // const slug = state.title.toLowerCase().replaceAll(' ', '-');
 
-    const fieldDto = {
+    const categoryDto = {
       title: title,
-      description: description
+      description: description,
+      fieldId: Number(filedId)
     };
 
+    console.log('categoryDto: ', categoryDto);
+
     apiPublic
-      .post('/field', fieldDto)
+      .post('/category', categoryDto)
       .then((res) => {
         console.log('res: ', res.data.data);
         NotificationCustom('success', res.data.data.message);
@@ -57,12 +72,12 @@ const AddField = ({ onClick, setOpenAddField, openAddField }: AddFieldProps) => 
   return (
     <Modal
       className='bg-[#29292962] dark:bg-[#f8f8f817] h-screen w-full flex justify-center items-center right-0 animate-in'
-      isOpen={openAddField}
+      isOpen={openAddCategory}
       hidden={false}
-      onClose={() => setOpenAddField(false)}
+      onClose={() => setOpenAddCategory(false)}
     >
-      <div className='modal_container_add_field'>
-        <form onSubmit={handleSubmit(addFieldHandler)}>
+      <div className='modal_container_add_category'>
+        <form onSubmit={handleSubmit(addCategoryHandler)}>
           <div className='modal_header'>
             <p>Thêm mới</p>
             <CloseOutlined
@@ -72,24 +87,33 @@ const AddField = ({ onClick, setOpenAddField, openAddField }: AddFieldProps) => 
           </div>
           <div className='w-full h-[80%] py-1 gap-2 flex flex-col md:flex overflow-y-auto'>
             <CommonInput
-              onblur={() => handleBlurChecking('text', 'titleError', state.title, setField)}
+              onblur={() => handleBlurChecking('text', 'titleError', state.title, setCategory)}
               inputValue={state.title}
               typeInput='text'
-              setField={setField}
+              setField={setCategory}
               field='title'
               error={state.titleError}
               placeholder='Nhap ho va ten ...'
               label_title='Ten linh vuc'
             />
             <CommonInput
-              onblur={() => handleBlurChecking('text', 'descriptionError', state.description, setField)}
+              onblur={() => handleBlurChecking('text', 'descriptionError', state.description, setCategory)}
               inputValue={state.description}
               typeInput='text'
-              setField={setField}
+              setField={setCategory}
               field='description'
               error={state.descriptionError}
               placeholder='Nhap mo ta ...'
               label_title='Mo ta chi tiet'
+            />
+            <CommonInput
+              typeInput='text'
+              field='field'
+              selectValue={filedId}
+              setSelectValue={setFiledId}
+              optionList={fieldOptionList}
+              placeholder='Nhap mo ta ...'
+              label_title='Lĩnh vực'
             />
           </div>
           <button className='modal_button' type='submit'>
@@ -101,4 +125,4 @@ const AddField = ({ onClick, setOpenAddField, openAddField }: AddFieldProps) => 
   );
 };
 
-export default AddField;
+export default AddCategory;

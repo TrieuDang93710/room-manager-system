@@ -45,7 +45,7 @@ const useResume = () => {
         .post('/resume', newResume)
         .then((result) => {
           console.log('result: ', result.data);
-          NotificationCustom('success', result.data.data.message);
+          NotificationCustom('success', result.data.message);
         })
         .catch((error) => {
           console.log('error: ', error);

@@ -13,19 +13,9 @@ interface ChatPageProps {
   params: { id: number };
 }
 
-// export async function generateStaticParams() {
-//   const res = await fetch('https://api.yourservice.com/endpoint');
-//   const data = await res.json();
-
-//   const results = data.result;
-
-//   return results.map((item: { id: { toString: () => any; }; }) => ({ id: item.id.toString() }));
-// }
-
-
 const ChatPage = ({ params }: ChatPageProps) => {
   const { useBusinessSearch } = useBusiness();
-  const { businesses } = useBusinessSearch({});
+  const { businesses } = useBusinessSearch();
   const { sendMessage, useAllMessages } = useChat();
   const { refetch } = useAllMessages({ userToChatId: Number(params.id) });
   const auth = useAuth();
@@ -78,13 +68,13 @@ const ChatPage = ({ params }: ChatPageProps) => {
   };
 
   return (
-    <div className='w-[75%] flex flex-col items-center justify-start'>
+    <div className='sm:w-[75%] w-full flex flex-col items-center justify-start'>
       <ChatBox receiverId={receiverId} />
       <form
         onSubmit={handleSubmit(sendHandler)}
-        className='relative w-full flex flex-row items-center bg-blue-200 dark:bg-transparent dark:border dark:border-blue-600 mt-2'
+        className='relative w-full flex sm:flex-row flex-col items-center gap-4 bg-blue-200 dark:bg-transparent dark:border dark:border-blue-600 mt-2'
       >
-        <div className='w-full flex flex-row items-center justify-start gap-2'>
+        <div className='w-full flex flex-row items-center justify-start sm:pb-0 pb-10 gap-2'>
           <input
             type='file'
             accept='image/*'
@@ -101,7 +91,7 @@ const ChatPage = ({ params }: ChatPageProps) => {
         </div>
         <button
           type='submit'
-          className={`absolute right-1 w-full sm:w-[20%] bg-blue-600 hover:bg-blue-500 text-slate-50 font-bold text-[16px] shadow-sm shadow-slate-400 px-4 py-1`}
+          className={`absolute right-1 bottom-0 w-full sm:w-[20%] bg-blue-600 hover:bg-blue-500 text-slate-50 font-bold text-[16px] shadow-sm shadow-slate-400 px-4 py-1`}
         >
           <SendOutlined />
         </button>

@@ -113,32 +113,34 @@ const PostRender = ({ setOpenPostDetailCard, openPostDetailCard, setPostId }: Po
   ));
 
   return (
-    <div className='w-[80%] flex flex-col items-center gap-3 px-2'>
-      <div className='w-full flex flex-row items-center justify-between px-4'>
-        <h2 className='text-2xl text-blue-600 font-bold mt-8'>Việt làm tốt nhất</h2>
-        <div className='flex flex-row items-center justify-center gap-4'>
+    <div className='sm:w-[80%] w-full flex flex-col items-center gap-3 px-2'>
+      <div className='w-full flex sm:flex-row flex-col items-center sm:justify-between justify-stretch px-4'>
+        <h2 className='w-full text-2xl text-blue-600 font-bold mt-8'>Việt làm tốt nhất</h2>
+        <div className='w-full flex flex-row items-center sm:justify-center justify-between gap-4'>
           <Link href={'#'} className='underline hover:text-blue-600'>
             Xem tất cả
           </Link>
-          <Button
-            onClick={() => alert('Click me')}
-            className='w-9 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white font-bold rounded-full flex justify-center items-center p-2'
-            variant={'outline'}
-            size={'sm'}
-          >
-            <LeftOutlined className='hidden md:block' />
-          </Button>
-          <Button
-            onClick={() => alert('Click me')}
-            className='w-9 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white font-bold rounded-full flex justify-center items-center p-2'
-            variant={'outline'}
-            size={'sm'}
-          >
-            <RightOutlined className='hidden md:block' />
-          </Button>
+          <div className='flex flex-row items-center justify-start gap-2'>
+            <Button
+              onClick={() => alert('Click me')}
+              className='w-9 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white font-bold rounded-full flex justify-center items-center p-2'
+              variant={'outline'}
+              size={'sm'}
+            >
+              <LeftOutlined />
+            </Button>
+            <Button
+              onClick={() => alert('Click me')}
+              className='w-9 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white font-bold rounded-full flex justify-center items-center p-2'
+              variant={'outline'}
+              size={'sm'}
+            >
+              <RightOutlined />
+            </Button>
+          </div>
         </div>
       </div>
-      <div className='relative w-full flex flex-row items-center justify-between px-4'>
+      <div className='relative w-full flex sm:flex-row flex-col sm:items-center items-start sm:justify-between justify-start px-4'>
         <Button
           onClick={handleOpenFilterTypeCard}
           className='w-[25%] text-slate-300 border-slate-400 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600 font-bold md:flex hidden justify-between items-center px-4'
@@ -150,21 +152,21 @@ const PostRender = ({ setOpenPostDetailCard, openPostDetailCard, setPostId }: Po
             Lọc theo:
             <span className='text-black ml-8'>{filterTypeLabel[0].title}</span>
           </p>
-          <DownOutlined className='hidden md:block' />
+          <DownOutlined />
         </Button>
         <ul
           className={`absolute left-14 top-12 w-[20%] bg-white rounded-xl shadow-sm shadow-slate-500 list-none list-inside flex flex-col items-start justify-start py-2 px-4 gap-2 ${filterTypeCard && 'hidden'}`}
         >
           {filterTypeItem}
         </ul>
-        <ul className='relative w-[70%] h-full flex flex-row items-center justify-start px-16 gap-4'>
+        <ul className='relative sm:w-[70%] w-full h-full flex sm:flex-row flex-col sm:items-center items-start justify-start px-16 gap-4'>
           <Button
             onClick={() => alert('Click me')}
             className='absolute left-2 w-9 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white font-bold rounded-full flex justify-center items-center p-2'
             variant={'outline'}
             size={'sm'}
           >
-            <LeftOutlined className='hidden md:block' />
+            <LeftOutlined />
           </Button>
           <li
             onClick={() => setFilterSelectedValue('all')}
@@ -179,7 +181,7 @@ const PostRender = ({ setOpenPostDetailCard, openPostDetailCard, setPostId }: Po
             variant={'outline'}
             size={'sm'}
           >
-            <RightOutlined className='hidden md:block' />
+            <RightOutlined />
           </Button>
         </ul>
       </div>
@@ -194,14 +196,14 @@ const PostRender = ({ setOpenPostDetailCard, openPostDetailCard, setPostId }: Po
           />
         ))}
       </div>
-      <div className='relative w-[30%] flex justify-center items-center my-8 gap-4'>
+      <div className='relative sm:w-[30%] w-[80%] flex justify-center items-center my-8 gap-4'>
         <Button
           onClick={() => alert('Click me')}
           className='absolute left-2 w-9 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white font-bold rounded-full flex justify-center items-center p-2'
           variant={'outline'}
           size={'sm'}
         >
-          <LeftOutlined className='hidden md:block' />
+          <LeftOutlined />
         </Button>
         {Array.from({ length: Math.ceil(filteredItems.length / itemsPerPage) }).map((_, index) => (
           <button
@@ -218,7 +220,7 @@ const PostRender = ({ setOpenPostDetailCard, openPostDetailCard, setPostId }: Po
           variant={'outline'}
           size={'sm'}
         >
-          <RightOutlined className='hidden md:block' />
+          <RightOutlined />
         </Button>
       </div>
     </div>

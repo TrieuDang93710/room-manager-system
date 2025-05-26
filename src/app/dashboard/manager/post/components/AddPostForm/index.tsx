@@ -5,7 +5,7 @@ import { handleBlurChecking } from '@/helpers/utils';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { useApiSecure } from '@/hooks/useApiSecure';
 import useBusiness from '@/hooks/useBusiness';
-import useField from '@/hooks/useFeild';
+import useCategory from '@/hooks/useCategory';
 import usePost from '@/hooks/usePost';
 import { CloseOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
@@ -39,7 +39,7 @@ const AddPostForm = ({
   const [fieldOptionList, setFieldOptionList] = useState<OptionInterface[]>([]);
   const [businessOptionList, setBusinessOptionList] = useState<OptionInterface[]>([]);
   const { handleSubmit, reset } = useForm();
-  const { fields } = useField();
+  const { categories } = useCategory();
   const { useBusinessSearch } = useBusiness();
   const { usePostsSearch } = usePost();
   const { businesses } = useBusinessSearch();
@@ -49,11 +49,11 @@ const AddPostForm = ({
   const {} = useAuth();
 
   useEffect(() => {
-    const fieldOption = fields.map((item: any) => ({ label: item.title, value: item.id }));
+    const fieldOption = categories.map((item: any) => ({ label: item.title, value: item.id }));
     const businessOption = businesses.map((item: any) => ({ label: item.title, value: item.id }));
     setFieldOptionList(fieldOption);
     setBusinessOptionList(businessOption);
-  }, [fields, businesses]);
+  }, [categories, businesses]);
 
   console.log('fieldOptionList: ', fieldOptionList);
   console.log('businessOptionList: ', businessOptionList);

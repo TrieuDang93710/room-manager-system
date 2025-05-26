@@ -4,6 +4,7 @@ import RenderContent from '../../post/components/RenderContent';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import useApiPublic from '@/hooks/useApiPublic';
+import { useRouter } from 'next/navigation';
 
 interface PostDetailCardProps {
   postId?: number;
@@ -12,6 +13,7 @@ interface PostDetailCardProps {
 }
 
 const PostDetailCard = ({ postId, setOpenPostDetailCard, openPostDetailCard }: PostDetailCardProps) => {
+  const router = useRouter();
   const [sticky, setSticky] = useState<boolean>(false);
   console.log(sticky);
 
@@ -57,7 +59,7 @@ const PostDetailCard = ({ postId, setOpenPostDetailCard, openPostDetailCard }: P
       onMouseLeave={() => {
         setOpenPostDetailCard(!openPostDetailCard);
       }}
-      className='fixed top-20 md:w-[35%] w-[60%] h-[80vh] bg-white shadow-sm shadow-slate-600 rounded-xl z-40'
+      className='fixed top-20 md:w-[35%] sm:w-[60%] w-[80%] h-[80vh] bg-white shadow-sm shadow-slate-600 rounded-xl z-40'
     >
       <div className='relative w-full h-full flex flex-col items-center justify-start py-2 px-4'>
         <div className={`w-full flex flex-row items-center justify-between py-2`}>
@@ -81,7 +83,7 @@ const PostDetailCard = ({ postId, setOpenPostDetailCard, openPostDetailCard }: P
             </div>
           </CardRow>
         </div>
-        <div className='w-full h-[50vh] flex flex-col items-center justify-start px-2 gap-4 overflow-y-auto hide-scrollbar'>
+        <div className='w-full h-[50vh] flex flex-col items-center justify-start px-2 pb-6 gap-4 overflow-y-auto hide-scrollbar'>
           <RenderContent contents={description} title='Mô tả công việc' />
           <RenderContent contents={experience} title='Yêu cầu công việc' />
           <RenderContent contents={benefit} title='Quyền lợi' />
@@ -96,9 +98,9 @@ const PostDetailCard = ({ postId, setOpenPostDetailCard, openPostDetailCard }: P
             </ul>
           </div>
         </div>
-        <div className='absolute bottom-0 w-full flex flex-row items-center justify-between px-4 py-2'>
+        <div className='absolute bottom-0 w-full bg-white flex flex-row items-center justify-between px-4 py-2'>
           <Button
-            onClick={() => alert('Click me')}
+            onClick={() => router.push(`/system/post/${Number(postId)}`)}
             className='border-blue-600 hover:bg-blue-600 text-blue-600 hover:text-white font-bold md:px-8 px-4'
             variant={'outline'}
             size={'sm'}
@@ -106,7 +108,7 @@ const PostDetailCard = ({ postId, setOpenPostDetailCard, openPostDetailCard }: P
             Ứng tuyển
           </Button>
           <Button
-            onClick={() => alert('Click me')}
+            onClick={() => router.push(`/system/post/${Number(postId)}`)}
             className='w-[40%] bg-blue-600 hover:text-black hover:border-blue-600 hover:bg-blue-700 text-white font-bold px-4'
             variant={'outline'}
             size={'sm'}

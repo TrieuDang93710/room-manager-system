@@ -104,7 +104,7 @@ function CheckoutForm({ price }: CheckoutFormProps) {
   return (
     <div className='w-full flex justify-center py-6'>
       <div className='w-1/2 flex flex-col items-start justify-start'>
-        <h2 className='text-3xl font-bold py-4'>Gói dịch vụ được chọn</h2>
+        {/* <h2 className='text-3xl font-bold py-4'>Gói dịch vụ được chọn</h2> */}
         <div className='w-[50%] border-[1px] rounded-sm py-2 cursor-pointer border-slate-500 dark:border-blue-600 flex flex-col items-center justify-start gap-2'>
           <button className='w-3/4 py-2 rounded-sm text-[16px] font-bold bg-[#9999993f] text-blue-600'>Miễn phí</button>
           <div className='w-full h-[30vh] flex flex-col items-start justify-start p-3 gap-2'>

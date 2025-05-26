@@ -14,6 +14,8 @@ import useCloudinary from '@/hooks/useCloudinary';
 import renderContent from '@/components/molecules/renderContent';
 import renderAddContent from '@/components/molecules/renderAddContent';
 import Image from 'next/image';
+import useBusiness from '@/hooks/useBusiness';
+import NotificationCustom from '@/helpers/notify';
 
 interface AddBusinessProps {
   openAddBusiness: boolean;
@@ -24,6 +26,8 @@ interface AddBusinessProps {
 const AddBusiness = ({ onClick, setOpenAddBusiness, openAddBusiness }: AddBusinessProps) => {
   const { handleSubmit } = useForm();
   const { uploadFile } = useCloudinary();
+  const { addBusiness, useBusinessSearch } = useBusiness();
+  const { refetch } = useBusinessSearch();
   const dispatch = useDispatch();
   const businessData = useSelector((state: RootState) => state.businesses);
   console.log('businessData: ', businessData);
@@ -149,6 +153,16 @@ const AddBusiness = ({ onClick, setOpenAddBusiness, openAddBusiness }: AddBusine
     };
 
     console.log('businessDto: ', businessDto);
+
+    await addBusiness
+      .mutateAsync({ newBusiness: businessDto })
+      .then((res) => {
+        NotificationCustom('success', res.data.message);
+        refetch();
+      })
+      .catch((error) => {
+        NotificationCustom('error', error.message);
+      });
   };
 
   return (

@@ -5,7 +5,7 @@ import PostCardRow from '@/components/organisms/system/Card/PostCardRow';
 import flex from '@/config/flex.config';
 import ExpiredPostChecking from '@/helpers/expired-check';
 import useApiPublic from '@/hooks/useApiPublic';
-import { FilterOutlined, HeartOutlined, HomeOutlined } from '@ant-design/icons';
+import { BellOutlined, FilterOutlined, HeartOutlined, HomeOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import RenderContent from '../components/RenderContent';
 import usePost from '@/hooks/usePost';
@@ -13,20 +13,11 @@ import AddApply from '../components/AddApply';
 import BusinessInformation from '../components/Business';
 import RequireInformation from '../components/Require';
 import ApplyCard from '../components/ApplyCard';
+import { Button } from '@/components/ui/button';
 
 interface PostDetailPageProps {
   params: { id: number };
 }
-
-// export async function generateStaticParams() {
-//   const res = await fetch('https://api.yourservice.com/endpoint');
-//   const data = await res.json();
-
-//   const results = data.result;
-
-//   return results.map((item: { id: { toString: () => any; }; }) => ({ id: item.id.toString() }));
-// }
-
 
 function PostDetailPage({ params }: PostDetailPageProps) {
   const apiPublic = useApiPublic();
@@ -78,20 +69,26 @@ function PostDetailPage({ params }: PostDetailPageProps) {
   return (
     <div
       className={
-        'relative w-full min-h-screen md:px-10 flex flex-col items-center px-3 pt-20 z-10' +
+        'relative w-full min-h-screen md:px-10 flex flex-col items-center px-3 pt-20 z-10 ' +
         flex({ direction: 'col', justifyContent: 'start', alignItems: 'center' })
       }
     >
-      <div
-        className='w-full h-[20vh] dark:rounded-sm px-2 bg-center bg-cover bg-no-repeat flex flex-row items-center justify-start'
-        style={{
-          backgroundImage:
-            "url('https://taggd.in/wp-content/uploads/2022/12/Job-Prospects-for-Freshers-in-Pharmaceutical-Industry-Banner.png')"
-        }}
-      >
+      <div className='w-[80%] flex flex-row items-center justify-between px-4 gap-3'>
+        <p className='text-[14px] font-bold text-black text-center'>Tuyển dụng 49.562 việc làm [Update 23/05/2025]</p>
+        <Button
+          onClick={() => alert('Click me')}
+          className='hover:text-white border-blue-600 hover:bg-blue-600 text-blue-600 font-bold rounded-full md:px-8 px-4'
+          variant={'outline'}
+          size={'lg'}
+        >
+          <BellOutlined />
+          <p className='hidden md:block'>Tạo thông báo việc làm</p>
+        </Button>
+      </div>
+      <div className='w-[80%] flex flex-row items-center justify-start px-4'>
         <BreadCrumbCommon breadcrumbs={breadcrumbs} currentUrl='/' mode='dark' />
       </div>
-      <div className='lg:w-[90%] w-full flex sm:flex-row flex-col items-start justify-around my-4 gap-1'>
+      <div className='w-[80%] flex sm:flex-row flex-col items-start justify-around my-4 gap-1'>
         <div className='sm:w-[70%] w-full rounded-md shadow-sm shadow-slate-600 dark:shadow-md dark:shadow-blue-600 flex flex-col justify-start items-center p-4 gap-4'>
           <ApplyCard postItem={postItem} onClick={closeAddApplyHandler} days={days} expired={expired} />
           <div className='w-full flex flex-col items-start justify-start gap-3'>
@@ -121,15 +118,17 @@ function PostDetailPage({ params }: PostDetailPageProps) {
                 onClick={closeAddApplyHandler}
                 className='w-full px-2 py-2 rounded-sm text-white text-[16px] font-bold active:shadow-blue-500 active:shadow-sm cursor-pointer bg-blue-500 line-clamp-1'
               >
-                Ung tuyen ngay
+                Ứng tuyển ngay
               </button>
               <HeartOutlined className='border border-blue-600 hover:border-blue-500 text-blue-600 rounded-md font-medium cursor-pointer py-2 px-4' />
             </div>
             <p className='text-[20px] text-black dark:text-blue-600 font-bold py-8'>Việc làm liên quan :</p>
             <div className='w-full flex flex-col items-center justify-start p-2 gap-3'>
-              {posts.map((item: any, index: any) => (
-                <PostCardRow key={index} postItem={item} applied='not applied' />
-              ))}
+              {posts
+                .filter((item: any) => item.id !== params.id)
+                .map((postItem: any) => (
+                  <PostCardRow key={postItem.id} postItem={postItem} applied='not applied' />
+                ))}
             </div>
           </div>
         </div>

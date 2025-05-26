@@ -1,24 +1,24 @@
 import { useQuery } from '@tanstack/react-query';
 import useApiPublic from '../useApiPublic';
 
-const useField = () => {
+const useCategory = () => {
   const apiPublic = useApiPublic();
 
   // Fetch the post with Get method
   const {
-    data: fields = [],
+    data: categories = [],
     isPending: loading,
     refetch
   } = useQuery({
-    queryKey: ['field'],
+    queryKey: ['categories'],
     queryFn: async () => {
-      const res = await apiPublic.get('/field');
-      console.log('fields: ', res.data.data.result);
+      const res = await apiPublic.get('/category');
+      console.log('categories: ', res.data.data.result);
       return res.data.data.result;
     }
   });
 
-  return { fields, loading, refetch };
+  return { categories, loading, refetch };
 };
 
-export default useField;
+export default useCategory;

@@ -37,26 +37,6 @@ const SignIn = () => {
     const email = state.email;
     const password = state.password;
 
-    const result = (await getUserByEmail.mutateAsync({ email: email })).data;
-    console.log('userByEmail: ', result.data);
-    setUser(result.data)
-    const decodedToken = jwt.decode(result.data.token!) as JwtPayload;
-    const decodedRefreshToken = jwt.decode(result.data.refresh_token!) as JwtPayload;
-    console.log(decodedToken, decodedRefreshToken);
-
-    const get_time = new Date().getTime();
-    const datetime = Math.floor(get_time / 1000);
-
-    if (!decodedToken || !decodedRefreshToken) {
-      return 'Error';
-    }
-
-    const token_time_exp = decodedToken.exp! - decodedToken.iat!;
-    const refresh_token_time_exp = decodedRefreshToken.exp! - decodedRefreshToken.iat!;
-    const realtime = datetime - decodedToken.iat!;
-
-    console.log(token_time_exp, refresh_token_time_exp, realtime);
-
     signIn(email, password)
       .then((response) => {
         NotificationCustom('success', response.data.message);
@@ -93,6 +73,26 @@ const SignIn = () => {
         }
         // NotificationCustom('error', error.message);
       });
+
+    const result = (await getUserByEmail.mutateAsync({ email: email })).data;
+    console.log('userByEmail: ', result.data);
+    setUser(result.data);
+    const decodedToken = jwt.decode(result.data.token!) as JwtPayload;
+    const decodedRefreshToken = jwt.decode(result.data.refresh_token!) as JwtPayload;
+    console.log(decodedToken, decodedRefreshToken);
+
+    const get_time = new Date().getTime();
+    const datetime = Math.floor(get_time / 1000);
+
+    if (!decodedToken || !decodedRefreshToken) {
+      return 'Error';
+    }
+
+    const token_time_exp = decodedToken.exp! - decodedToken.iat!;
+    const refresh_token_time_exp = decodedRefreshToken.exp! - decodedRefreshToken.iat!;
+    const realtime = datetime - decodedToken.iat!;
+
+    console.log(token_time_exp, refresh_token_time_exp, realtime);
   };
 
   return (

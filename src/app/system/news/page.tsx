@@ -9,8 +9,6 @@ import CardSquare from '@/components/organisms/system/Card/Square';
 import { useRouter } from 'next/navigation';
 import useNews from '@/hooks/useNews';
 
-import banner from '@/public/images/search_banner.jpg';
-
 const NewsPage = () => {
   const router = useRouter();
   const { newses } = useNews();
@@ -46,67 +44,60 @@ const NewsPage = () => {
 
   return (
     <div
-      className={'w-full min-h-screen z-10 ' + flex({ direction: 'col', justifyContent: 'start', alignItems: 'center' })}
+      className={
+        'w-full min-h-screen pt-20 px-2 z-10 ' +
+        flex({ direction: 'col', justifyContent: 'start', alignItems: 'center' })
+      }
     >
-      <div
-        className='absolute top-16 w-full h-[30vh] px-[10%] bg-center bg-cover bg-no-repeat flex flex-row items-center justify-start'
-        style={{
-          backgroundImage: `url(${banner.src})`,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
+      <div className='sm:w-[80%] w-full flex flex-row items-center justify-start px-2'>
         <BreadCrumbCommon breadcrumbs={breadcrumbs} currentUrl='/' mode='dark' />
       </div>
-
-      <div className='w-full flex flex-col items-center justify-start md:pt-[20%] pt-[30%]'>
-        <div className='w-[80%] flex flex-row justify-between items-center shadow-sm shadow-black border border-slate-200 px-4 py-4 gap-2'>
-          <p className='md:hidden text-slate-800 text-[14px] flex items-center gap-2'>
-            <strong className='font-bold'>Loc : </strong>
-            <FileSearchOutlined className='text-green-500 font-bold text-2xl cursor-pointer active:shadow-slate-500 active:shadow-sm' />
-          </p>
-          <div className='md:w-full w-3/4 flex justify-end items-center gap-3'>
-            <div className='border border-green-500 rounded-sm'>
-              <select className='px-2 border-none' name='' id=''>
-                <option className='border-none' value=''>
-                  All
-                </option>
-                <option className='border-none' value='10'>
-                  10
-                </option>
-              </select>
-            </div>
-            <p className='text-slate-800 text-[14px] flex items-center gap-2'>
-              <strong className='font-bold'>View : </strong>
-              <TableOutlined
-                onClick={() => handleSetViewRender()}
-                className='text-green-500 font-bold text-2xl cursor-pointer active:shadow-slate-500 active:shadow-sm'
-              />
-            </p>
+      <div className='sm:w-[80%] w-full flex flex-row justify-between items-center shadow-sm shadow-black border border-slate-200 px-4 py-4 gap-2'>
+        <p className='md:hidden text-slate-800 text-[14px] flex items-center gap-2'>
+          <strong className='font-bold'>Loc : </strong>
+          <FileSearchOutlined className='text-green-500 font-bold text-2xl cursor-pointer active:shadow-slate-500 active:shadow-sm' />
+        </p>
+        <div className='md:w-full w-3/4 flex justify-end items-center gap-3'>
+          <div className='border border-green-500 rounded-sm'>
+            <select className='px-2 border-none' name='' id=''>
+              <option className='border-none' value=''>
+                All
+              </option>
+              <option className='border-none' value='10'>
+                10
+              </option>
+            </select>
           </div>
+          <p className='text-slate-800 text-[14px] flex items-center gap-2'>
+            <strong className='font-bold'>View : </strong>
+            <TableOutlined
+              onClick={() => handleSetViewRender()}
+              className='text-green-500 font-bold text-2xl cursor-pointer active:shadow-slate-500 active:shadow-sm'
+            />
+          </p>
         </div>
-        <div className='w-[70%] flex sm:grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 py-10'>
-          {newses.map((item: any, index: any) => (
-            <CardSquare key={index + 1} logo={item!.banner && item!.banner}>
-              <div className='w-full px-2'>
-                <p className='text-[13px] text-slate-800 font-normal'>
-                  {item!.information?.field && item!.information?.field}
-                </p>
-                <h3 className='text-[18px] text-black font-bold py-2 line-clamp-1'>{item!.title}</h3>
-                <p className='text-[13px] text-slate-800 font-normal py-1 line-clamp-3'>
-                  <strong className='font-bold text-black'>Mô tả : </strong>
-                  {item!.contents}
-                </p>
-              </div>
-              <button
-                onClick={() => router.push(`/system/news/${index + 1}`)}
-                className='w-1/2 py-2 rounded-md text-green-500 text-[16px] font-bold hover:bg-green-200 hover:text-green-800 active:shadow-sm active:shadow-gray-600'
-              >
-                Xem thêm
-              </button>
-            </CardSquare>
-          ))}
-        </div>
+      </div>
+      <div className='w-[70%] flex sm:grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 py-10'>
+        {newses.map((item: any, index: any) => (
+          <CardSquare key={index + 1} logo={item!.banner && item!.banner}>
+            <div className='w-full px-2'>
+              <p className='text-[13px] text-slate-800 font-normal'>
+                {item!.information?.field && item!.information?.field}
+              </p>
+              <h3 className='text-[18px] text-black font-bold py-2 line-clamp-1'>{item!.title}</h3>
+              <p className='text-[13px] text-slate-800 font-normal py-1 line-clamp-3'>
+                <strong className='font-bold text-black'>Mô tả : </strong>
+                {item!.contents}
+              </p>
+            </div>
+            <button
+              onClick={() => router.push(`/system/news/${index + 1}`)}
+              className='w-1/2 py-2 rounded-md text-green-500 text-[16px] font-bold hover:bg-green-200 hover:text-green-800 active:shadow-sm active:shadow-gray-600'
+            >
+              Xem thêm
+            </button>
+          </CardSquare>
+        ))}
       </div>
     </div>
   );
