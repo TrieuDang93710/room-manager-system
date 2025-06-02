@@ -4,11 +4,15 @@ import CategoryCard from './components/CategoryCard';
 import { useState } from 'react';
 import AddressCard from './components/AddressCard';
 import SearchHistoryCard from './components/SearchHistoryCard';
+import { useDispatch } from 'react-redux';
+import { addHistory } from '@/lib/features/searchHistories/searchHistorySlice';
 
 const SearchBox = () => {
   const [openCategoryCard, setOpenCategoryCard] = useState<boolean>(true);
   const [openAddressCard, setOpenAddressCard] = useState<boolean>(true);
   const [openSearchHistoryCard, setOpenSearchHistoryCard] = useState<boolean>(true);
+  const [searchHistory, setSearchHistory] = useState<string>('');
+  const dispatch = useDispatch();
 
   const handleOpenCategoryCard = () => {
     setOpenCategoryCard(!openCategoryCard);
@@ -21,6 +25,8 @@ const SearchBox = () => {
   const handleOpenSearchHistoryCard = () => {
     setOpenSearchHistoryCard(!openSearchHistoryCard);
   };
+
+  console.log('searchHistory: ', searchHistory);
 
   return (
     <div className='w-[80%] relative'>
@@ -38,6 +44,9 @@ const SearchBox = () => {
           <input
             type='search'
             name='search'
+            // defaultValue={searchHistory}
+            value={searchHistory}
+            onChange={(e) => setSearchHistory(e.target.value)}
             placeholder='Vị trí tuyển dụng, tên công ty'
             className='h-11 w-full rounded-none border-r border-r-slate-300 border-l border-l-slate-300 placeholder:text-slate-800 focus:outline-none px-4'
             onFocus={handleOpenSearchHistoryCard}
@@ -57,7 +66,10 @@ const SearchBox = () => {
           <DownOutlined className='hidden md:block' />
         </Button>
         <Button
-          onClick={() => alert('Click me')}
+          onClick={() => {
+            dispatch(addHistory(searchHistory));
+            setSearchHistory('');
+          }}
           className='bg-blue-600 hover:text-black hover:border-blue-600 hover:bg-blue-700 text-white font-bold md:px-8 px-4'
           variant={'outline'}
           size={'lg'}
@@ -68,6 +80,7 @@ const SearchBox = () => {
         <SearchHistoryCard
           openSearchHistoryCard={openSearchHistoryCard}
           setOpenSearchHistoryCard={setOpenSearchHistoryCard}
+          setSearchHistory={setSearchHistory}
         />
         <AddressCard openAddressCard={openAddressCard} setOpenAddressCard={setOpenAddressCard} />
       </div>

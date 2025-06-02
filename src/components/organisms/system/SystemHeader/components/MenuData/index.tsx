@@ -2,16 +2,20 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface MenuDataProps {
   data: any[];
 }
 
 const MenuData = ({ data }: MenuDataProps) => {
+  const router = useRouter();
+
   const menuItem =
     data &&
     data.map((item, index) => (
       <li
+        onClick={() => router.push(`${item.path}`)}
         key={index}
         className='w-full flex flex-row items-center justify-start gap-2 py-2 px-2 rounded-md hover:bg-blue-100'
       >

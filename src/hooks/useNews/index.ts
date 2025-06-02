@@ -1,8 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useMutation, useQuery } from '@tanstack/react-query';
 import useApiPublic from '../useApiPublic';
+import { useApiSecure } from '../useApiSecure';
 
 const useNews = () => {
   const apiPublic = useApiPublic();
+  const apiSecure = useApiSecure()
 
   // Fetch the post with Get method
   const {
@@ -18,7 +21,14 @@ const useNews = () => {
     }
   });
 
-  return { newses, loading, refetch };
+  const addNews = useMutation({
+    mutationFn: async ({ newsBody }: { newsBody: any }) => {
+      const res = await apiSecure.post('/news', newsBody);
+      return res;
+    }
+  });
+
+  return { newses, loading, refetch, addNews };
 };
 
 export default useNews;

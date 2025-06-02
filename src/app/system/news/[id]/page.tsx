@@ -93,24 +93,17 @@ const NewsInfoPage = ({ params }: NewsInfoPageProps) => {
   return (
     <div
       className={
-        'w-full min-h-screen md:px-10 flex flex-col items-center px-3 z-10' +
+        'w-full min-h-screen md:px-10 flex flex-col items-center px-3 pt-20 z-10 ' +
         flex({ direction: 'col', justifyContent: 'start', alignItems: 'center' })
       }
     >
-      <div
-        className='absolute top-16 w-full h-[40vh] px-2 bg-center bg-cover bg-no-repeat flex flex-row items-center justify-start'
-        style={{
-          backgroundImage: `url(${banner.src})`,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
+      <div className='sm:w-[80%] w-full flex flex-row items-center justify-start px-2'>
         <BreadCrumbCommon breadcrumbs={breadcrumbs} currentUrl='/' mode='dark' />
       </div>
-      <div className='lg:w-[90%] w-full flex md:flex-row flex-col items-start justify-around my-4 pt-[25%] gap-3'>
+      <div className='sm:w-[80%] w-full flex md:flex-row flex-col items-start justify-around my-4 gap-3'>
         <div className='w-full rounded-md shadow-sm shadow-slate-600 flex flex-col justify-start items-center p-4 gap-4'>
           {bannerImage}
-          <div className='w-[80%] flex flex-col items-start justify-start gap-3'>
+          <div className='sm:w-[80%] w-full flex flex-col items-start justify-start gap-3'>
             <p className='text-[16px] text-black font-normal leading-8'>
               <strong className=''>Thông tin liên hệ : </strong>
             </p>

@@ -179,6 +179,17 @@ const featuredIndustry = [
   }
 ];
 
+interface OptionInterface {
+  value: string;
+  label: string;
+}
+
+const roles: OptionInterface[] = [
+  { label: 'Ứng viên', value: 'applicant' },
+  { label: 'Quản lý đại diện công ty', value: 'manager' },
+  { label: 'Quản trị viên hệ thống', value: 'admin' }
+];
+
 export {
   listRoom,
   chartData,
@@ -192,5 +203,6 @@ export {
   addresses,
   workTypes,
   filterPost,
-  featuredIndustry
+  featuredIndustry,
+  roles
 };

@@ -1,18 +1,28 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { BellOutlined, FilterOutlined, HomeOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
 import flex from '@/config/flex.config';
 import { listRoom } from '@/faker/data';
 import { STRIPE_SECRET_KEY } from '@/lib/constants';
-import CheckoutForm from './components/CheckoutForm';
 import { Button } from '@/components/ui/button';
+import CheckoutForm from '../components/CheckoutForm';
+import { useApiSecure } from '@/hooks/useApiSecure';
+import NotificationCustom from '@/helpers/notify';
 
 const stripePromise = loadStripe(`${STRIPE_SECRET_KEY}`);
 
-const PaymentPage = () => {
+interface PaymentPageProps {
+  params: { id: number };
+}
+
+const PaymentPage = ({ params }: PaymentPageProps) => {
+  console.log('params: ', params);
+  const apiSecure = useApiSecure();
+  const [packageItem, setPackageItem] = useState<any>(null);
   const [filteredItems] = useState(listRoom);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(2);
@@ -37,6 +47,18 @@ const PaymentPage = () => {
       prefixIcon: () => <FilterOutlined />
     }
   ];
+
+  useEffect(() => {
+    apiSecure
+      .get(`/service-package/${Number(params.id)}`)
+      .then((result) => {
+        console.log('result: ', result);
+        setPackageItem(result.data.data);
+      })
+      .catch((error) => {
+        NotificationCustom('error', error.message);
+      });
+  }, [apiSecure, params.id]);
 
   return (
     <div
@@ -66,7 +88,7 @@ const PaymentPage = () => {
         <h2 className='text-xl font-bold py-4'>Gói dịch vụ được chọn</h2>
         <div className='w-full flex flex-col items-center justify-start'>
           <Elements stripe={stripePromise}>
-            <CheckoutForm price={200000} />
+            <CheckoutForm packageItem={packageItem} price={packageItem && packageItem!.price} />
           </Elements>
         </div>
       </div>

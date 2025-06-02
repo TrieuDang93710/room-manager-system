@@ -21,6 +21,8 @@ interface NavbarCommonProps {
   setMenuBox?: (value: boolean) => void;
   selectedMenuItem?: string;
   setSelectedMenuItem?: (value: string) => void;
+  isSelectedMenuItem?: boolean;
+  setIsSelectedMenuItem?: (value: boolean) => void;
 }
 
 const NavbarCommon = ({
@@ -29,7 +31,9 @@ const NavbarCommon = ({
   setMenuBox,
   menuBox,
   setSelectedMenuItem,
-  selectedMenuItem
+  selectedMenuItem,
+  setIsSelectedMenuItem,
+  isSelectedMenuItem
 }: NavbarCommonProps) => {
   const [sticky, setSticky] = useState<boolean>(false);
   const router = useRouter();
@@ -80,7 +84,8 @@ const NavbarCommon = ({
 
   const menus = [
     { path: '#', label: 'Việc làm' },
-    { path: '#', label: 'Tạo hồ sơ' }
+    { path: '#', label: 'Tạo hồ sơ' },
+    { path: '#', label: 'Quản lý đănng bài' }
   ];
 
   const menuItem = menus.map((item, index) => (
@@ -88,6 +93,7 @@ const NavbarCommon = ({
       key={index}
       onMouseEnter={() => {
         setSelectedMenuItem!(item.label);
+        setIsSelectedMenuItem!(!isSelectedMenuItem)
         if (
           selectedMenuItem?.trim().toLocaleLowerCase().toString() === item.label?.trim().toLocaleLowerCase().toString()
         ) {
@@ -173,7 +179,7 @@ const NavbarCommon = ({
             <Button onClick={() => router.push('/sign-up')} className='bg-none' variant={'outline'} size={'sm'}>
               Đăng ký
             </Button>
-            <Button onClick={() => router.push('/sign-in-manager')} className='bg-none' variant={'outline'} size={'sm'}>
+            <Button onClick={() => router.push('/sign-in')} className='bg-none' variant={'outline'} size={'sm'}>
               Đăng tuyển và tìm hồ sơ
             </Button>
           </div>

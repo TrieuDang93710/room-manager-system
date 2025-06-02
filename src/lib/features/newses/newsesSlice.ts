@@ -7,7 +7,7 @@ const initialState: any | null = {
 };
 
 const newsesSlice = createSlice({
-  name: 'businesses',
+  name: 'newses',
   initialState,
   reducers: {
     addImage: (state, action: PayloadAction<string>) => {

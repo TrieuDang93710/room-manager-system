@@ -3,9 +3,11 @@ import PostMiniCardSquare from '@/components/organisms/system/Card/PostMiniCardS
 import { Button } from '@/components/ui/button';
 import { filterPost } from '@/faker/data';
 import usePost from '@/hooks/usePost';
+import { RootState } from '@/lib/store';
 import { CheckOutlined, DownOutlined, FunnelPlotOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 interface PostRenderProps {
   setOpenPostDetailCard: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,8 +16,9 @@ interface PostRenderProps {
 }
 
 const PostRender = ({ setOpenPostDetailCard, openPostDetailCard, setPostId }: PostRenderProps) => {
+  const historyData = useSelector((state: RootState) => state.histories);
   const { usePostsSearch } = usePost();
-  const { posts } = usePostsSearch();
+  const { posts } = usePostsSearch({ titles: historyData.selectedHistoryValue });
 
   const [filteredItems, setFilteredItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(8);
@@ -117,7 +120,7 @@ const PostRender = ({ setOpenPostDetailCard, openPostDetailCard, setPostId }: Po
       <div className='w-full flex sm:flex-row flex-col items-center sm:justify-between justify-stretch px-4'>
         <h2 className='w-full text-2xl text-blue-600 font-bold mt-8'>Việt làm tốt nhất</h2>
         <div className='w-full flex flex-row items-center sm:justify-center justify-between gap-4'>
-          <Link href={'#'} className='underline hover:text-blue-600'>
+          <Link href={'/system/post-filter'} className='underline hover:text-blue-600'>
             Xem tất cả
           </Link>
           <div className='flex flex-row items-center justify-start gap-2'>

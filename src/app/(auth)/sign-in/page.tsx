@@ -98,7 +98,7 @@ const SignIn = () => {
   return (
     <div className={'w-full py-10 ' + flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })}>
       <div className='sign_in_container'>
-        <h2 className='sign_in_title'>Sign In</h2>
+        <h2 className='sign_in_title'>Đăng Nhập</h2>
         <form className='sign_in_form' onSubmit={handleSubmit(handleSignIn)}>
           <div className='w-full py-1 gap-3 flex-col'>
             <CommonInput
@@ -111,7 +111,7 @@ const SignIn = () => {
               error={state.emailError}
               hidden={true}
               isAuth={true}
-              label_title='Email'
+              label_title='Địa chỉ email'
               placeholder='Please, enter email'
               labelTileClassName='text-white'
             />
@@ -127,7 +127,7 @@ const SignIn = () => {
               iconPass={true}
               passHidden={passHidden}
               setPassHidden={setPassHidden}
-              label_title='Password'
+              label_title='Mật khẩu'
               placeholder='Please, enter password'
               iconPassStyle='text-slate-100'
               labelTileClassName='text-white'

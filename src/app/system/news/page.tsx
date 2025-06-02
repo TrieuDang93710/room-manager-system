@@ -1,20 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import BreadCrumbCommon from '@/components/atoms/Breadcumb';
 import flex from '@/config/flex.config';
-import { listRoom } from '@/faker/data';
-import { FileSearchOutlined, FilterOutlined, HomeOutlined, TableOutlined } from '@ant-design/icons';
+import {
+  FileSearchOutlined,
+  FilterOutlined,
+  HomeOutlined,
+  LeftOutlined,
+  RightOutlined,
+  TableOutlined
+} from '@ant-design/icons';
 import { useState } from 'react';
 import CardSquare from '@/components/organisms/system/Card/Square';
 import { useRouter } from 'next/navigation';
 import useNews from '@/hooks/useNews';
+import { Button } from '@/components/ui/button';
 
 const NewsPage = () => {
   const router = useRouter();
   const { newses } = useNews();
-  const [filteredItems] = useState(listRoom);
+  console.log('news: ', newses)
+  const [filteredItems, setFilteredItems] = useState(newses);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(2);
+  const [itemsPerPage] = useState(4);
   const [viewRender, setViewRender] = useState<boolean>(false);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -77,8 +86,8 @@ const NewsPage = () => {
           </p>
         </div>
       </div>
-      <div className='w-[70%] flex sm:grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 py-10'>
-        {newses.map((item: any, index: any) => (
+      <div className='sm:w-[70%] w-full grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 py-10'>
+        {currentItems.map((item: any, index: any) => (
           <CardSquare key={index + 1} logo={item!.banner && item!.banner}>
             <div className='w-full px-2'>
               <p className='text-[13px] text-slate-800 font-normal'>
@@ -98,6 +107,33 @@ const NewsPage = () => {
             </button>
           </CardSquare>
         ))}
+      </div>
+      <div className='relative sm:w-[30%] w-[80%] flex justify-center items-center my-8 gap-4'>
+        <Button
+          onClick={() => alert('Click me')}
+          className='absolute left-2 w-9 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white font-bold rounded-full flex justify-center items-center p-2'
+          variant={'outline'}
+          size={'sm'}
+        >
+          <LeftOutlined />
+        </Button>
+        {Array.from({ length: Math.ceil(filteredItems.length / itemsPerPage) }).map((_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={`mx-1 px-3 py-1 rounded-full ${currentPage === index + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <Button
+          onClick={() => alert('Click me')}
+          className='absolute right-2 w-9 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white font-bold rounded-full flex justify-center items-center p-2'
+          variant={'outline'}
+          size={'sm'}
+        >
+          <RightOutlined />
+        </Button>
       </div>
     </div>
   );
