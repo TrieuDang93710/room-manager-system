@@ -12,9 +12,11 @@ import { useForm } from 'react-hook-form';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { useRouter } from 'next/navigation';
 import NotificationCustom from '@/helpers/notify';
+import { roles } from '@/faker/data';
 
 const SignUp = () => {
   const [passHidden, setPassHidden] = useState<boolean>(false);
+  const [roleValue, setRoleValue] = useState<string>('');
 
   const [state, setField] = useCombinedState({
     email: '',
@@ -36,16 +38,27 @@ const SignUp = () => {
     const email = state.email;
     const password = state.password;
     const passConfirm = state.passConfirm;
-    const role = null;
+    const role = roleValue;
+
+    const signUpDto = {
+      username: username,
+      email: email,
+      password: password,
+      passConfirm: passConfirm,
+      role: [role]
+    };
+
+    console.log('signUpDto: ', signUpDto);
 
     if (passConfirm !== password) {
       NotificationCustom('error', 'passConfirm and password no match');
     }
 
-    signUp(username, email, password, role!)
+    signUp(username, email, password, [role])
       .then((response) => {
         console.log('response: ', response);
         NotificationCustom('success', response.data.message);
+        localStorage.setItem('code-id', response.data.data.user.code_id);
         router.push('/sign-in');
       })
       .catch((error: string) => {
@@ -60,7 +73,7 @@ const SignUp = () => {
     <div className={'w-full h-full ' + flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })}>
       <div className='sign_up_container flex flex-col items-center justify-start'>
         <div className={`w-full flex flex-row items-center justify-center py-2`}>
-          <h2 className='sign_up_title'>Sign up</h2>
+          <h2 className='sign_up_title'>Đăng Ký</h2>
         </div>
         <form className='sign_up_form pt-4' onSubmit={handleSubmit(handleSignUp)}>
           <CommonInput
@@ -72,7 +85,7 @@ const SignUp = () => {
             error={state.nameError}
             hidden={false}
             isAuth={true}
-            label_title='Username'
+            label_title='Họ và Tên'
             placeholder='Please, enter name'
             labelTileClassName='text-white'
           />
@@ -86,7 +99,7 @@ const SignUp = () => {
             error={state.emailError}
             hidden={false}
             isAuth={true}
-            label_title='Email'
+            label_title='Địa chỉ email'
             placeholder='Please, enter email'
             labelTileClassName='text-white'
           />
@@ -102,7 +115,7 @@ const SignUp = () => {
             isAuth={true}
             passHidden={passHidden}
             setPassHidden={setPassHidden}
-            label_title='Password'
+            label_title='Mật khẩu'
             placeholder='Please, enter password'
             iconPassStyle='text-slate-100'
             labelTileClassName='text-white'
@@ -118,23 +131,19 @@ const SignUp = () => {
             error={state.passConfirmError}
             hidden={false}
             isAuth={true}
-            label_title='Password Confirm'
+            label_title='Xác nhận lại mật khẩu'
             placeholder='Please, enter password confirm'
             iconPassStyle='text-slate-100'
             labelTileClassName='text-white'
           />
           <CommonInput
-            onblur={() =>
-              handleBlurChecking('passwordConfirm', 'passConfirmError', state.passConfirm, setField, state.password)
-            }
-            inputValue={state.passConfirm}
-            typeInput='password'
-            setField={setField}
-            field='passConfirm'
-            error={state.passConfirmError}
+            typeInput='text'
+            selectValue={roleValue}
+            setSelectValue={setRoleValue}
+            optionList={roles}
             hidden={false}
             isAuth={true}
-            label_title='Role'
+            label_title='Bạn với vai trò là'
             placeholder='Please, enter password confirm'
             iconPassStyle='text-slate-100'
             labelTileClassName='text-white'

@@ -7,6 +7,7 @@ import appliesSlice from '@/lib/features/applies/appliesSlice';
 import usersSlice from '@/lib/features/users/usersSlice';
 import chatbotSlice from '@/lib/features/chatbot/chatbotSlice';
 import newsesSlice from '@/lib/features/newses/newsesSlice';
+import searchHistorySlice from '@/lib/features/searchHistories/searchHistorySlice';
 
 export const makeStore = () => {
   return configureStore({
@@ -18,7 +19,8 @@ export const makeStore = () => {
       applies: appliesSlice,
       users: usersSlice,
       chatBots: chatbotSlice,
-      newses: newsesSlice
+      newses: newsesSlice,
+      histories: searchHistorySlice
       // =====================
     }
   });

@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import './MenuBox.css';
 import MenuData from '../MenuData';
-
 interface MenuBoxComponentProps {
   menuBox: boolean;
   setMenuBox: (value: boolean) => void;
   menus: any;
+  isSelectedMenuItem?: boolean;
+  setIsSelectedMenuItem?: (value: boolean) => void;
 }
 
 const MenuBoxComponent = ({ menuBox, setMenuBox, menus }: MenuBoxComponentProps) => {

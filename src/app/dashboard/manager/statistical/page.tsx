@@ -5,11 +5,24 @@ import SearchComponent from '@/components/molecules/Search';
 import MaintenanceCard from '@/components/organisms/manager/MaintenanceCard';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { chartConfig, chartConfigCircle } from '@/config/chart.config';
-import { chartData, chartDataCircle, listRoom } from '@/faker/data';
-import { BarChartOutlined } from '@ant-design/icons';
+import { chartData, chartDataCircle } from '@/faker/data';
+import { useAuth } from '@/hooks/auth/useAuth';
+import { NumberOutlined } from '@ant-design/icons';
 import { CartesianGrid, Line, LineChart, Pie, PieChart, XAxis } from 'recharts';
 
 const StatisticalManagerPage = () => {
+  const auth = useAuth();
+  const { user } = auth;
+  // const [newsTotal, setNewsTotal] = useState<number>(0);
+  // let total: number = 0;
+
+  // useEffect(() => {
+  //   user!.manager?.packages.map((item: any) => {
+  //     total = total + item.news_quantity;
+  //     setNewsTotal(total);
+  //   });
+  // }, [total, setNewsTotal, user]);
+
   return (
     <div className='relative w-full h-screen flex flex-col items-end gap-6 snap-y pt-20 md:px-3'>
       <div className='w-full h-fit py-3 px-3 flex-col justify-center md:gap-3 gap-y-2'>
@@ -20,9 +33,21 @@ const StatisticalManagerPage = () => {
         </div>
         <div className='w-full h-[75vh] flex flex-col items-center justify-start hide-scrollbar overflow-y-auto gap-4 p-4 mt-4'>
           <div className='w-full py-3 flex flex-row justify-center items-center md:gap-3 gap-y-2'>
-            {listRoom.map((r) => {
-              return <MaintenanceCard key={r._id} title='Tổng Phòng' icon={<BarChartOutlined />} />;
-            })}
+            <MaintenanceCard
+              count={user && user!.manager?.news}
+              title='Tổng số tin cho phép'
+              icon={<NumberOutlined className='text-blue-500' />}
+            />
+            <MaintenanceCard
+              count={0}
+              title='Số tin đã đăng ký gói mới'
+              icon={<NumberOutlined className='text-blue-500' />}
+            />
+            <MaintenanceCard
+              count={user && user!.manager?.news - user!.manager?.posts.length}
+              title='Tổng số tin còn lại'
+              icon={<NumberOutlined className='text-blue-500' />}
+            />
           </div>
           <div className='w-full py-3 md:pr-10 flex flex-row items-start justify-center gap-3 gap-y-2'>
             <Card className='md:w-1/2 w-full dark:bg-[#1a1a1a] mb-5'>
@@ -77,7 +102,9 @@ const StatisticalManagerPage = () => {
           <div className='w-full dark:bg-[#1a1a1a00] md:pr-10'>
             <Card className='w-full dark:bg-[#ffffff00]'>
               <p className='text-[#292929] font-bold text-[15px] pb-2 dark:text-blue-600'>Danh Sách Các Bài Đăng</p>
-              <p className='text-[#333333] font-bold text-[12px] pb-4 dark:text-blue-600'>Dưới đây là thống kê các bài đăng mới nhất trên hệ thống.</p>
+              <p className='text-[#333333] font-bold text-[12px] pb-4 dark:text-blue-600'>
+                Dưới đây là thống kê các bài đăng mới nhất trên hệ thống.
+              </p>
               <div className='flex items-end justify-end'>
                 <SearchComponent />
               </div>

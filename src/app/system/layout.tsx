@@ -21,6 +21,7 @@ const SystemLayout = ({ children }: SystemLayoutProps) => {
   const [menuBox, setMenuBox] = useState(false);
   const [openChatAI, setOpenChatAI] = useState<boolean>(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState<string>();
+  const [isSelectedMenuItem, setIsSelectedMenuItem] = useState<boolean>(false);
   const [animateIcon, setAnimateIcon] = useState<boolean>(false);
 
   const menuItem = selectedMenuItem?.toLocaleLowerCase().replaceAll(' ', '_').toString();
@@ -55,8 +56,16 @@ const SystemLayout = ({ children }: SystemLayoutProps) => {
         setMenuBox={setMenuBox}
         selectedMenuItem={selectedMenuItem}
         setSelectedMenuItem={setSelectedMenuItem}
+        isSelectedMenuItem={isSelectedMenuItem}
+        setIsSelectedMenuItem={setIsSelectedMenuItem}
       />
-      <MenuBoxComponent menuBox={menuBox} setMenuBox={setMenuBox} menus={menuContent} />
+      <MenuBoxComponent
+        menuBox={menuBox}
+        setMenuBox={setMenuBox}
+        menus={menuContent}
+        isSelectedMenuItem={isSelectedMenuItem}
+        setIsSelectedMenuItem={setIsSelectedMenuItem}
+      />
       <PostFilter />
       <div
         className={`right-4 bottom-10 fixed z-20 ${animateIcon ? 'scale-150 duration-700 opacity-100' : 'scale-100 duration-700 opacity-100'}`}
@@ -78,4 +87,4 @@ const SystemLayout = ({ children }: SystemLayoutProps) => {
   );
 };
 
-export default SystemLayout
+export default SystemLayout;

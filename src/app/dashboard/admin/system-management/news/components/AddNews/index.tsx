@@ -13,6 +13,8 @@ import { RootState } from '@/lib/store';
 import renderContent from '@/components/molecules/renderContent';
 import renderAddContent from '@/components/molecules/renderAddContent';
 import { addImage, addContactInformation } from '@/lib/features/newses/newsesSlice';
+import useNews from '@/hooks/useNews';
+import NotificationCustom from '@/helpers/notify';
 
 interface AddFieldProps {
   openAddNews: boolean;
@@ -23,6 +25,7 @@ interface AddFieldProps {
 const AddField = ({ onClick, setOpenAddNews, openAddNews }: AddFieldProps) => {
   const { handleSubmit } = useForm();
   const { uploadFile } = useCloudinary();
+  const { refetch, addNews } = useNews();
   const dispatch = useDispatch();
   const newsData = useSelector((state: RootState) => state.newses);
 
@@ -103,7 +106,7 @@ const AddField = ({ onClick, setOpenAddNews, openAddNews }: AddFieldProps) => {
       title: title,
       contents: contents,
       banner: banner_secure_url,
-      images: image_urls,
+      image: image_urls,
       information: {
         createBy: newsData.contact_information.createBy,
         email: newsData.contact_information.email,
@@ -112,6 +115,15 @@ const AddField = ({ onClick, setOpenAddNews, openAddNews }: AddFieldProps) => {
       }
     };
     console.log('newsDto: ', newsDto);
+    await addNews
+      .mutateAsync({ newsBody: newsDto })
+      .then((result) => {
+        NotificationCustom('success', result.data.message);
+        refetch();
+      })
+      .catch((error) => {
+        NotificationCustom('error', error.message);
+      });
   };
 
   return (

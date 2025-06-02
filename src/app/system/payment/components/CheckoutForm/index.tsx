@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import CurrencyFormatted from '@/config/currency.config';
 import NotificationCustom from '@/helpers/notify';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { useApiSecure } from '@/hooks/useApiSecure';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface CheckoutFormProps {
   price: any;
   cart?: any;
+  packageItem: any;
 }
 
-function CheckoutForm({ price }: CheckoutFormProps) {
+function CheckoutForm({ price, packageItem }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const { user } = useAuth();
@@ -96,7 +95,8 @@ function CheckoutForm({ price }: CheckoutFormProps) {
       await axiosSecure.post(`/payment/new/${1}`, paymentInformation).then((res: any) => {
         console.log('data: ', res.data);
         NotificationCustom('success', 'Thanh toán thành công !!!');
-        router.push('/system/payment');
+        router.back();
+        // router.push(`/system/payment/${Number(packageItem && packageItem!.id)}`);
       });
     }
   };
@@ -105,25 +105,29 @@ function CheckoutForm({ price }: CheckoutFormProps) {
     <div className='w-full flex justify-center py-6'>
       <div className='w-1/2 flex flex-col items-start justify-start'>
         {/* <h2 className='text-3xl font-bold py-4'>Gói dịch vụ được chọn</h2> */}
-        <div className='w-[50%] border-[1px] rounded-sm py-2 cursor-pointer border-slate-500 dark:border-blue-600 flex flex-col items-center justify-start gap-2'>
-          <button className='w-3/4 py-2 rounded-sm text-[16px] font-bold bg-[#9999993f] text-blue-600'>Miễn phí</button>
+        <div className='w-[50%] h-fit border-[1px] rounded-sm py-2 cursor-pointer border-slate-500 dark:border-blue-600 flex flex-col items-center justify-start gap-2'>
+          <button className='w-3/4 py-2 rounded-sm text-[16px] font-bold bg-[#9999993f] text-blue-600'>
+            {CurrencyFormatted({ value: packageItem && packageItem!.price, code: 'VND' })}
+          </button>
           <div className='w-full h-[30vh] flex flex-col items-start justify-start p-3 gap-2'>
-            <p className='text-[20px] font-medium'>
-              <strong className='text-black dark:text-blue-600 font-medium'>Gia : </strong>
-              {CurrencyFormatted({ value: 0, code: 'VND' })}
+            <p className='text-[20px] font-normal'>
+              <strong className='text-black dark:text-blue-600 font-bold'>Giá : </strong>
+              {CurrencyFormatted({ value: packageItem && packageItem!.price, code: 'VND' })}
             </p>
-            <p className='text-[18px] font-medium'>
-              <strong className='text-black dark:text-blue-600 font-medium'>So tin dang : </strong>15
+            <p className='text-[18px] font-normal'>
+              <strong className='text-black dark:text-blue-600 font-bold'>Số tin đăng :</strong>
+              {packageItem && packageItem!.news_quantity}
             </p>
-            <p className='text-[18px] font-medium'>
-              <strong className='text-black dark:text-blue-600 font-medium'>So tin dang : </strong>15
+            <p className='text-[18px] font-normal w-full line-clamp-4 text-wrap'>
+              <strong className='text-black dark:text-blue-600 font-bold'>Mô tả : </strong>
+              {packageItem && packageItem!.description}
             </p>
           </div>
           <button
             disabled={true}
             className='w-3/4 py-2 rounded-sm dark:text-blue-600 border border-slate-500 dark:border-[#9999993f] text-[16px] font-bold'
           >
-            <Link href={'/system/payment'}>Thanh toán ngay</Link>
+            {packageItem && packageItem!.note}
           </button>
         </div>
       </div>
