@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArrowRightOutlined, CloseOutlined } from '@ant-design/icons';
 import Link from 'next/link';
-
 import lightning from '@/public/images/lightning-svgrepo-com.svg';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/lib/store';
 import { addSelectedHistoryValue } from '@/lib/features/searchHistories/searchHistorySlice';
+import usePost from '@/hooks/usePost';
+import { useEffect, useState } from 'react';
+import PostMiniCardRow from '../../../Card/PostMiniCardRow';
+import { useRouter } from 'next/navigation';
 
 interface SearchHistoryCardProps {
   openSearchHistoryCard: boolean;
@@ -21,6 +24,15 @@ const SearchHistoryCard = ({
 }: SearchHistoryCardProps) => {
   const historyData = useSelector((state: RootState) => state.histories);
   const disPatch = useDispatch();
+  const [postRecommend, setPostRecommend] = useState<any[]>([]);
+  const { usePostsSearch } = usePost();
+  const { posts } = usePostsSearch({});
+  const router = useRouter();
+
+  useEffect(() => {
+    setPostRecommend(posts);
+    postRecommend.sort((a: any, b: any) => a.createAt - b.createAt);
+  }, [postRecommend, posts]);
 
   return (
     <div
@@ -38,13 +50,14 @@ const SearchHistoryCard = ({
           <h3 className='w-full text-[16px] font-medium text-slate-400 hover:text-blue-600 py-1 border-b border-b-slate-300'>
             Từ khóa phổ biến:
           </h3>
-          <ul className='w-full h-[40vh] list-none list-inside flex flex-col items-start justify-start pb-3 overflow-y-auto hide-scrollbar gap-2 z-10'>
+          <ul className='w-full h-[40vh] list-none list-inside flex flex-col items-start justify-start pb-3 overflow-y-auto hide-scrollbar gap-2'>
             {historyData &&
               historyData.histories.map((item: any, index: any) => (
                 <li
                   onClick={() => {
                     setSearchHistory(item);
                     disPatch(addSelectedHistoryValue(item));
+                    setOpenSearchHistoryCard(!openSearchHistoryCard);
                   }}
                   key={index + 1}
                   className='w-full flex flex-row items-center justify-start py-2 rounded-md'
@@ -60,10 +73,20 @@ const SearchHistoryCard = ({
               ))}
           </ul>
         </div>
-        <div className='w-[50%] flex flex-row items-start justify-start'>
+        <div className='w-[50%] flex flex-col items-start justify-start gap-4'>
           <h3 className='w-full text-[16px] font-medium text-slate-400 hover:text-blue-600 py-1 border-b border-b-slate-300'>
             Việc làm bạn có thể quan tâm:
           </h3>
+          <div className='w-full h-[40vh] overflow-y-auto hide-scrollbar flex flex-col items-start justify-start gap-2'>
+            {postRecommend &&
+              postRecommend.map((item: any) => (
+                <PostMiniCardRow
+                  key={item.id}
+                  postItem={item}
+                  onClick={() => router.push(`/system/post/${Number(item.id)}`)}
+                />
+              ))}
+          </div>
         </div>
       </div>
     </div>

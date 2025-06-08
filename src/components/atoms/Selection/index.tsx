@@ -11,7 +11,7 @@ interface SelectionComponentProps {
 const SelectionComponent = ({ className, optionList, value, setValue }: SelectionComponentProps) => {
   return (
     <div className={cn('selection_box', className)}>
-      <select value={value} onChange={(e) => setValue(e.target.value)} className='bg-transparent outline-none text-white'>
+      <select value={value} onChange={(e) => setValue(e.target.value)} className='bg-transparent outline-none text-blue-600'>
         <option className='bg-transparent outline-none text-black'>Chọn</option>
         {optionList?.map((item, index) =>
           item ? (

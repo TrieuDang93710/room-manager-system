@@ -5,7 +5,7 @@ import { useState } from 'react';
 import AddressCard from './components/AddressCard';
 import SearchHistoryCard from './components/SearchHistoryCard';
 import { useDispatch } from 'react-redux';
-import { addHistory } from '@/lib/features/searchHistories/searchHistorySlice';
+import { addHistory, addSelectedHistoryValue } from '@/lib/features/searchHistories/searchHistorySlice';
 
 const SearchBox = () => {
   const [openCategoryCard, setOpenCategoryCard] = useState<boolean>(true);
@@ -44,17 +44,20 @@ const SearchBox = () => {
           <input
             type='search'
             name='search'
-            // defaultValue={searchHistory}
+            defaultValue={searchHistory}
             value={searchHistory}
             onChange={(e) => setSearchHistory(e.target.value)}
             placeholder='Vị trí tuyển dụng, tên công ty'
             className='h-11 w-full rounded-none border-r border-r-slate-300 border-l border-l-slate-300 placeholder:text-slate-800 focus:outline-none px-4'
             onFocus={handleOpenSearchHistoryCard}
-            onBlur={handleOpenSearchHistoryCard}
           />
         </div>
         <Button
-          onClick={handleOpenAddressCard}
+          onClick={() => {
+            handleOpenAddressCard();
+            dispatch(addSelectedHistoryValue(searchHistory))
+            setSearchHistory('');
+          }}
           className='w-[20%] text-black border-slate-400 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600 font-bold md:flex hidden justify-between items-center px-4'
           variant={'outline'}
           size={'lg'}

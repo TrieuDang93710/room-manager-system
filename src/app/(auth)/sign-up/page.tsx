@@ -73,7 +73,7 @@ const SignUp = () => {
     <div className={'w-full h-full ' + flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })}>
       <div className='sign_up_container flex flex-col items-center justify-start'>
         <div className={`w-full flex flex-row items-center justify-center py-2`}>
-          <h2 className='sign_up_title'>Đăng Ký</h2>
+          <h2 className='sign_up_title'>Đăng ký</h2>
         </div>
         <form className='sign_up_form pt-4' onSubmit={handleSubmit(handleSignUp)}>
           <CommonInput
@@ -85,7 +85,7 @@ const SignUp = () => {
             error={state.nameError}
             hidden={false}
             isAuth={true}
-            label_title='Họ và Tên'
+            label_title='Họ và tên'
             placeholder='Please, enter name'
             labelTileClassName='text-white'
           />
@@ -143,7 +143,7 @@ const SignUp = () => {
             optionList={roles}
             hidden={false}
             isAuth={true}
-            label_title='Bạn với vai trò là'
+            label_title='Chọn vai trò'
             placeholder='Please, enter password confirm'
             iconPassStyle='text-slate-100'
             labelTileClassName='text-white'

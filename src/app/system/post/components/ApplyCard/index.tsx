@@ -26,7 +26,7 @@ const ApplyCard = ({ postItem, onClick, expired, days }: ApplyCardProps) => {
                 <p className='w-full flex flex-col items-start text-[14px] text-black dark:text-blue-600 text-start font-bold line-clamp-3 leading-6'>
                   <strong className='font-normal'>Muc luong : </strong>
                   <span className='dark:text-white'>
-                    {postItem && !postItem.salary ? 'Thoa thuan' : postItem && !postItem.salary}
+                    {postItem && !postItem.salary ? 'Thương lượng' : postItem && !postItem.salary}
                   </span>
                 </p>
               </div>
@@ -55,13 +55,21 @@ const ApplyCard = ({ postItem, onClick, expired, days }: ApplyCardProps) => {
                 </p>
               </div>
               <div className='w-full flex gap-2'>
-                <button
-                  onClick={onClick}
-                  className='w-full px-2 py-2 rounded-sm text-white text-[16px] font-bold active:shadow-blue-500 active:shadow-sm cursor-pointer bg-blue-500 line-clamp-1'
-                >
-                  Ứng tuyển ngay
-                </button>
-                <HeartOutlined className='border border-blue-600 hover:border-blue-500 text-blue-600 rounded-md font-medium cursor-pointer py-2 px-4' />
+                {expired < days ? (
+                  <p className='w-full text-[14px] p-2 text-center rounded-md bg-slate-200 text-red-600 font-bold'>
+                    Đã hết hạn ứng tuyển
+                  </p>
+                ) : (
+                  <>
+                    <button
+                      onClick={onClick}
+                      className='w-full px-2 py-2 rounded-sm text-white text-[16px] font-bold active:shadow-blue-500 active:shadow-sm cursor-pointer bg-blue-500 line-clamp-1'
+                    >
+                      Ứng tuyển ngay
+                    </button>
+                    <HeartOutlined className='border border-blue-600 hover:border-blue-500 text-blue-600 rounded-md font-medium cursor-pointer py-2 px-4' />
+                  </>
+                )}
               </div>
             </div>
           </div>

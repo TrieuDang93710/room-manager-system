@@ -47,7 +47,7 @@ const ChatBoxAI = ({ }: ChatBoxAIProps) => {
       className={`right-4 bottom-24 fixed md:w-1/3 sm:w-3/4 w-full h-[65vh] z-20 rounded-md bg-blue-100 border border-blue-600 animate-fade`}
     >
       <div className='absolute w-full h-[65vh] bg-[#0000003e] overflow-y-auto hide-scrollbar rounded-md gap-4 p-4'>
-        <div className='fixed top-36 right-4 md:w-1/3 sm:w-3/4 w-full flex items-center justify-between truncate gap-2 p-4 bg-[#f7f7f7] dark:bg-[#333333] rounded-md rounded-br-none rounded-bl-none border border-slate-400 border-b-0'>
+        <div className='fixed top-36 right-4 md:w-1/3 sm:w-3/4 w-full flex items-center justify-between truncate gap-2 z-20 p-4 bg-[#f7f7f7] dark:bg-[#333333] rounded-md rounded-br-none rounded-bl-none border border-slate-400 border-b-0'>
           <div className='flex items-center justify-start gap-2'>
             <Image
               alt='avatar'
@@ -65,7 +65,7 @@ const ChatBoxAI = ({ }: ChatBoxAIProps) => {
             className='text-[14px] text-slate-600 font-bold active:shadow-sm active:shadow-blue-600'
           />
         </div>
-        <div className='w-full flex flex-col items-center justify-start gap-4 z-10 pt-24'>
+        <div className='w-full flex flex-col items-center justify-start gap-4 z-10 py-10'>
           {Object.entries(groupedSplit).map(([date, { query, answer }]) => (
             <div key={date} className='relative w-full flex flex-col items-start justify-center py-4 gap-4'>
               <div className='w-full flex flex-col items-center justify-between'>

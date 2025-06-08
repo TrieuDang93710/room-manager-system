@@ -65,7 +65,7 @@ const FunctionListManager = ({
           className='mb-3 rounded-full'
           priority={true}
         />
-        <p className='text-[#e4e4e4] md:text-[16px] text-[13px] font-bold pt-4 pb-4 text-center'>Quản Lý Chức Năng</p>
+        <p className='text-[#e4e4e4] md:text-[16px] text-[13px] font-bold pt-4 pb-4 text-center'>Quản lý chức năng</p>
       </div>
       <div className='w-full'>
         <ul className='w-ful'>

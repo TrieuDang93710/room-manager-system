@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import useApiPublic from '@/hooks/useApiPublic';
 import { useRouter } from 'next/navigation';
+import CurrencyFormatted from '@/config/currency.config';
+import ExpiredPostChecking from '@/helpers/expired-check';
 
 interface PostDetailCardProps {
   postId?: number;
@@ -54,6 +56,8 @@ const PostDetailCard = ({ postId, setOpenPostDetailCard, openPostDetailCard }: P
       });
   }, [apiPublic, postId]);
 
+  const { days, expired } = ExpiredPostChecking(postItem && postItem!.createAt, postItem && postItem!.duration);
+
   return (
     <div
       onMouseLeave={() => {
@@ -63,7 +67,7 @@ const PostDetailCard = ({ postId, setOpenPostDetailCard, openPostDetailCard }: P
     >
       <div className='relative w-full h-full flex flex-col items-center justify-start py-2 px-4'>
         <div className={`w-full flex flex-row items-center justify-between py-2`}>
-          <CardRow>
+          <CardRow logo={postItem && postItem!.company.logo}>
             <div className='w-full flex flex-col items-center justify-center'>
               <div className='w-full h-full p-2'>
                 <h3 className='text-[20px] text-black dark:text-blue-600 font-bold line-clamp-2'>
@@ -71,14 +75,25 @@ const PostDetailCard = ({ postId, setOpenPostDetailCard, openPostDetailCard }: P
                 </h3>
                 <h3 className='text-[16px] text-slate-600 dark:text-slate-200 font-medium line-clamp-2'>
                   {postItem && postItem!.company.title}
-                  Công ty công nghệ Soft Tech
                 </h3>
-                <h3 className='text-[16px] text-blue-600 dark:text-blue-600 font-bold line-clamp-2'>5 - 7 triệu</h3>
+                <h3 className='text-[16px] text-blue-600 dark:text-blue-600 font-bold line-clamp-2'>
+                  {postItem && postItem!.salary
+                    ? CurrencyFormatted({ value: postItem && postItem!.salary, code: 'VND' })
+                    : 'Thương lượng'}
+                </h3>
               </div>
               <div className='w-full h-full flex flex-row items-center justify-start gap-2 p-2'>
-                <p className='text-[13px] bg-slate-200 text-slate-800 font-normal rounded-sm py-1 px-4'>Đà Nẵng</p>
-                <p className='text-[13px] bg-slate-200 text-slate-800 font-normal rounded-sm py-1 px-4'>1 năm</p>
-                <p className='text-[13px] bg-slate-200 text-slate-800 font-normal rounded-sm py-1 px-4'>Còn 1 ngày</p>
+                <p className='text-[13px] bg-slate-200 text-slate-800 font-normal rounded-sm py-1 px-4'>
+                  {postItem && postItem!.company.work_place.address.city}
+                </p>
+                <p className='text-[13px] bg-slate-200 text-slate-800 font-normal rounded-sm py-1 px-4'>
+                  {postItem && postItem!.require.experience}
+                </p>
+                <p
+                  className={`${expired < days ? 'text-orange-600' : 'text-slate-800'} text-[13px] bg-slate-200 font-normal rounded-sm py-1 px-4`}
+                >
+                  {expired < days ? 'Đã hết hạn ứng tuyển' : postItem && postItem!.duration}
+                </p>
               </div>
             </div>
           </CardRow>
@@ -99,14 +114,18 @@ const PostDetailCard = ({ postId, setOpenPostDetailCard, openPostDetailCard }: P
           </div>
         </div>
         <div className='absolute bottom-0 w-full bg-white flex flex-row items-center justify-between px-4 py-2'>
-          <Button
-            onClick={() => router.push(`/system/post/${Number(postId)}`)}
-            className='border-blue-600 hover:bg-blue-600 text-blue-600 hover:text-white font-bold md:px-8 px-4'
-            variant={'outline'}
-            size={'sm'}
-          >
-            Ứng tuyển
-          </Button>
+          {expired < days ? (
+            <p className='text-[14px] px-2 py-1 rounded-md bg-slate-200 text-red-600 font-bold'>Đã hết hạn ứng tuyển</p>
+          ) : (
+            <Button
+              onClick={() => router.push(`/system/post/${Number(postId)}`)}
+              className='border-blue-600 hover:bg-blue-600 text-blue-600 hover:text-white font-bold md:px-8 px-4'
+              variant={'outline'}
+              size={'sm'}
+            >
+              Ứng tuyển
+            </Button>
+          )}
           <Button
             onClick={() => router.push(`/system/post/${Number(postId)}`)}
             className='w-[40%] bg-blue-600 hover:text-black hover:border-blue-600 hover:bg-blue-700 text-white font-bold px-4'

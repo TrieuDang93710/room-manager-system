@@ -7,7 +7,7 @@ interface CardRowProps {
 
 const CardRow = ({ children, logo }: CardRowProps) => {
   return (
-    <div className='relative w-full border border-slate-300 dark:border-blue-600 dark:bg-blue-100 dark:hover:bg-white rounded-sm hover:border-green-500 hover:cursor-default flex sm:flex-row flex-col items-center justify-start'>
+    <div className='relative w-full border border-slate-300 dark:border-blue-600 dark:bg-blue-100 dark:hover:bg-white rounded-sm hover:border-green-500 hover:cursor-default flex sm:flex-row flex-col items-center justify-start px-2'>
       <div
         className='w-1/6 h-[10vh] bg-center bg-contain bg-no-repeat'
         style={{
