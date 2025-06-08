@@ -98,7 +98,7 @@ const SignIn = () => {
   return (
     <div className={'w-full py-10 ' + flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })}>
       <div className='sign_in_container'>
-        <h2 className='sign_in_title'>Đăng Nhập</h2>
+        <h2 className='sign_in_title'>Đăng nhập</h2>
         <form className='sign_in_form' onSubmit={handleSubmit(handleSignIn)}>
           <div className='w-full py-1 gap-3 flex-col'>
             <CommonInput

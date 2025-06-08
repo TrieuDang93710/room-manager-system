@@ -1,44 +1,45 @@
 import { AreaChartOutlined, BookOutlined, HomeOutlined, SettingOutlined } from '@ant-design/icons';
 
 const funcOfManager = [
-  { label: 'Thống Kê', icon: <AreaChartOutlined />, path: 'statistical' },
-  { label: 'Quản Lý Bài Đăng', icon: <HomeOutlined />, path: 'post' },
-  { label: 'Đăng Ký Công Ty', icon: <HomeOutlined />, path: 'business' },
-  { label: 'Quản Lý Trạng Thái', icon: <HomeOutlined />, path: 'resume-status' },
-  { label: 'Quản Lý Ứng Viên', icon: <HomeOutlined />, path: 'applicant' },
-  { label: 'Quản Lý Hóa Đơn', icon: <HomeOutlined />, path: 'service-bill' }
+  { label: 'Thống kê', icon: <AreaChartOutlined />, path: 'statistical' },
+  { label: 'Quản lý bằng đăng', icon: <HomeOutlined />, path: 'post' },
+  { label: 'Đăng lý công ty', icon: <HomeOutlined />, path: 'business' },
+  { label: 'Quản lý trạng thái', icon: <HomeOutlined />, path: 'resume-status' },
+  { label: 'Quản lý ứng viên', icon: <HomeOutlined />, path: 'applicant' },
+  { label: 'Quản lý hóa đơn', icon: <HomeOutlined />, path: 'service-bill' }
 ];
 
 const funcOfApplicant = [
   // { label: 'Hồ Sơ Cá Nhân', icon: <AreaChartOutlined />, path: 'profile' },
-  { label: 'Trạng Thái Ứng Tuyển', icon: <HomeOutlined />, path: 'history' },
-  { label: 'Quản Lý Đăng Ký', icon: <HomeOutlined />, path: 'resume' },
-  { label: 'Người Theo Giỏi', icon: <SettingOutlined />, path: 'follower' },
-  { label: 'Lưu Bài Đăng', icon: <BookOutlined />, path: 'saved' }
+  { label: 'Trạng thái ứng tuyển', icon: <HomeOutlined />, path: 'history' },
+  { label: 'Quản lý đăng ký', icon: <HomeOutlined />, path: 'resume' },
+  { label: 'Theo dõi', icon: <SettingOutlined />, path: 'follower' },
+  { label: 'Bài đăng đã lưu', icon: <BookOutlined />, path: 'saved' }
 ];
 
 const funcOfAdmin = [
-  { label: 'Thống Kê', icon: <AreaChartOutlined />, path: 'statistical' },
+  { label: 'Thống kê', icon: <AreaChartOutlined />, path: 'statistical' },
   {
-    label: 'Quản Lý Các Chức Năng',
+    label: 'Quản lý các chức năng',
     icon: <HomeOutlined />,
     path: 'func-management',
     children: [
-      { label: 'Quản Lý Linh Vuc', icon: <HomeOutlined />, path: 'field' },
-      { label: 'Quản Lý Nhóm nghề', icon: <HomeOutlined />, path: 'category' },
-      { label: 'Quản Lý Doanh Nghiep', icon: <HomeOutlined />, path: 'business' },
-      { label: 'Quản Lý Bai Dang', icon: <HomeOutlined />, path: 'post' }
+      { label: 'Quản lý lĩnh vực', icon: <HomeOutlined />, path: 'field' },
+      { label: 'Quản lý nhóm nghề', icon: <HomeOutlined />, path: 'category' },
+      { label: 'Quản lý doanh nghiệp', icon: <HomeOutlined />, path: 'business' },
+      { label: 'Quản lý bài đăng', icon: <HomeOutlined />, path: 'post' }
     ]
   },
   {
-    label: 'Quản Lý Hệ Thống',
+    label: 'Quản lý hệ thống',
     icon: <HomeOutlined />,
     path: 'system-management',
     children: [
-      { label: 'Quản Lý Tin Tuc', icon: <HomeOutlined />, path: 'news' },
-      { label: 'Quản Lý Goi Tai Khoang', icon: <HomeOutlined />, path: 'service-package' },
-      { label: 'Quản Lý Tài Khoản', icon: <HomeOutlined />, path: 'account' },
-      { label: 'Hóa Đơn', icon: <HomeOutlined />, path: 'service-bill' }
+      { label: 'Quản lý tin tức', icon: <HomeOutlined />, path: 'news' },
+      { label: 'Quản lý gói tài khoản', icon: <HomeOutlined />, path: 'service-package' },
+      { label: 'Quản lý tài khoản', icon: <HomeOutlined />, path: 'account' },
+      { label: 'Hóa đơn', icon: <HomeOutlined />, path: 'service-bill' },
+      { label: 'Đánh giá hệ thống', icon: <HomeOutlined />, path: 'reviewer' },
     ]
   }
 ];

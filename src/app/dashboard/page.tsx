@@ -1,7 +1,9 @@
-import StatisticalManagerPage from "./manager/statistical/page";
-
 const DashboardPage = () => {
-  return <StatisticalManagerPage />;
+  return (
+    <>
+      <h1>Dashboard Admin</h1>
+    </>
+  );
 };
 
 export default DashboardPage;

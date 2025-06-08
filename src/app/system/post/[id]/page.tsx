@@ -74,7 +74,9 @@ function PostDetailPage({ params }: PostDetailPageProps) {
       }
     >
       <div className='w-[80%] flex flex-row items-center justify-between px-4 gap-3'>
-        <p className='text-[14px] font-bold text-black text-center'>Tuyển dụng 49.562 việc làm [Update 23/05/2025]</p>
+        <p className='text-[14px] font-bold text-black text-center'>
+          Tuyển dụng {posts.length} việc làm [Update {new Date().toLocaleDateString()}]
+        </p>
         <Button
           onClick={() => alert('Click me')}
           className='hover:text-white border-blue-600 hover:bg-blue-600 text-blue-600 font-bold rounded-full md:px-8 px-4'
@@ -113,15 +115,17 @@ function PostDetailPage({ params }: PostDetailPageProps) {
                 </li>
               </ul>
             </div>
-            <div className='w-full flex gap-2'>
-              <button
-                onClick={closeAddApplyHandler}
-                className='w-full px-2 py-2 rounded-sm text-white text-[16px] font-bold active:shadow-blue-500 active:shadow-sm cursor-pointer bg-blue-500 line-clamp-1'
-              >
-                Ứng tuyển ngay
-              </button>
-              <HeartOutlined className='border border-blue-600 hover:border-blue-500 text-blue-600 rounded-md font-medium cursor-pointer py-2 px-4' />
-            </div>
+            {expired > days && (
+              <div className='w-full flex gap-2'>
+                <button
+                  onClick={closeAddApplyHandler}
+                  className='w-full px-2 py-2 rounded-sm text-white text-[16px] font-bold active:shadow-blue-500 active:shadow-sm cursor-pointer bg-blue-500 line-clamp-1'
+                >
+                  Ứng tuyển ngay
+                </button>
+                <HeartOutlined className='border border-blue-600 hover:border-blue-500 text-blue-600 rounded-md font-medium cursor-pointer py-2 px-4' />
+              </div>
+            )}
             <p className='text-[20px] text-black dark:text-blue-600 font-bold py-8'>Việc làm liên quan :</p>
             <div className='w-full flex flex-col items-center justify-start p-2 gap-3'>
               {posts
@@ -136,7 +140,7 @@ function PostDetailPage({ params }: PostDetailPageProps) {
           <BusinessInformation postItem={postItem} />
           <RequireInformation postItem={postItem} />
           <button className='w-full border border-blue-600 hover:bg-blue-500 rounded-md active:shadow-md active:shadow-slate-300 text-blue-600 hover:text-white text-[16px] font-bold px-2 py-3'>
-            Nhan tin ngay
+            Nhắn tin cho nhà tuyển dụng
           </button>
         </div>
       </div>

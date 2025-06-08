@@ -20,7 +20,6 @@ interface PaymentPageProps {
 }
 
 const PaymentPage = ({ params }: PaymentPageProps) => {
-  console.log('params: ', params);
   const apiSecure = useApiSecure();
   const [packageItem, setPackageItem] = useState<any>(null);
   const [filteredItems] = useState(listRoom);

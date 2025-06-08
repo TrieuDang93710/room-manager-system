@@ -13,6 +13,7 @@ import { useAuth } from '@/hooks/auth/useAuth';
 import { useApiSecure } from '@/hooks/useApiSecure';
 import './header.css';
 import job_logo from '@/public/svgs/job.svg';
+import { Role } from '@/enum/role.enum';
 
 interface NavbarCommonProps {
   isOpen?: boolean;
@@ -85,7 +86,7 @@ const NavbarCommon = ({
   const menus = [
     { path: '#', label: 'Việc làm' },
     { path: '#', label: 'Tạo hồ sơ' },
-    { path: '#', label: 'Quản lý đănng bài' }
+    { path: '#', label: 'Quản lý đăng bài' }
   ];
 
   const menuItem = menus.map((item, index) => (
@@ -93,7 +94,7 @@ const NavbarCommon = ({
       key={index}
       onMouseEnter={() => {
         setSelectedMenuItem!(item.label);
-        setIsSelectedMenuItem!(!isSelectedMenuItem)
+        setIsSelectedMenuItem!(!isSelectedMenuItem);
         if (
           selectedMenuItem?.trim().toLocaleLowerCase().toString() === item.label?.trim().toLocaleLowerCase().toString()
         ) {
@@ -114,7 +115,7 @@ const NavbarCommon = ({
       <div className='header_logo'>
         <MenuUnfoldOutlined
           onClick={handleOpenModal}
-          className='font-bold text-xl md:hidden hover:cursor-pointer hover:text-slate-700 dark:text-white dark:hover:text-slate-300'
+          className='font-bold text-xl lg:hidden hover:cursor-pointer hover:text-slate-700 dark:text-white dark:hover:text-slate-300'
         />
         <div className='sm:flex hidden flex-col justify-center items-center py-1 px-2'>
           <Image alt='logo' src={job_logo} width={30} height={30} />
@@ -124,7 +125,7 @@ const NavbarCommon = ({
         </div>
         <h2 className='text-green-600 text-2xl font-bold sm:hidden py-4 px-2'>CHÀO MỪNG MỌI NGƯỜI</h2>
       </div>
-      {pathname !== '/sign-in' && pathname !== '/sign-up' && (
+      {pathname !== '/sign-in' && pathname !== '/sign-up' && user?.role[0] !== Role.ADMIN && (
         <ul className='header_menu'>
           {menuItem}
           <li className='menu_item'>
@@ -151,7 +152,7 @@ const NavbarCommon = ({
             />
             <div className='hidden sm:flex flex-col items-start relative'>
               <Link
-                href={'/dashboard/profile'}
+                href={`/${user && user!.role[0] !== Role.ADMIN ? `system/${user && user!.role[0]}` : 'dashboard'}/profile`}
                 className='font-medium text-[14px] dark:text-[#b4b4b4] dark:hover:text-[#ebebeb] cursor-pointer'
               >
                 {user.username}

@@ -25,7 +25,7 @@ const job_menu = {
     title: 'Công ty',
     data: [
       { icon: search, label: 'Danh sách công ty', path: '/system/business', arrow_right: <ArrowRightOutlined /> },
-      { icon: search, label: 'Tìm kiếm ứng viên', path: '/system/applicant', arrow_right: <ArrowRightOutlined /> }
+      { icon: search, label: 'Tìm kiếm ứng viên', path: '/system/applicant-filter', arrow_right: <ArrowRightOutlined /> }
     ]
   },
   position: {
@@ -40,19 +40,29 @@ const job_menu = {
 
 const profile_menu = {
   profile: {
-    title: 'Tạo hồ sơ đăng ký',
+    title: 'Quản lý bài đăng',
     data: [
-      { icon: search, label: 'Tạo hồ sơ', path: '#', arrow_right: <ArrowRightOutlined /> },
-      { icon: search, label: 'Tải CV lên', path: '#', arrow_right: <ArrowRightOutlined /> }
+      { icon: search, label: 'Tạo bài đăng', path: '/dashboard/manager/post', arrow_right: <ArrowRightOutlined /> },
+      { icon: search, label: 'Đăng ký công ty', path: '/dashboard/manager/business', arrow_right: <ArrowRightOutlined /> }
     ]
   },
-  profile_manager: {
-    title: 'Quản lý hồ sơ đăng ký',
-    data: [
-      { icon: search, label: 'Danh sách hồ sơ đăng ký', path: '#', arrow_right: <ArrowRightOutlined /> },
-      { icon: search, label: 'Danh sách hồ sơ đã ứng tuyển', path: '#', arrow_right: <ArrowRightOutlined /> }
-    ]
-  }
+  // profile_manager: {
+  //   title: 'Quản lý hồ sơ đăng ký',
+  //   data: [
+  //     {
+  //       icon: search,
+  //       label: 'Danh sách hồ sơ đăng ký',
+  //       path: '/dashboard/manager/resume-status',
+  //       arrow_right: <ArrowRightOutlined />
+  //     },
+  //     {
+  //       icon: search,
+  //       label: 'Danh sách hồ sơ đã ứng tuyển',
+  //       path: '/dashboard/manager/resume-status',
+  //       arrow_right: <ArrowRightOutlined />
+  //     }
+  //   ]
+  // }
 };
 
 export { job_menu, profile_menu };

@@ -9,7 +9,9 @@ const ReviewUs = () => {
   return (
     <div className='sm:w-[70%] w-full flex flex-col items-center'>
       <h2 className='text-2xl font-bold text-blue-600 py-2'>Đánh Giá Về Hệ Thống</h2>
-      <div className='w-[90%] flex sm:grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around gap-4 py-10'>
+      <div
+        className={`${comments.length > 2 ? 'w-[80%] sm:grid md:grid-cols-3 sm:grid-cols-2' : 'w-[30%]'} flex flex-col items-center justify-around gap-4 py-10`}
+      >
         {comments.map((item: any, index: any) => (
           <CardSquare key={index + 1} logo={item!.userId?.avatar}>
             <div className='w-full flex flex-col items-start justify-center gap-2'>

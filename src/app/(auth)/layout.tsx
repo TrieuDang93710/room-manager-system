@@ -14,15 +14,15 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
       <NavbarCommon isOpen={isOpen} setIsOpen={setIsOpen} />
       <main
         className={
-          'w-full min-h-screen md:px-10 px-3 font-[family-name:var(--font-geist-sans)] py-28 z-10 ' +
+          'w-full min-h-screen md:px-10 px-3 font-[family-name:var(--font-geist-sans)] py-28 z-10 bg-blue-200 ' +
           flex({ direction: 'col', alignItems: 'center', justifyContent: 'center' })
         }
-        style={{
-          backgroundImage: `url('https://thatsgoodhr.com/wp-content/uploads/2024/03/MOre-than-luck.png')`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
+        // style={{
+        //   backgroundImage: `url('https://thatsgoodhr.com/wp-content/uploads/2024/03/MOre-than-luck.png')`,
+        //   backgroundRepeat: 'no-repeat',
+        //   backgroundSize: 'cover',
+        //   backgroundPosition: 'center'
+        // }}
       >
         {children}
       </main>

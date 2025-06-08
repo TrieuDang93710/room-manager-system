@@ -2,15 +2,26 @@
 import CurrencyFormatted from '@/config/currency.config';
 import useServicePackage from '@/hooks/usePackage';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const ServicePackage = () => {
   const router = useRouter();
   const { packages } = useServicePackage();
+  const [packageFilter, setPackageFilter] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (packages && packages.length > 0) {
+      const filterPackages = packages.filter((item: any) => item.status !== true);
+      setPackageFilter(filterPackages);
+    }
+  }, [packages]);
 
   return (
     <div className='sm:w-[70%] w-full flex flex-col items-center pb-8'>
       <h2 className='text-2xl font-bold text-blue-600 py-2'>Các Gói Dịch Vụ</h2>
-      <div className='w-[80%] flex sm:grid md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around gap-4 py-10'>
+      <div
+        className={`${packageFilter.length > 2 ? 'w-[80%] sm:grid md:grid-cols-3 sm:grid-cols-2' : 'w-[60%]'} flex flex-row items-center justify-around gap-4 py-10`}
+      >
         <div className='w-full border-[1px] rounded-sm py-2 cursor-pointer border-slate-500 dark:border-blue-600 flex flex-col items-center justify-start gap-2'>
           <button className='w-3/4 py-2 rounded-sm text-[14px] font-bold bg-[#9999993f] text-blue-600'>
             {CurrencyFormatted({ value: 0, code: 'VND' })}
@@ -38,10 +49,10 @@ const ServicePackage = () => {
           </button>
         </div>
 
-        {packages.map((item: any, index: any) => (
+        {packageFilter.map((item: any, index: any) => (
           <div
             key={index + 1}
-            className='w-full border-[1px] rounded-sm hover:translate-x-1 py-2 cursor-pointer border-slate-500 hover:border-blue-600 flex flex-col items-center justify-start gap-2'
+            className='w-full border-[1px] rounded-sm hover:translate-x-1 py-2 cursor-pointer border-slate-500 hover:border-blue-600 flex flex-col items-center justify-center gap-2'
           >
             <button
               onClick={() => router.push(`/system/payment/${item.id}`)}

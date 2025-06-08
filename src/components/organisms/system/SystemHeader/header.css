@@ -7,7 +7,7 @@
 }
 
 .header_menu {
-    @apply w-[50%] list-none md:flex items-center justify-center gap-2 hidden
+    @apply w-[50%] list-none lg:flex items-center justify-center gap-2 hidden
 }
 
 .menu_item {

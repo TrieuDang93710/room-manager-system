@@ -191,6 +191,7 @@ const PostRender = ({ setOpenPostDetailCard, openPostDetailCard, setPostId }: Po
       <div className='w-full flex sm:grid md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around gap-3 px-4 py-2'>
         {currentItems.map((item: any) => (
           <PostMiniCardSquare
+            postId={item.id}
             onHover={() => {
               setOpenPostDetailCard(!openPostDetailCard);
               setPostId(item.id);

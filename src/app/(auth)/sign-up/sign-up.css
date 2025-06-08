@@ -1,9 +1,9 @@
 .sign_up_container {
-    @apply lg:w-[30%] md:w-1/2 sm:w-3/4 w-full h-full bg-[#0c0c0c31] border-[2px] py-2 px-2 border-slate-700 rounded-md shadow-md shadow-slate-300 
+    @apply lg:w-[30%] md:w-1/2 sm:w-3/4 w-full h-full bg-white border-[2px] py-2 px-2 border-blue-600 rounded-md shadow-sm shadow-blue-600 
 }
 
 .sign_up_title {
-    @apply text-3xl text-slate-100 font-bold flex px-2 py-2 
+    @apply text-3xl text-blue-600 font-bold flex px-2 py-2 
 }
 
 .sign_up_form {
