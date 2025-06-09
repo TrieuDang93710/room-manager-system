@@ -38,7 +38,7 @@ const ChatPage = ({}: ChatPageProps) => {
     };
     console.log('queryDto: ', queryDto);
     dispatch(addQuery(text));
-    const response = await apiChatbot.post('/ai', queryDto);
+    const response = await apiChatbot.post('/ask_pdf', queryDto);
     dispatch(addMessageResponse(response.data));
     setLoading(false);
     console.log('response: ', response);

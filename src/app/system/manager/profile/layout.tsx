@@ -9,15 +9,15 @@ interface ProfileLayoutProps {
 const navigates = [
   {
     title: 'Thông tin chung',
-    path: '/system/profile/'
+    path: '/system/manager/profile/'
   },
   {
     title: 'Thông tin liên hệ',
-    path: '/system/profile/contact'
+    path: '/system/manager/profile/contact'
   },
   {
     title: 'Cài đặt tài khoản',
-    path: '/system/profile/setting'
+    path: '/system/manager/profile/setting'
   }
 ];
 
