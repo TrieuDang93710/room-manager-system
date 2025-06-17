@@ -5,21 +5,26 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import AddResume from './components/AddResume';
 import ResumeCardComponent from '@/components/organisms/system/Card/ResumeCard';
-import useResume from '@/hooks/useResume';
 import UpdateResume from './components/UpdateResume';
+import useApiPublic from '@/hooks/useApiPublic';
+import { useAuth } from '@/hooks/auth/useAuth';
 
 const ResumePage = () => {
   const router = useRouter();
-  const { useResumeSearch } = useResume();
-  const { resumes } = useResumeSearch();
+  const apiPublic = useApiPublic();
+  const auth = useAuth();
+  const { user } = auth;
   const [addResume, setAddResume] = useState<boolean>(false);
   const [updateResume, setUpdateResume] = useState<boolean>(false);
   const [resumeSort, setResumeSort] = useState<any[]>([]);
   const [resumeItem, setResumeItem] = useState<any>(null);
 
   useEffect(() => {
-    setResumeSort(resumes.sort((a: any, b: any) => a.id - b.id));
-  }, [resumes]);
+    apiPublic.get(`/resume/get-by-email/?email=${user && user!.email}`).then((res) => {
+      console.log('resumes by email: ', res.data.data.result);
+      setResumeSort(res.data.data.result.sort((a: any, b: any) => a.id - b.id));
+    });
+  }, [apiPublic, user]);
 
   const addResumeHandler = () => {
     setAddResume(!addResume);

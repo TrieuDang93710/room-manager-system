@@ -19,6 +19,7 @@ import { PostCardSquareComponent } from '@/components/organisms/system/Card/Post
 import useCombinedState from '@/hooks/useCombinedState';
 import { Button } from '@/components/ui/button';
 import useApiPublic from '@/hooks/useApiPublic';
+import usePost from '@/hooks/usePost';
 
 interface RentOfRoomPageProps {
   params: { id: number };
@@ -27,10 +28,12 @@ interface RentOfRoomPageProps {
 const RentOfRoomPage = ({ params }: RentOfRoomPageProps) => {
   const apiPublic = useApiPublic();
   const [filteredItems] = useState(listRoom);
+  const { usePostsSearch } = usePost();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(2);
   const [viewRender, setViewRender] = useState<boolean>(false);
   const [category, setCategory] = useState<any>(null);
+  const [postFilterByCategory, setpostFilterByCategory] = useState<any[]>([]);
   const [checkedState, setCheckedState] = useCombinedState<any>({
     field: [''],
     address: [''],
@@ -40,6 +43,7 @@ const RentOfRoomPage = ({ params }: RentOfRoomPageProps) => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+  const { posts } = usePostsSearch({});
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -69,6 +73,10 @@ const RentOfRoomPage = ({ params }: RentOfRoomPageProps) => {
         console.error('Error fetching fields:', error);
       });
   }, [apiPublic, params.id]);
+
+  useEffect(() => {
+    setpostFilterByCategory(posts.filter((item: any) => item.type_of_post.title === category && category!.title));
+  }, [category, posts]);
 
   const handleSetViewRender = () => {
     setViewRender(!viewRender);
@@ -178,16 +186,18 @@ const RentOfRoomPage = ({ params }: RentOfRoomPageProps) => {
           </div>
           {viewRender ? (
             <div className='w-full flex sm:grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around gap-3 py-4 px-2'>
-              {category && category!.posts.length !== 0 ? (
-                category!.posts.map((item: any, index: any) => <PostCardSquareComponent key={index + 1} post={item} />)
+              {postFilterByCategory ? (
+                postFilterByCategory.map((item: any, index: any) => (
+                  <PostCardSquareComponent key={index + 1} post={item} />
+                ))
               ) : (
                 <p className='text-blue-600 font-bold'>No posts found</p>
               )}
             </div>
           ) : (
             <div className='w-full flex flex-col items-center justify-center px-2 py-4 gap-3'>
-              {category && category!.posts.length !== 0 ? (
-                category!.posts.map((item: any, index: any) => <PostCardRow key={index} postItem={item} />)
+              {postFilterByCategory ? (
+                postFilterByCategory.map((item: any, index: any) => <PostCardRow key={index} postItem={item} />)
               ) : (
                 <p className='text-blue-600 font-bold'>No posts found</p>
               )}

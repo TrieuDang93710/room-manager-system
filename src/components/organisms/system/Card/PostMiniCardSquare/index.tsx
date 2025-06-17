@@ -28,12 +28,14 @@ const PostMiniCardSquare = ({ onHover, postId }: PostMiniCardSquareProps) => {
   }, [apiPublic, postId]);
 
   return (
-    <CardSquare onHover={onHover}>
-      <div className='w-full px-2'>
+    <CardSquare onHover={onHover} logo={postItem ? postItem!.company.logo : ''} className='w-full h-fit'>
+      <div className='w-full px-2 h-[15vh]'>
         <h3 className='text-[18px] text-black dark:text-blue-800 font-bold py-2 line-clamp-2'>
           {postItem ? postItem!.title : 'Loading...'}
         </h3>
-        <p className='text-[13px] text-slate-800 font-normal py-1'>{postItem && postItem!.company.title}</p>
+        <p className='text-[13px] text-slate-800 font-normal py-1 line-clamp-2'>
+          {postItem && postItem!.company.title}
+        </p>
         <div className='w-full flex flex-row items-center justify-between'>
           <div className='w-full flex md:flex-row flex-col md:items-center items-start gap-2'>
             <p className='text-[13px] bg-slate-200 text-slate-800 font-normal rounded-full py-1 px-3'>

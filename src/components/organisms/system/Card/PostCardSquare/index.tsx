@@ -14,7 +14,7 @@ export const PostCardSquareComponent = ({ onClick, post }: PostCardSquareCompone
   console.log('expired: ', expired);
 
   return (
-    <CardSquare logo={post && post.company.logo}>
+    <CardSquare logo={post && post!.company ? post!.company.logo : ''}>
       <div className='w-full px-2'>
         <p className='text-[13px] text-slate-800 dark:text-blue-500 font-normal'>{post!.type_of_post.title}</p>
         <h3 className='text-[18px] text-black dark:text-blue-800 font-bold py-2 line-clamp-2'>{post!.title}</h3>

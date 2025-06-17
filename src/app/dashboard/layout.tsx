@@ -1,9 +1,8 @@
 'use client';
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from '@/components/molecules/Modal';
 import { funcOfAdmin, funcOfApplicant, funcOfManager } from '@/config/funcMenuConfig';
 import { Role } from '@/enum/role.enum';
-import Loading from './loading';
 import listFuncInterface from '@/interfaces/listFunction';
 import FunctionListManager from '@/components/organisms/manager/SideBar';
 import ManagerHeader from '@/components/organisms/manager/ManagerHeader';
@@ -19,7 +18,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [selectedMenu, setSelectedMenu] = useState<number>(0);
   const [functions, setFunctions] = useState<listFuncInterface[]>([]);
   const { user } = useAuth();
-  console.log('user: ', user)
+  console.log('user: ', user);
   let account: string = Role.MANAGER;
 
   account = user && user!.role[0];
@@ -56,7 +55,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       />
       <div className='w-full max-h-screen flex flex-col items-center justify-start md:px-3'>
         <ManagerHeader isHiddenMenu={isHiddenMenu} setIsHiddenMenu={setIsHiddenMenu} account={account} />
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        {children}
       </div>
       <Modal
         className='bg-[#10101030] dark:bg-[#73737300] border-none right-0'

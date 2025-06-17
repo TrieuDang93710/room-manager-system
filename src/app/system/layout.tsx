@@ -1,12 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
-import React, { Suspense, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import FooterCommon from '@/components/organisms/system/Footer';
 import NavbarCommon from '@/components/organisms/system/SystemHeader';
 import ChatBoxAI from './components/ChatBoxAI';
 import ModalResponsive from './components/Modal';
-import Loading from './loading';
 import PostFilter from './components/PostFilter';
 import { job_menu, profile_menu } from '@/faker/menu';
 import MenuBoxComponent from '@/components/organisms/system/SystemHeader/components/MenuBox';
@@ -108,7 +107,8 @@ const SystemLayout = ({ children }: SystemLayoutProps) => {
       )}
       {openCommentBox && <CommentBox onClose={() => setOpenCommentBox(!openCommentBox)} />}
       {openChatAI && <ChatBoxAI openChatAI={openChatAI} />}
-      <Suspense fallback={<Loading />}>{children}</Suspense>
+      {children}
+      {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
       <FooterCommon />
       <ModalResponsive isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
