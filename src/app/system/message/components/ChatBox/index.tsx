@@ -42,7 +42,7 @@ const ChatBox = ({ receiverId }: ChatBoxProps) => {
   return (
     <div className='relative w-full h-[65vh] bg-blue-200 dark:bg-blue-900 gap-4 overflow-y-auto hide-scrollbar'>
       {receiverUser && (
-        <div className='sm:fixed z-20 w-[55%] flex items-start justify-start truncate gap-2 px-2 py-2 bg-[#f7f7f7] dark:bg-blue-800 border border-slate-400 border-b-0'>
+        <div className='z-20 w-full flex items-start justify-start truncate gap-2 px-2 py-2 bg-[#f7f7f7] dark:bg-blue-800 border border-slate-400 border-b-0'>
           <Image
             alt='avatar'
             src={receiverUser?.avatar}

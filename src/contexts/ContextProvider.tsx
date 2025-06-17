@@ -27,7 +27,7 @@ interface AuthContextType {
   loginWithEmailAndPassword: (email: string, password: string) => Promise<any>;
   registerWithEmailAndPassword: (email: string, password: string) => Promise<any>;
   signIn: (email: string, password: string) => Promise<any>;
-  signUp: (username: string, email: string, password: string, role?: string[]) => Promise<any>;
+  signUp: (username: string, email: string, password?: string, role?: string[], account_type?: string[]) => Promise<any>;
   loginWithGmail: () => Promise<any>;
   logout: () => Promise<any>;
 }
@@ -48,9 +48,9 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
     return apiPublic.post('/auth/sign-in', { email, password });
   };
 
-  const signUp = (username: string, email: string, password: string, role?: string[]) => {
+  const signUp = (username: string, email: string, password?: string, role?: string[], account_type?: string[]) => {
     setLoading(true);
-    const body = { username: username, email: email, password: password, role: role };
+    const body = { username: username, email: email, password: password, role: role, account_type: account_type };
     return apiPublic.post('/auth/sign-up', body);
   };
 
@@ -83,7 +83,7 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
     const refreshToken: string | null = localStorage.getItem('refresh-token');
 
     if (!token) {
-      router.push('/sign-in');
+      router.push('/');
     }
 
     const decodedToken = jwt.decode(token!) as JwtPayload;
@@ -104,7 +104,7 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
         NotificationCustom('warning', 'You need refresh token');
         router.push('/refresh-token');
       } else {
-        return;
+        router.push('/');
       }
     }
   }, [router]);
@@ -127,12 +127,14 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
         })
         .then((result) => {
           setUser(result.data.data);
+          router.push('/');
         })
         .catch((error) => {
           return error;
+          router.push('/');
         });
     }
-  }, []);
+  }, [router]);
   const authInfo: AuthContextType = {
     loading,
     setLoading,

@@ -14,8 +14,8 @@ const ReviewUs = () => {
       >
         {comments.map((item: any, index: any) => (
           <CardSquare key={index + 1} logo={item!.userId?.avatar}>
-            <div className='w-full flex flex-col items-start justify-center gap-2'>
-              <p className='text-[13px] text-slate-800 font-normal py-1 line-clamp-4'>
+            <div className='w-full h-[15vh] flex flex-col items-start justify-center gap-2'>
+              <p className='text-[13px] text-slate-800 font-normal py-1 line-clamp-1'>
                 <strong className='font-bold text-black dark:text-blue-600'>Tên : </strong>
                 {item!.userId?.username}
               </p>

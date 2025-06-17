@@ -28,7 +28,7 @@ const SignIn = () => {
   });
 
   const { handleSubmit, reset } = useForm();
-  const { signIn, setUser, user } = useAuth();
+  const { signIn, setUser, user, loginWithGmail, signUp } = useAuth();
   const { getUserByEmail } = useUser();
   const apiSecure = useApiSecure();
   const router = useRouter();
@@ -68,7 +68,7 @@ const SignIn = () => {
           (token_time_exp < realtime && TimestampConvert(realtime) <= TimestampConvert(refresh_token_time_exp) - 1) ||
           TimestampConvert(realtime) > TimestampConvert(refresh_token_time_exp) - 1
         ) {
-          NotificationCustom('warning', 'Vui lòng làm mới mật khẩu');
+          await NotificationCustom('warning', 'Vui lòng làm mới mật khẩu');
           router.push('/refresh-token');
         }
         // NotificationCustom('error', error.message);
@@ -93,6 +93,40 @@ const SignIn = () => {
     const realtime = datetime - decodedToken.iat!;
 
     console.log(token_time_exp, refresh_token_time_exp, realtime);
+  };
+
+  const handleLoginWithGmail = async () => {
+    loginWithGmail()
+      .then((response) => {
+        if (response) {
+          NotificationCustom('success', 'Đăng nhập thành công');
+          console.log('userData: ', response);
+          const userInfor = {
+            username: response.user.displayName,
+            email: response.user.email,
+            role: ['applicant'],
+            account_type: ['google']
+          };
+
+          signUp(userInfor.username, userInfor.email, undefined, userInfor.role, userInfor.account_type)
+            .then((response) => {
+              console.log('response: ', response);
+              NotificationCustom('success', response.data.message);
+              localStorage.setItem('code-id', response.data.data.user.code_id);
+              router.push('/sign-in');
+            })
+            .catch((error: string) => {
+              console.log('error: ', error);
+              NotificationCustom('error', error);
+              reset();
+              router.push('/sign-up');
+            });
+        }
+      })
+      .catch((error) => {
+        console.log('error: ', error);
+        NotificationCustom('error', 'Đăng nhập thất bại, vui lòng thử lại sau');
+      });
   };
 
   return (
@@ -138,13 +172,13 @@ const SignIn = () => {
         <p>
           Haven&apos; t you an account yet?
           <Link className='text-blue-600' href={'/sign-up'}>
-            Sign up
+            Sign up here
           </Link>
         </p>
         <div className='sign_in_other'>
           <p>Sign in with</p>
           <div className={'w-full gap-3 ' + flex({ justifyContent: 'around', alignItems: 'center' })}>
-            <GooglePlusOutlined className='text-[30px] text-red-500' />
+            <GooglePlusOutlined className='text-[30px] text-red-500' onClick={handleLoginWithGmail} />
             <FacebookOutlined className='text-[30px] text-blue-500' />
             <TwitterOutlined className='text-[30px] text-blue-500' />
           </div>

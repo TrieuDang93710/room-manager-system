@@ -26,7 +26,7 @@ const PostCardRow = ({ postItem, applied }: PostCardRowProps) => {
   }
 
   return (
-    <CardRow logo={postItem && postItem.company.logo}>
+    <CardRow logo={postItem && postItem!.company ? postItem!.company.logo : ''}>
       <div className='w-full h-full p-2'>
         <h3 className='w-[60%] text-[18px] text-black dark:text-blue-600 font-bold py-2 line-clamp-2'>{postItem && postItem!.title}</h3>
         <h3 className='text-[18px] text-black dark:text-blue-600 font-normal line-clamp-2'>{postItem && postItem!.company.title}</h3>
