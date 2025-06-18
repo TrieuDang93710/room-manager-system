@@ -1,19 +1,38 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SearchComponent from '@/components/molecules/Search';
 import TableComponent from '@/components/molecules/Table';
 import ButtonCommon from '@/components/atoms/ButtonCommon';
 import PaginationComponent from '@/components/molecules/Pagination/pagination';
 import { DeleteOutlined, PlusOutlined, ReadOutlined } from '@ant-design/icons';
 import AddBusiness from '../business/components/AddBusiness';
-import useBusiness from '@/hooks/useBusiness';
 import './business.css';
+import useApiPublic from '@/hooks/useApiPublic';
+import { useAuth } from '@/hooks/auth/useAuth';
 
 const RoomManagerPage = () => {
+  const apiPublic = useApiPublic();
+  const auth = useAuth();
+  const { user } = auth;
   const [openAddBusiness, setOpenAddBusiness] = useState<boolean>(false);
-  const { useBusinessSearch } = useBusiness();
-  const { businesses } = useBusinessSearch();
+
+  const [companyFIlterByEmail, setCompanyFilterByEmail] = useState<any[]>([]);
+
+  useEffect(() => {
+    apiPublic
+      .get(`companies/get-by-email?email=${user && user!.email}`)
+      .then((res) => {
+        if (res.data) {
+          setCompanyFilterByEmail(res.data.data.result);
+        }
+      })
+      .catch((error) => {
+        if (error.response.data) {
+          console.error('Error fetching companies by email:', error.response.data.message);
+        }
+      });
+  }, [apiPublic, user]);
 
   const closeAddBusinessHandler = () => {
     setOpenAddBusiness(!openAddBusiness);
@@ -72,7 +91,7 @@ const RoomManagerPage = () => {
           </div>
           <SearchComponent />
         </div>
-        <TableComponent headers={headers} data={businesses} renderRow={renderRow} />
+        <TableComponent headers={headers} data={companyFIlterByEmail} renderRow={renderRow} />
         <div className='w-full flex justify-end py-1'>
           <PaginationComponent />
         </div>

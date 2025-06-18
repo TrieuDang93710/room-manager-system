@@ -36,6 +36,8 @@ const PostRender = ({ setOpenPostDetailCard, openPostDetailCard, setPostId }: Po
   const currentItems = itemsRender;
   // const currentItems = !itemsRender ? itemsRender : posts;
   console.log('currentItems: ', currentItems);
+  const filteredCurrentItems = currentItems.filter((item: any) => item.status[0] === 'approved');
+  console.log('filteredCurrentItems: ', filteredCurrentItems);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -189,7 +191,7 @@ const PostRender = ({ setOpenPostDetailCard, openPostDetailCard, setPostId }: Po
         </ul>
       </div>
       <div className='w-full flex sm:grid md:grid-cols-3 sm:grid-cols-2 flex-col items-center justify-around gap-3 px-4 py-2'>
-        {currentItems.map((item: any) => (
+        {filteredCurrentItems.map((item: any) => (
           <PostMiniCardSquare
             postId={item.id}
             onHover={() => {
