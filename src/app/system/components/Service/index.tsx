@@ -20,7 +20,7 @@ const ServicePackage = () => {
     <div className='sm:w-[70%] w-full flex flex-col items-center pb-8'>
       <h2 className='text-2xl font-bold text-blue-600 py-2'>Các Gói Dịch Vụ</h2>
       <div
-        className={`${packageFilter.length > 2 ? 'w-[80%] sm:grid md:grid-cols-3 sm:grid-cols-2' : 'w-[60%]'} flex flex-row items-center justify-around gap-4 py-10`}
+        className={`${packageFilter.length > 2 ? 'w-[80%] sm:grid md:grid-cols-3 sm:grid-cols-2' : 'w-[80%]'} flex flex-row items-center justify-around gap-4 py-10`}
       >
         <div className='w-full border-[1px] rounded-sm py-2 cursor-pointer border-slate-500 dark:border-blue-600 flex flex-col items-center justify-start gap-2'>
           <button className='w-3/4 py-2 rounded-sm text-[14px] font-bold bg-[#9999993f] text-blue-600'>

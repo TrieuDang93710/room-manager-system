@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddPost from './components/AddPost';
 import SearchComponent from '@/components/molecules/Search';
 import TableComponent from '@/components/molecules/Table';
@@ -11,15 +11,33 @@ import { AppstoreOutlined, DeleteOutlined, PlusOutlined, ReadOutlined, TableOutl
 import './room.css';
 import AddField from './components/AddField';
 import AddBusiness from '../business/components/AddBusiness';
-import usePost from '@/hooks/usePost';
+import useApiPublic from '@/hooks/useApiPublic';
+import { useAuth } from '@/hooks/auth/useAuth';
 
 const RoomManagerPage = () => {
+  const apiPublic = useApiPublic();
+  const auth = useAuth();
+  const { user } = auth;
   const [openAddPost, setOpenAddPost] = useState<boolean>(false);
   const [openAddField, setOpenAddField] = useState<boolean>(false);
   const [openAddBusiness, setOpenAddBusiness] = useState<boolean>(false);
   const [viewRender, setViewRender] = useState<boolean>(false);
-  const { usePostsSearch } = usePost();
-  const { posts } = usePostsSearch();
+  const [postFIlterByEmail, setPostFilterByEmail] = useState<any[]>([]);
+
+  useEffect(() => {
+    apiPublic
+      .get(`post/get-by-email/?email=${user && user!.email}`)
+      .then((res) => {
+        if (res.data) {
+          setPostFilterByEmail(res.data.data.result);
+        }
+      })
+      .catch((error) => {
+        if (error.response.data) {
+          console.error('Error fetching posts by email:', error.response.data.message);
+        }
+      });
+  }, [apiPublic, user]);
 
   const closeAddPostHandler = () => {
     setOpenAddPost(!openAddPost);
@@ -110,12 +128,10 @@ const RoomManagerPage = () => {
           )}
         </div>
         {viewRender ? (
-          <TableComponent headers={headers} data={posts} renderRow={renderRow} />
+          <TableComponent headers={headers} data={postFIlterByEmail} renderRow={renderRow} />
         ) : (
           <div className='w-full h-[60vh] flex flex-col items-center justify-start hide-scrollbar overflow-y-auto gap-4 p-4 mt-4'>
-            {posts.map((item: any) => (
-              <PostCardRow key={item.id} postItem={item} />
-            ))}
+            {postFIlterByEmail && postFIlterByEmail.map((item: any) => <PostCardRow key={item.id} postItem={item} />)}
           </div>
         )}
         {viewRender && (

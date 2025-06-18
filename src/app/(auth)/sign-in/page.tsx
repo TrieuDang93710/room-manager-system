@@ -99,7 +99,7 @@ const SignIn = () => {
     loginWithGmail()
       .then((response) => {
         if (response) {
-          NotificationCustom('success', 'Đăng nhập thành công');
+          NotificationCustom('success', 'Đăng nhập thành công, vui lòng kiểm tra email của bạn để hoàn tất đăng ký');
           console.log('userData: ', response);
           const userInfor = {
             username: response.user.displayName,
