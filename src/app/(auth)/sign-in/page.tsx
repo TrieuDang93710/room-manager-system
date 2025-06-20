@@ -39,7 +39,8 @@ const SignIn = () => {
 
     signIn(email, password)
       .then((response) => {
-        NotificationCustom('success', response.data.message);
+        // NotificationCustom('success', response.data.message);
+        NotificationCustom('success', 'Đăng nhập thành công, vui lòng kiểm tra email của bạn để hoàn tất đăng ký');
         const token = response.data.data.token;
         const refreshToken = response.data.data.refreshToken;
         localStorage.setItem('access-token', token);
@@ -57,7 +58,10 @@ const SignIn = () => {
           })
           .catch((error) => {
             if (error.response.data) {
-              NotificationCustom(`warning`, error.response.data.message);
+              NotificationCustom(
+                `warning`,
+                `${error.response.data.message}, vui lòng kiểm tra email của bạn để hoàn tất`
+              );
               reset();
               router.push('/account-active');
             }
